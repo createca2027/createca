@@ -10,7 +10,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "actu:nouvelle": "node scripts/cms/actu-nouvelle.mjs",
+    "verifier": "node scripts/cms/verifier.mjs",
+    "publier": "node scripts/cms/publier.mjs",
+    "test:cms": "node --test scripts/cms/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
