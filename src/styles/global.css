@@ -189,6 +189,19 @@ dialog.plan::backdrop { background: color-mix(in srgb, var(--color-encre) 35%, t
 .groupe-tirages { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1.5rem 1.75rem; margin-block: 2rem; }
 .groupe-tirages .tirage { flex: 0 0 auto; }
 
+/* Avant / après (articles) : deux captures côte à côte, plus larges que la colonne de texte sur grand écran */
+.prose-createca .avant-apres { display: grid; gap: 1.5rem; margin-block: 2rem; }
+.prose-createca .avant-apres > div > * + * { margin-top: 0.6rem; }
+.prose-createca .avant-apres img { display: block; width: 100%; height: auto; border: 1px solid var(--color-ligne); border-radius: 0.5rem; box-shadow: 0 8px 24px -14px color-mix(in srgb, var(--color-encre) 40%, transparent); }
+.prose-createca .avant-apres p { font-size: 1rem; color: var(--color-muet); }
+@media (min-width: 48rem) {
+  .prose-createca .avant-apres { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 64rem) {
+  .prose-createca .avant-apres { width: 60rem; }
+  .prose-createca .avant-apres-mobile { width: 34rem; }
+}
+
 /* Calendrier de la formation (page Formation) */
 .prose-createca .calendrier { list-style: none; padding: 0; border-top: 1px solid var(--color-ligne); }
 .prose-createca .calendrier li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--color-ligne); margin: 0; }

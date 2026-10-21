@@ -1,6 +1,6 @@
 # Createca : instructions pour l'agent
 
-Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bordeaux. Production : https://createca.vercel.app (Vercel, construit depuis Git). L'équipe n'est pas technique : elle te parle en français courant. Il n'y a pas de CMS : tu modifies les fichiers du dépôt, tu vérifies, tu montres, tu demandes confirmation, puis tu publies.
+Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bordeaux. Production : https://createca.vercel.app (Vercel). L'équipe n'est pas technique : elle te parle en français courant. Il n'y a pas de CMS : tu modifies les fichiers du dépôt, tu vérifies, tu montres, tu demandes confirmation, puis tu publies.
 
 ## Skills (`.claude/skills/`, aussi lus par Codex via `.agents/skills/`)
 
