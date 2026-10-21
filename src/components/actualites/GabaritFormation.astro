@@ -1,0 +1,25 @@
+---
+// Formation : encadré mis en avant avec la date limite d'inscription, puis le texte et les liens utiles.
+import { dateLongue } from '../../lib/dates';
+import type { Actu } from '../../lib/actualites';
+interface Props { actu: Actu; Content: any; passee: boolean }
+const { actu, Content, passee } = Astro.props;
+const { limite } = actu.data;
+---
+<div class="max-w-[40rem]">
+  <aside class="rounded-xl border border-encre bg-encre p-6 text-papier sur-encre" aria-labelledby="inscription">
+    <h2 id="inscription" class="text-titre-4 text-papier">Inscription</h2>
+    {limite ? (
+      <p class="mt-2 text-[1.1875rem]">Inscriptions jusqu’au <strong class="text-papier">{dateLongue(limite)}</strong>
+        <span data-passee hidden={!passee} class="ml-2 rounded-full border border-papier/60 px-3 py-0.5 text-[0.95rem]">Annonce passée</span></p>
+    ) : (
+      <p class="mt-2 text-[1.1875rem]">La date limite d’inscription n’est pas indiquée pour cette session.</p>
+    )}
+    <p class="mt-5"><a href="/contact/?objet=formation#formulaire" class="bouton bouton-trait border-papier bg-papier">Demander le programme</a></p>
+  </aside>
+  <div class="actu-corps mt-8 text-[1.1875rem]"><Content /></div>
+  <ul class="mt-8 flex flex-wrap gap-x-8 gap-y-1">
+    <li><a href="/formation/" class="lien inline-flex min-h-11 items-center">La formation en art-thérapie</a></li>
+    <li><a href="/formation/#calendrier" class="lien inline-flex min-h-11 items-center">Le calendrier de la formation</a></li>
+  </ul>
+</div>

@@ -1,0 +1,31 @@
+---
+// Pied commun des pages d'actualité : catégorie, retour et annonces voisines.
+import { lien, lienType, libelles, type Actu } from '../../lib/actualites';
+import { insecableTexte } from '../../lib/typo';
+interface Props { actu: Actu; precedente?: Actu; suivante?: Actu }
+const { actu, precedente, suivante } = Astro.props;
+---
+<nav aria-label="Autres annonces" class="mt-14 border-t border-encre/15 pt-8">
+  <p class="flex flex-wrap items-center gap-3">
+    <a href={lienType(actu.data.type)} class="inline-flex min-h-11 items-center rounded-full border border-encre/30 px-4 text-[1rem] text-encre no-underline hover:border-encre hover:bg-papier">{libelles[actu.data.type]}<span class="sr-only"> : toutes les actualités de ce type</span></a>
+    <a href="/actualites/" class="lien inline-flex min-h-11 items-center">Retour aux actualités</a>
+  </p>
+  <ul class="mt-6 grid gap-6 sm:grid-cols-2">
+    <li>
+      {precedente && (
+        <a href={lien(precedente)} class="block min-h-11 no-underline">
+          <span class="text-[0.95rem] text-muet">Annonce précédente</span>
+          <span class="mt-1 block font-titre text-[1.15rem] font-semibold leading-snug text-encre underline decoration-encre/40 underline-offset-4" set:html={insecableTexte(precedente.data.titre)} />
+        </a>
+      )}
+    </li>
+    <li class="sm:text-right">
+      {suivante && (
+        <a href={lien(suivante)} class="block min-h-11 no-underline">
+          <span class="text-[0.95rem] text-muet">Annonce suivante</span>
+          <span class="mt-1 block font-titre text-[1.15rem] font-semibold leading-snug text-encre underline decoration-encre/40 underline-offset-4" set:html={insecableTexte(suivante.data.titre)} />
+        </a>
+      )}
+    </li>
+  </ul>
+</nav>

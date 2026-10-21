@@ -1,0 +1,51 @@
+---
+// Portes ouvertes, événement, exposition, rencontre, atelier : bloc « Quand / Où » puis le texte.
+// L'adresse du centre n'est affichée que là où le centre est bien le lieu (portes ouvertes, exposition) ;
+// le lien vers la carte est réservé aux portes ouvertes.
+import { Image } from 'astro:assets';
+import { site, carteUrl } from '../../data/site';
+import { dateLongue } from '../../lib/dates';
+import { expositions } from '../../data/expositions';
+import type { Actu } from '../../lib/actualites';
+interface Props { actu: Actu; Content: any; passee: boolean }
+const { actu, Content, passee } = Astro.props;
+const { type, date, dateFin } = actu.data;
+const quand = date ? (dateFin ? `Du ${dateLongue(date)} au ${dateLongue(dateFin)}` : dateLongue(date)) : undefined;
+const avecAdresse = type === 'portes-ouvertes' || type === 'exposition';
+const expo = type === 'exposition' ? expositions.find((e) => e.actualite === actu.id) : undefined;
+const a = site.adresse;
+---
+<div class="max-w-[40rem]">
+  {(quand || avecAdresse) && (
+    <dl class="grid gap-x-8 gap-y-4 rounded-xl border border-ligne bg-papier p-6 sm:grid-cols-2">
+      {quand && (
+        <div>
+          <dt class="text-[0.95rem] text-cadmium-fonce">Quand</dt>
+          <dd class="mt-1 font-titre text-[1.25rem] font-semibold text-encre">{quand}
+            <span data-passee hidden={!passee} class="ml-1 block text-[0.95rem] font-normal text-muet">Annonce passée</span></dd>
+        </div>
+      )}
+      {avecAdresse && (
+        <div>
+          <dt class="text-[0.95rem] text-cadmium-fonce">Où</dt>
+          <dd class="mt-1">
+            <address class="not-italic font-titre text-[1.25rem] font-semibold text-encre">{a.rue}<br />{a.cp} {a.ville}-{a.quartier}</address>
+            {type === 'portes-ouvertes' && <a href={carteUrl} class="lien mt-1 inline-flex min-h-11 items-center" rel="noopener">Voir sur la carte</a>}
+          </dd>
+        </div>
+      )}
+    </dl>
+  )}
+  <div class:list={['actu-corps text-[1.1875rem]', (quand || avecAdresse) && 'mt-8']}><Content /></div>
+  {expo && (
+    <section class="mt-10" aria-labelledby="photos-expo">
+      <h2 id="photos-expo" class="text-titre-4">Les photos de l’exposition</h2>
+      <ul class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3" role="list">
+        {expo.photos.map((p) => (
+          <li><Image src={p.src} alt={p.alt} width={400} widths={[200, 400]} sizes="(min-width: 40rem) 12rem, 45vw" class="aspect-square w-full rounded-sm object-cover" loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+      <p class="mt-5"><a href={`/galerie/#expo-${expo.id}`} class="lien inline-flex min-h-11 items-center">Voir l’exposition dans la galerie</a></p>
+    </section>
+  )}
+</div>

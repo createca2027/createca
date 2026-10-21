@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import EnTetePage from '../../components/EnTetePage.astro';
+import Pied from '../../components/actualites/Pied.astro';
+import EcheanceClient from '../../components/actualites/EcheanceClient.astro';
+import GabaritArticle from '../../components/actualites/GabaritArticle.astro';
+import GabaritCertification from '../../components/actualites/GabaritCertification.astro';
+import GabaritEvenement from '../../components/actualites/GabaritEvenement.astro';
+import GabaritFormation from '../../components/actualites/GabaritFormation.astro';
+import GabaritSimple from '../../components/actualites/GabaritSimple.astro';
+import { site } from '../../data/site';
+import { toutes, corps, description, echeance, estPassee, libelles, pigments, quand, type Actu } from '../../lib/actualites';
+
+export function getStaticPaths() {
+  // Dans l'ordre de tri (récent d'abord) : « précédente » est la plus ancienne, « suivante » la plus récente.
+  return toutes.map((actu, i) => ({
+    params: { id: actu.id },
+    props: { actu, precedente: toutes[i + 1], suivante: toutes[i - 1] },
+  }));
+}
+
+interface Props { actu: Actu; precedente?: Actu; suivante?: Actu }
+const { actu, precedente, suivante } = Astro.props;
+const Content = await corps(actu);
+const { type, titre, date, dateFin, publie, image } = actu.data;
+const passee = estPassee(actu);
+const echeanceIso = echeance(actu);
+const url = new URL(`/actualites/${actu.id}/`, site.url).href;
+const lieu = {
+  '@type': 'Place', name: 'Createca',
+  address: { '@type': 'PostalAddress', streetAddress: '244 rue Pasteur', postalCode: site.adresse.cp, addressLocality: site.adresse.ville, addressCountry: 'FR' },
+};
+
+const jsonLd: Record<string, unknown>[] = [];
+if (type === 'portes-ouvertes' && date) {
+  jsonLd.push({
+    '@context': 'https://schema.org', '@type': 'Event', name: titre, url, startDate: date,
+    ...(dateFin ? { endDate: dateFin } : {}),
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: lieu,
+    ...((actu.body ?? '').includes('Entrée libre') ? { isAccessibleForFree: true } : {}),
+    description: description(actu),
+  });
+}
+if (type === 'article' && publie) {
+  jsonLd.push({
+    '@context': 'https://schema.org', '@type': 'Article', headline: titre, url, datePublished: publie,
+    description: description(actu), mainEntityOfPage: url,
+    author: { '@type': 'Organization', name: 'Createca' }, publisher: { '@type': 'Organization', name: 'Createca' },
+    ...(image ? { image: new URL(image.src.src, site.url).href } : {}),
+  });
+}
+
+const evenement = ['portes-ouvertes', 'evenement', 'exposition', 'rencontre', 'atelier'].includes(type);
+---
+<Base titre={titre} description={description(actu)} jsonLd={jsonLd}>
+  <EnTetePage titre={titre} chapo={`${libelles[type]}, ${quand(actu)}`} pigment={pigments[type]} icone="plume"
+    filAriane={[{ titre: 'Actualités', href: '/actualites/' }]} />
+
+  <section class="page py-12 lg:py-16" aria-label="Annonce" data-annonce data-echeance={echeanceIso}>
+    {type === 'formation' ? <GabaritFormation actu={actu} Content={Content} passee={passee} />
+      : evenement ? <GabaritEvenement actu={actu} Content={Content} passee={passee} />
+      : type === 'certifications' || type === 'qualite' ? <GabaritCertification Content={Content} />
+      : type === 'article' ? <GabaritArticle actu={actu} Content={Content} />
+      : (
+        <div>
+          {echeanceIso && <span data-passee hidden={!passee} class="mb-6 inline-block rounded-full border border-encre/30 px-3 py-0.5 text-[0.95rem] text-muet">Annonce passée</span>}
+          <GabaritSimple Content={Content} />
+        </div>
+      )}
+    <Pied actu={actu} precedente={precedente} suivante={suivante} />
+  </section>
+  <EcheanceClient />
+</Base>
