@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { analyserArguments, attendre200, attendreVersion, idsActualites, urlSuivi, urlsAControler } from './publier.mjs';
+import { analyserArguments, attendre200, attendreVersion, horsPerimetre, idsActualites, urlSuivi, urlsAControler } from './publier.mjs';
 
 test('arguments : message obligatoire, options valides', () => {
   assert.throws(() => analyserArguments([]), /message est obligatoire/);
@@ -37,18 +37,33 @@ test('attente : réussit après des 404, échoue au délai dépassé', async () 
   assert.equal(err.ok, false);
 });
 
-test('version : attend le commit envoyé, pas un simple 200 de l’ancienne version', async () => {
+test('version : attend le commit envoyé ou un commit qui le contient, pas un simple 200 de l’ancienne version', async () => {
   let t = 0; let n = 0;
   const base = { pause: 10, dormir: async (ms) => { t += ms; }, horloge: () => t };
   const sha = 'a'.repeat(40);
   const page = (v) => `<head><meta name="createca-version" content="${v}"></head>`;
-  const ok = await attendreVersion('https://x/', sha, { ...base, delaiMax: 100, lire: async () => page(++n < 3 ? 'b'.repeat(40) : sha) });
+  const vus = [];
+  const estPublie = (enLigne) => { vus.push(enLigne); return enLigne === sha || enLigne === 'c'.repeat(40); };
+  const ok = await attendreVersion('https://x/', estPublie, { ...base, delaiMax: 100, lire: async () => page(++n < 3 ? 'b'.repeat(40) : sha) });
   assert.deepEqual(ok, { ok: true });
   assert.equal(n, 3);
+  assert.deepEqual(vus, ['b'.repeat(40), 'b'.repeat(40), sha]);
   t = 0;
-  const ancienne = await attendreVersion('https://x/', sha, { ...base, delaiMax: 50, lire: async () => page('b'.repeat(40)) });
+  const plusRecent = await attendreVersion('https://x/', estPublie, { ...base, delaiMax: 50, lire: async () => page('c'.repeat(40)) });
+  assert.deepEqual(plusRecent, { ok: true });
+  t = 0;
+  const ancienne = await attendreVersion('https://x/', estPublie, { ...base, delaiMax: 50, lire: async () => page('b'.repeat(40)) });
   assert.deepEqual(ancienne, { ok: false, statut: 'version bbbbbbb en ligne' });
   t = 0;
-  const absente = await attendreVersion('https://x/', sha, { ...base, delaiMax: 30, lire: async () => '<head></head>' });
+  const absente = await attendreVersion('https://x/', estPublie, { ...base, delaiMax: 30, lire: async () => '<head></head>' });
   assert.deepEqual(absente, { ok: false, statut: 'version absente de la page' });
+});
+
+test('périmètre : fichiers suivis modifiés hors des chemins publiés', () => {
+  const porcelain = [
+    ' M src/data/site.ts', 'M  plugins/createca/skills/x/SKILL.md', 'R  .claude/skills/a/SKILL.md -> plugins/createca/skills/a/SKILL.md',
+    ' M tsconfig.json', ' M README.md', ' D vercel.json', '?? notes.txt', ' M src-copie/x.ts', ' M "docs/guide équipe.md"',
+  ].join('\n');
+  assert.deepEqual(horsPerimetre(porcelain), ['README.md', 'vercel.json', 'src-copie/x.ts']);
+  assert.deepEqual(horsPerimetre(''), []);
 });

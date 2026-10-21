@@ -1,0 +1,14 @@
+{
+  "name": "createca",
+  "owner": { "name": "Waimia", "url": "https://waimia.com" },
+  "metadata": {
+    "description": "Plugin du site Createca pour Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "createca",
+      "source": "./plugins/createca",
+      "description": "Gérer le site Createca en langage naturel : publier une actualité, modifier, supprimer, ajouter des photos, mettre en ligne."
+    }
+  ]
+}

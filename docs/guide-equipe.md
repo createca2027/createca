@@ -1,10 +1,12 @@
 # Guide de l'équipe Createca : modifier le site avec un agent IA
 
-## Installer et ouvrir
+## Installer et ouvrir (une seule fois)
 
-1. Installer **Claude Code** (claude.com/claude-code) ou **Codex** (openai.com/codex), et se connecter à son compte.
-2. Récupérer le dossier du site (dépôt Git « createca ») sur votre ordinateur, avec l'aide de la personne qui l'a mis en place.
-3. Ouvrir l'agent **dans ce dossier**. Il lit seul les consignes du site. Vous lui écrivez en français, comme à un collègue.
+1. Accepter l'invitation au dépôt privé GitHub **virtuoseweb/createca** envoyée par Waimia.
+2. Installer **Claude** (application de bureau, onglet Code, ou Claude Code) ou **Codex**, et se connecter à son compte.
+3. Installer l'outil GitHub (`gh`), puis lancer `gh auth login` et `gh auth setup-git`, et récupérer le site : `gh repo clone virtuoseweb/createca`.
+4. Ouvrir l'agent **dans ce dossier** et accepter de lui faire confiance. Dans Claude, le plugin **Createca** s'active alors seul ; il apparaît dans le menu Plugins et ses commandes commencent par `/createca:` (par exemple `/createca:publier-une-actualite`). Codex lit les mêmes consignes dans le dossier.
+5. Vous écrivez ensuite en français, comme à un collègue : pas besoin de taper les commandes.
 
 ## Exemples de demandes
 

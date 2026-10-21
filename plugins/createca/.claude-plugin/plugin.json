@@ -1,0 +1,6 @@
+{
+  "name": "createca",
+  "displayName": "Createca",
+  "description": "Gérer le site Createca en langage naturel : publier une actualité, modifier, supprimer, ajouter des photos, mettre en ligne.",
+  "author": { "name": "Waimia", "url": "https://waimia.com" }
+}

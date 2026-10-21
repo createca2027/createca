@@ -1,8 +1,8 @@
 # Createca : instructions pour l'agent
 
-Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bordeaux. Production : https://createca.vercel.app (Vercel). L'équipe n'est pas technique : elle te parle en français courant. Il n'y a pas de CMS : tu modifies les fichiers du dépôt, tu vérifies, tu montres, tu demandes confirmation, puis tu publies.
+Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bordeaux. Production : https://createca.vercel.app (Vercel, construit depuis la branche `main` du dépôt GitHub `virtuoseweb/createca`). L'équipe n'est pas technique : elle te parle en français courant. Il n'y a pas de CMS : tu modifies les fichiers du dépôt, tu vérifies, tu montres, tu demandes confirmation, puis tu publies.
 
-## Skills (`.claude/skills/`, aussi lus par Codex via `.agents/skills/`)
+## Skills (plugin Claude `createca` dans `plugins/createca/skills/`, lus par Codex via `.agents/skills/`)
 
 - `publier-une-actualite` : annoncer, écrire, ajouter (portes ouvertes, événement, formation, certifiés, article…).
 - `modifier-le-site` : changer un tarif, une coordonnée, un horaire, un texte de page, la liste des certifiés.
@@ -14,7 +14,7 @@ Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bo
 
 - `npm run actu:nouvelle -- --type <type> --titre "<titre>" [--date AAAA-MM-JJ] [--fin ...] [--limite ...] [--resume "..."] [--brouillon]`
 - `npm run verifier` : `astro check`, `astro build`, puis portes (U+2014, `resume` ≤ 160, alt des images, « à remplacer », liens internes).
-- `npm run publier -- "<message>"` : vérifie, commit, envoie, attend la nouvelle version en ligne puis les réponses 200.
+- `npm run publier -- "<message>"` : contrôle la branche `main` et le retard sur GitHub, vérifie, commit, envoie, attend la nouvelle version en ligne puis les réponses 200 (jusqu'à 10 minutes : délai maximal de l'outil ou arrière-plan).
 - `npm run test:cms` : tests des scripts.
 
 ## Règles (non négociables)
@@ -36,4 +36,4 @@ Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bo
 
 ## Limite
 
-Publier exige un agent qui a accès au dépôt : Claude Code, Codex, ou Claude avec connecteur GitHub. ChatGPT en simple conversation ne peut pas publier ; il peut seulement aider à rédiger un texte à transmettre. Guide pour l'équipe : `docs/guide-equipe.md`.
+Publier exige un agent qui a accès au dépôt : Claude Code ou Codex (Codex doit être autorisé à écrire dans `.git` et à utiliser le réseau). ChatGPT en simple conversation ne peut pas publier ; il peut seulement aider à rédiger un texte à transmettre. Guide pour l'équipe : `docs/guide-equipe.md`.

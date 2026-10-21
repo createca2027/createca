@@ -1,0 +1,10 @@
+{
+  "extraKnownMarketplaces": {
+    "createca": {
+      "source": { "source": "directory", "path": "." }
+    }
+  },
+  "enabledPlugins": {
+    "createca@createca": true
+  }
+}

@@ -44,6 +44,7 @@ Dans les textes longs : `{#ancre}` fixe l'ancre d'un titre (ne pas la changer, d
 
 ## Règles communes (toujours)
 
+- Dossier : ne travailler que dans le dépôt du site Createca (son `AGENTS.md` commence par « # Createca », il contient `src/content/actualites/`). Ailleurs, ne rien modifier et demander d’ouvrir le dossier du site.
 - Ne rien inventer : aucun fait, chiffre, nom, lieu, horaire ou citation qui n’a pas été donné. Demander.
 - Typographie française, jamais de tiret cadratin (U+2014). Espace insécable avant « : ; ? ! », « h » pour les heures (10 h 30).
 - Texte simple et accessible : phrases courtes, public comprenant des personnes en situation de handicap.
