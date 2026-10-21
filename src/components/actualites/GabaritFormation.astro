@@ -6,8 +6,8 @@ interface Props { actu: Actu; Content: any; passee: boolean }
 const { actu, Content, passee } = Astro.props;
 const { limite } = actu.data;
 ---
-<div class="max-w-[40rem]">
-  <aside class="rounded-xl border border-encre bg-encre p-6 text-papier sur-encre" aria-labelledby="inscription">
+<div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
+  <aside class="self-start rounded-xl border border-encre bg-encre p-6 text-papier sur-encre lg:sticky lg:top-28 lg:col-span-5 lg:col-start-8 lg:row-start-1" aria-labelledby="inscription">
     <h2 id="inscription" class="text-titre-4 text-papier">Inscription</h2>
     {limite ? (
       <p class="mt-2 text-[1.1875rem]">Inscriptions jusqu’au <strong class="text-papier">{dateLongue(limite)}</strong>
@@ -17,9 +17,11 @@ const { limite } = actu.data;
     )}
     <p class="mt-5"><a href="/contact/?objet=formation#formulaire" class="bouton bouton-trait border-papier bg-papier">Demander le programme</a></p>
   </aside>
-  <div class="actu-corps mt-8 text-[1.1875rem]"><Content /></div>
+  <div class="lg:col-span-7 lg:row-start-1">
+  <div class="actu-corps actu-corps-page"><Content /></div>
   <ul class="mt-8 flex flex-wrap gap-x-8 gap-y-1">
     <li><a href="/formation/" class="lien inline-flex min-h-11 items-center">La formation en art-thérapie</a></li>
     <li><a href="/formation/#calendrier" class="lien inline-flex min-h-11 items-center">Le calendrier de la formation</a></li>
   </ul>
+  </div>
 </div>

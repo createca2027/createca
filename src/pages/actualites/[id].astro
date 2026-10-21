@@ -51,10 +51,14 @@ if (type === 'article' && publie) {
   });
 }
 
+// Dessin de l'en-tête selon le type d'annonce
+const icones: Record<string, 'livre' | 'chevalet' | 'palette' | 'pinceau' | 'plume'> = {
+  formation: 'livre', certifications: 'livre', qualite: 'livre', 'portes-ouvertes': 'chevalet', exposition: 'palette', atelier: 'pinceau', reprise: 'pinceau',
+};
 const evenement = ['portes-ouvertes', 'evenement', 'exposition', 'rencontre', 'atelier'].includes(type);
 ---
 <Base titre={titre} description={description(actu)} jsonLd={jsonLd}>
-  <EnTetePage titre={titre} chapo={`${libelles[type]}, ${quand(actu)}`} pigment={pigments[type]} icone="plume"
+  <EnTetePage titre={titre} chapo={`${libelles[type]}, ${quand(actu)}`} pigment={pigments[type]} icone={icones[type] ?? 'plume'}
     filAriane={[{ titre: 'Actualités', href: '/actualites/' }]} />
 
   <section class="page py-12 lg:py-16" aria-label="Annonce" data-annonce data-echeance={echeanceIso}>

@@ -200,6 +200,9 @@ dialog.plan::backdrop { background: color-mix(in srgb, var(--color-encre) 35%, t
 .actu-corps a { text-decoration: underline; text-underline-offset: 0.18em; }
 .actu-corps strong { color: var(--color-encre); font-weight: 700; }
 .actu-corps-inverse, .actu-corps-inverse a, .actu-corps-inverse strong { color: var(--color-papier); }
+/* Sur la page d'une annonce : corps de texte courant, paragraphes aérés */
+.actu-corps-page { font-size: var(--text-corps); line-height: 1.6; }
+.actu-corps-page > p + p { margin-top: 0.6em; }
 
 /* Champs du formulaire de contact */
 .champ {
