@@ -1,14 +1,19 @@
 ---
-// Héros de l'accueil : l'emblème de Createca (dessin à l'encre de la plaquette) révélé par
+// Héros de l'accueil : l'emblème de Createca (dessin à l'encre de la plaquette, fichier SVG externe) révélé par
 // cinq coups de pinceau, posé sur des taches de gouache générées (art/generate.mjs).
 // Sans JavaScript et en mouvement réduit, tout est affiché d'emblée.
+import { Picture } from 'astro:assets';
 import { emblemes } from '../data/emblemes';
 import { formation } from '../data/site';
+import rayonnant from '../assets/emblemes/embleme-rayonnant.svg?url';
 import tacheCadmium from '../assets/art/tache-cadmium.webp';
 import lavisCobalt from '../assets/art/lavis-cobalt.webp';
 import traitOcre from '../assets/art/trait-ocre.webp';
 
-const { viewBox, d } = emblemes['embleme-rayonnant'];
+const { viewBox } = emblemes['embleme-rayonnant'];
+// Taches décoratives : AVIF puis WebP, à la largeur réellement affichée (conteneur 16, 26 puis ~35 rem)
+const formats: ('avif' | 'webp')[] = ['avif', 'webp'];
+const largeurs = [240, 480, 720, 960];
 // Balayages du pinceau (viewBox 1875 × 1713), alternés comme un geste de peintre
 const balayages = [
   'M-120 190C330 90 760 260 1180 150S1820 120 2000 210',
@@ -34,20 +39,20 @@ const balayages = [
       <p class="mt-8 flex max-w-[34rem] items-start gap-3 text-[1rem] leading-snug text-muet">
         <span aria-hidden="true" class="mt-1.5 inline-block size-3 shrink-0 rounded-[55%_45%_50%_50%] bg-cadmium"></span>
         <span>
-          Formation en art-thérapie appliquée : prochaine session en {formation.prochaineSession}, inscriptions jusqu’au {formation.dateLimiteTexte}.
+          Formation en art-thérapie appliquée : prochaine session en {formation.prochaineSession}, inscriptions jusqu’au {formation.dateLimiteTexte}.{' '}
           <a href="/formation/#calendrier" class="lien">Voir le calendrier</a>
         </span>
       </p>
     </div>
 
-    <div class="relative order-1 mx-auto w-full max-w-[19rem] sm:max-w-[26rem] lg:order-2 lg:col-span-6 lg:max-w-none">
+    <div class="relative order-1 mx-auto w-full max-w-[16rem] sm:max-w-[26rem] lg:order-2 lg:col-span-6 lg:max-w-none">
       <div class="relative aspect-[1875/1713]">
-        <img src={lavisCobalt.src} width={lavisCobalt.width} height={lavisCobalt.height} alt="" decoding="async"
-          class="pigment eclot absolute -right-[12%] top-[2%] w-[78%]" style="--d:.05s" />
-        <img src={tacheCadmium.src} width={tacheCadmium.width} height={tacheCadmium.height} alt="" decoding="async" fetchpriority="high"
-          class="pigment eclot absolute -left-[10%] top-[24%] w-[66%]" style="--d:.15s" />
-        <img src={traitOcre.src} width={traitOcre.width} height={traitOcre.height} alt="" decoding="async"
-          class="pigment eclot absolute -left-[6%] -top-[6%] w-[74%] -rotate-6" style="--d:.3s" />
+        <Picture src={lavisCobalt} formats={formats} widths={largeurs} sizes="(min-width: 64rem) 28rem, (min-width: 40rem) 20rem, 12.5rem"
+          alt="" loading="eager" decoding="async" class="pigment eclot absolute -right-[12%] top-[2%] w-[78%]" style="--d:.05s" />
+        <Picture src={tacheCadmium} formats={formats} widths={largeurs} sizes="(min-width: 64rem) 23rem, (min-width: 40rem) 17rem, 10.5rem"
+          alt="" loading="eager" decoding="async" class="pigment eclot absolute -left-[10%] top-[24%] w-[66%]" style="--d:.15s" />
+        <Picture src={traitOcre} formats={formats} widths={largeurs} sizes="(min-width: 64rem) 26rem, (min-width: 40rem) 19.5rem, 12rem"
+          alt="" loading="eager" decoding="async" class="pigment eclot absolute -left-[6%] -top-[6%] w-[74%] -rotate-6" style="--d:.3s" />
         <svg viewBox={viewBox} class="relative h-full w-full text-encre" role="img"
           aria-label="Emblème de Createca : un visage dessiné à l’encre, entouré de rayons">
           <defs>
@@ -59,7 +64,7 @@ const balayages = [
               </g>
             </mask>
           </defs>
-          <path d={d} fill="currentColor" fill-rule="evenodd" mask="url(#pinceau-revele)" />
+          <image href={rayonnant} width="1875" height="1713" mask="url(#pinceau-revele)" />
         </svg>
       </div>
     </div>

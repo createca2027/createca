@@ -9,7 +9,7 @@ Dans un premier temps, un entretien individuel permet une prise en compte des at
 
 Il est possible de suivre les séances sur une période relativement courte, jusqu’à plusieurs années. Pour évaluer les résultats, l’art-thérapie s’inscrit plus généralement dans le temps mais surtout dans la régularité.
 
-### Buts {#buts}
+## Buts {#buts}
 
 Éducatif et/ou thérapeutique par le biais de l’activité artistique.
 
@@ -17,7 +17,7 @@ Thérapies individuelles ou de groupe
 
 <!-- img: images/at2.jpg -->
 
-### Objectifs {#objectifs}
+## Objectifs {#objectifs}
 
 - Exprimer ses difficultés et ses émotions
 - Mieux se connaître, s’estimer
@@ -28,7 +28,7 @@ Thérapies individuelles ou de groupe
 - Modifier son regard sur soi
 - Changer son rapport aux autres…
 
-### Techniques proposées {#techniques}
+## Techniques proposées {#techniques}
 
 Diverses pratiques au sein des arts-plastiques sont présentées afin de correspondre au mieux à la sensibilité de chacun.
 

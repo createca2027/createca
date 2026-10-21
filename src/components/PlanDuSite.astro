@@ -15,6 +15,10 @@ const actuel = Astro.url.pathname;
         </button>
       </form>
     </div>
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href="/contact/#formulaire" class="bouton bouton-plein">Nous écrire</a>
+      <a href={tel(site.telephones[0].numero)} class="bouton bouton-trait">Appeler le centre : {site.telephones[0].numero}</a>
+    </div>
     <h2 id="plan-titre" class="mt-10 font-titre text-titre-2">Plan du site</h2>
     <nav aria-labelledby="plan-titre" class="mt-8 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
       {plan.map((groupe) => (
@@ -43,7 +47,6 @@ const actuel = Astro.url.pathname;
     </nav>
     <p class="mt-auto flex flex-wrap gap-x-8 gap-y-1 pt-12 text-[1rem] text-muet">
       <span>{site.adresse.rue}, {site.adresse.cp} {site.adresse.ville}-{site.adresse.quartier}</span>
-      <a class="lien" href={tel(site.telephones[1].numero)}>{site.telephones[1].numero}</a>
       <a class="lien" href={`mailto:${site.email}`}>{site.email}</a>
     </p>
   </div>

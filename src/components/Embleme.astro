@@ -1,16 +1,20 @@
 ---
-// Dessin à l'encre de la plaquette Createca, vectorisé (src/data/emblemes.ts).
+// Dessin à l'encre de la plaquette Createca, servi comme fichier SVG externe :
+// mis en cache entre les pages au lieu d'alourdir chaque document HTML.
 import { emblemes } from '../data/emblemes';
+const fichiers = import.meta.glob<string>('../assets/emblemes/*.svg', { query: '?url', import: 'default', eager: true });
 interface Props {
   nom: keyof typeof emblemes;
+  /** papier : version claire pour fond encre (emblème rayonnant seulement) */
+  teinte?: 'encre' | 'papier';
   class?: string;
   /** Texte alternatif ; absent = décoratif */
   alt?: string;
+  loading?: 'lazy' | 'eager';
 }
-const { nom, class: classe, alt } = Astro.props;
-const { viewBox, d } = emblemes[nom];
+const { nom, teinte = 'encre', class: classe, alt = '', loading = 'lazy' } = Astro.props;
+const src = fichiers[`../assets/emblemes/${nom}${teinte === 'papier' ? '-papier' : ''}.svg`];
+if (!src) throw new Error(`Emblème introuvable : ${nom} (${teinte})`);
+const [, , largeur, hauteur] = emblemes[nom].viewBox.split(' ').map(Number);
 ---
-<svg viewBox={viewBox} class={classe} fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-  role={alt ? 'img' : undefined} aria-label={alt} aria-hidden={alt ? undefined : 'true'} focusable="false">
-  <path fill-rule="evenodd" d={d} />
-</svg>
+<img src={src} width={largeur} height={hauteur} alt={alt} class={classe} loading={loading} decoding="async" />

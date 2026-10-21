@@ -1,16 +1,5 @@
 @import "tailwindcss";
 
-/* Alegreya : titres (dessin calligraphique, pensé pour la lecture longue).
-   Alegreya Sans : texte courant et interface. Sous-ensemble latin seulement. */
-@import "@fontsource/alegreya/latin-500.css";
-@import "@fontsource/alegreya/latin-600.css";
-@import "@fontsource/alegreya/latin-700.css";
-@import "@fontsource/alegreya/latin-500-italic.css";
-@import "@fontsource/alegreya-sans/latin-400.css";
-@import "@fontsource/alegreya-sans/latin-400-italic.css";
-@import "@fontsource/alegreya-sans/latin-500.css";
-@import "@fontsource/alegreya-sans/latin-700.css";
-
 @theme {
   /* Papier, encre et pigments, tirés de la plaquette Createca */
   --color-papier: #fcfcfa;
@@ -21,12 +10,14 @@
   --color-muet: #5a6170;
   --color-ligne: #d3dce8;
   --color-cadmium: #ee7f1a;
-  --color-cadmium-fonce: #b5560a;
+  --color-cadmium-fonce: #a84f08;
   --color-ocre: #e8b33c;
   --color-cobalt: #6f98cf;
 
-  --font-titre: "Alegreya", "Iowan Old Style", Georgia, serif;
-  --font-texte: "Alegreya Sans", "Gill Sans", "Segoe UI", system-ui, sans-serif;
+  /* Alegreya : titres (dessin calligraphique, pensé pour la lecture longue).
+     Alegreya Sans : texte courant et interface. Déclarées dans astro.config.mjs (API Fonts). */
+  --font-titre: var(--font-alegreya);
+  --font-texte: var(--font-alegreya-sans);
 
   /* Échelle typographique classique : 15 · 19 · 24 · 30 · 38 · 48 · 72 */
   --text-petit: 0.9375rem;
@@ -145,6 +136,7 @@
   }
   .prose-createca ol { padding-left: 1.4rem; list-style: decimal; }
   .prose-createca strong { font-weight: 700; color: var(--color-encre); }
+  .prose-createca :is(h2, h3, h4) strong { font-weight: inherit; }
   .prose-createca a { color: var(--color-encre); text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
   .prose-createca a:hover { text-decoration-color: var(--color-cadmium); text-decoration-thickness: 2px; }
   .prose-createca blockquote {
@@ -216,6 +208,7 @@ dialog.plan::backdrop { background: color-mix(in srgb, var(--color-encre) 35%, t
   background: #fff; border: 1.5px solid color-mix(in srgb, var(--color-encre) 40%, transparent); border-radius: 0.6rem;
 }
 .champ:hover { border-color: var(--color-encre); }
+.champ[aria-invalid="true"] { border-width: 2px; border-color: var(--color-cadmium-fonce); }
 .champ:focus-visible { outline: 2px solid var(--color-encre); outline-offset: 2px; border-color: var(--color-encre); }
 textarea.champ { resize: vertical; }
 .champ-piege { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }

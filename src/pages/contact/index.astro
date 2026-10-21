@@ -95,18 +95,27 @@ const objets = [
     indisponible: 'L’envoi est indisponible pour le moment. Écrivez directement à createca@free.fr.',
     envoi: 'Le message n’a pas pu partir. Réessayez dans un instant ou écrivez à createca@free.fr.',
   };
-  const afficherErreur = (texte: string) => {
+  // Le champ fautif est signalé (aria-invalid, bordure) et reçoit le focus ; le message reste annoncé par role="alert".
+  const marquer = (id?: string) => {
+    form?.querySelectorAll('[aria-invalid]').forEach((c) => c.removeAttribute('aria-invalid'));
+    const champ = id ? form?.querySelector<HTMLElement>(`#${id}`) : null;
+    champ?.setAttribute('aria-invalid', 'true');
+    return champ;
+  };
+  const afficherErreur = (texte: string, id?: string) => {
     if (!erreur) return;
     erreur.textContent = texte;
     erreur.classList.remove('hidden');
+    marquer(id)?.focus();
   };
+  form?.addEventListener('input', (e) => (e.target as HTMLElement).removeAttribute('aria-invalid'));
 
   const params = new URLSearchParams(location.search);
   const cle = params.get('objet');
   const option = cle && form?.querySelector<HTMLOptionElement>(`option[data-cle="${CSS.escape(cle)}"]`);
   if (option) option.selected = true;
   const codeErreur = params.get('erreur');
-  if (codeErreur && messages[codeErreur]) afficherErreur(messages[codeErreur]);
+  if (codeErreur && messages[codeErreur]) afficherErreur(messages[codeErreur], ['nom', 'email', 'message'].includes(codeErreur) ? codeErreur : undefined);
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -114,8 +123,7 @@ const objets = [
     const champ = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')].find((c) => !c.checkValidity());
     if (champ) {
       const libelle = form.querySelector(`label[for="${champ.id}"]`)?.textContent ?? 'Ce champ';
-      afficherErreur(champ.id === 'email' && champ.value ? 'Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.' : champ.id === 'message' ? 'Écrivez votre message (10 caractères au moins).' : `${libelle} : champ à remplir.`);
-      champ.focus();
+      afficherErreur(champ.id === 'email' && champ.value ? messages.email : champ.id === 'message' ? messages.message : `${libelle} : champ à remplir.`, champ.id);
       return;
     }
     bouton!.disabled = true;
@@ -128,7 +136,7 @@ const objets = [
         succes!.hidden = false;
         succes!.focus();
       } else {
-        afficherErreur(data.error ?? messages.envoi);
+        afficherErreur(data.error ?? messages.envoi, ['nom', 'email', 'message'].includes(data.code) ? data.code : undefined);
       }
     } catch {
       afficherErreur(messages.envoi);

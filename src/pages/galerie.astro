@@ -9,15 +9,15 @@ const page = lirePage('galerie');
 page.titres.unshift({ niveau: 2, id: 'expositions', texte: 'Les expositions' });
 const inclinaisons = [-1.6, 1.1, -0.6, 1.8, -1.2];
 ---
-<PageTexte page={page} titre="La galerie du Chien" titreSeo="Galerie : expositions et art-thérapie"
-  chapo="Lieu d’exposition et de stimulation, la galerie est la première étape de la thérapie artistique : elle aide à voir les œuvres, puis accueille les productions des participants."
+<PageTexte page={page} titreSeo="Galerie : expositions et art-thérapie"
+  chapo="La galerie a deux fonctions dans le processus art-thérapeutique : un lieu d’exposition et de stimulations, puis une étape finale d’exposition pour les participants aux ateliers."
   pigment="cadmium" icone="chevalet">
   <Fragment slot="avant">
     <section aria-labelledby="expositions" class="lavis-bande py-14 lg:py-20">
       <div class="page">
         <div class="max-w-[42rem]">
-          <h2 id="expositions" class="scroll-mt-24 text-titre-2">Les expositions de la galerie</h2>
-          <p class="mt-3">Peintres, dessinateurs et sculpteurs exposés par Createca. Sélectionnez une photo pour l’agrandir.</p>
+          <h2 id="expositions" class="scroll-mt-24 text-titre-2">Les expositions</h2>
+          <p class="mt-3">Sélectionnez une photo pour l’agrandir.</p>
         </div>
         <div class="mt-10 divide-y divide-encre/15 border-y border-encre/15">
           {expositions.map((expo) => (
@@ -43,7 +43,7 @@ const inclinaisons = [-1.6, 1.1, -0.6, 1.8, -1.2];
           ))}
         </div>
         <div class="mt-10 max-w-[42rem]">
-          <h3 class="text-titre-4">Les autres expositions</h3>
+          <h3 class="text-titre-4">Autres expositions annoncées dans les actualités</h3>
           <ul class="mt-4 space-y-2">
             {autresExpositions.map((e) => (
               <li><a href={`/actualites/#${e.actualite}`} class="lien">{e.artiste}{e.titre && <>, <i>{e.titre}</i></>}</a> <span class="text-muet">({e.annee})</span></li>

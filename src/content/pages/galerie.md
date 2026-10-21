@@ -1,6 +1,6 @@
 ---
 title: Galerie
-description: La galerie du Chien, étape essentielle en art-thérapie : stimulations, analyses d’œuvres et exposition des productions des participants.
+description: La galerie, étape essentielle en art-thérapie : stimulations, analyses d’œuvres et exposition des productions des participants.
 ---
 
 ## La galerie : une étape essentielle en art-thérapie {#fonctions}

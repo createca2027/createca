@@ -1,13 +1,16 @@
 ---
-// Marque : emblème ovale (dessin de la plaquette) et nom.
-import Embleme from './Embleme.astro';
-interface Props { surEncre?: boolean; class?: string }
-const { surEncre = false, class: classe } = Astro.props;
+// Marque : emblème ovale (dessin de la plaquette, en image légère) et nom.
+// Le nom accessible du lien reprend le texte visible (WCAG 2.5.3), suivi de « accueil ».
+import { Image } from 'astro:assets';
+import logo from '../assets/emblemes/logo-ovale.png';
+interface Props { class?: string }
+const { class: classe } = Astro.props;
 ---
-<a href="/" class:list={['group inline-flex items-center gap-3 no-underline', classe]} aria-label="Createca, retour à l’accueil">
-  <Embleme nom="embleme-ovale" class:list={['h-11 w-auto shrink-0 transition-transform duration-300 group-hover:-rotate-3', surEncre ? 'text-papier' : 'text-encre']} />
+<a href="/" class:list={['group inline-flex items-center gap-3 no-underline', classe]}>
+  <Image src={logo} alt="" height={44} densities={[1, 2, 3]} loading="eager" decoding="async"
+    class="h-11 w-auto shrink-0 transition-transform duration-300 group-hover:-rotate-3 motion-reduce:transition-none" />
   <span class="flex flex-col leading-none">
-    <span class:list={['font-titre text-[1.4rem] font-bold tracking-[0.09em]', surEncre ? 'text-papier' : 'text-encre']}>CREATECA</span>
-    <span class:list={['mt-1 text-[0.8125rem] tracking-[0.01em]', surEncre ? 'text-papier/80' : 'text-muet']}>Centre d’art-thérapie à Bordeaux</span>
+    <span class="font-titre text-[1.4rem] font-semibold tracking-[0.09em] text-encre">CREATECA</span>
+    <span class="mt-1 text-[0.8125rem] tracking-[0.01em] text-muet">Centre d’art-thérapie à Bordeaux<span class="sr-only">, accueil</span></span>
   </span>
 </a>

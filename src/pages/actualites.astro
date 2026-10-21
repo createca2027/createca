@@ -1,41 +1,34 @@
 ---
 import Base from '../layouts/Base.astro';
 import EnTetePage from '../components/EnTetePage.astro';
-import actualites from '../data/actualites.json';
 import { site } from '../data/site';
-import { dateLongue } from '../lib/dates';
+import { aVenir, passees, libelles, quand } from '../lib/actualites';
 import { insecableTexte } from '../lib/typo';
 
-type Actu = (typeof actualites)[number];
-const libelles: Record<string, string> = {
-  atelier: 'Atelier', certifications: 'Certifications', evenement: 'Événement', exposition: 'Exposition', formation: 'Formation',
-  'portes-ouvertes': 'Portes ouvertes', publication: 'Publication', rencontre: 'Rencontre', reprise: 'Rentrée', soutien: 'Soutien',
-};
-// Actualités de l'année en cours et à venir ; les années précédentes forment l'historique.
-const anneeCourante = new Date().getFullYear();
-const recentes = actualites.filter((a) => a.annee >= anneeCourante);
-const anciennes = actualites.filter((a) => a.annee < anneeCourante);
-const annees = [...new Set(anciennes.map((a) => a.annee))].sort((a, b) => b - a);
-const quand = (a: Actu) => (a.date ? (a.dateFin ? `Du ${dateLongue(a.date)} au ${dateLongue(a.dateFin)}` : dateLongue(a.date)) : String(a.annee));
+const annees = [...new Set(passees.map((a) => a.annee))].sort((a, b) => b - a);
 ---
 <Base titre="Actualités et historique" description={`Portes ouvertes, rentrées, formation, expositions et certifications : les actualités de Createca, centre d’art-thérapie à Bordeaux, depuis ${annees.at(-1)}.`}>
   <EnTetePage titre="Actualités" chapo="Portes ouvertes, rentrées des ateliers, sessions de formation, expositions de la galerie et certifications : la vie du centre, année après année."
     pigment="cadmium" icone="plume" />
 
-  <section class="page py-12 lg:py-16" aria-labelledby="en-ce-moment">
-    <h2 id="en-ce-moment" class="text-titre-2">En ce moment</h2>
-    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {recentes.map((a, i) => (
-        <article id={a.id} class:list={['scroll-mt-28 rounded-xl border p-6', i === 0 ? 'border-encre bg-encre text-papier sur-encre' : 'border-ligne bg-papier']}>
-          <p class:list={['text-[0.95rem]', i === 0 ? 'text-ocre' : 'text-cadmium-fonce']}>{libelles[a.categorie]}<span aria-hidden="true">, </span><span class:list={[i === 0 ? 'text-papier/85' : 'text-muet']}>{quand(a)}</span></p>
-          <h3 class:list={['mt-2 text-titre-4', i === 0 && 'text-papier']} set:html={insecableTexte(a.titre)} />
-          <div class:list={['actu-corps mt-3', i === 0 && 'actu-corps-inverse']}>
-            {a.paragraphes.map((p) => <p set:html={p} />)}
-          </div>
-        </article>
-      ))}
-    </div>
-    <p class="mt-8 text-[1rem] text-muet">Toutes les nouvelles du centre sont aussi publiées sur <a href={site.facebook} class="lien" rel="noopener">la page Facebook de Createca</a>.</p>
+  <section class="page py-12 lg:py-16" aria-labelledby="a-venir">
+    <h2 id="a-venir" class="text-titre-2">À venir</h2>
+    {aVenir.length > 0 ? (
+      <div class:list={['mt-8 grid gap-6', aVenir.length === 1 ? 'max-w-[42rem]' : 'md:grid-cols-2 lg:grid-cols-3']}>
+        {aVenir.map((a, i) => (
+          <article id={a.id} class:list={['scroll-mt-28 rounded-xl border p-6', i === 0 ? 'border-encre bg-encre text-papier sur-encre' : 'border-ligne bg-papier']}>
+            <p class:list={['text-[0.95rem]', i === 0 ? 'text-ocre' : 'text-cadmium-fonce']}>{libelles[a.categorie]}<span aria-hidden="true">, </span><span class:list={[i === 0 ? 'text-papier/85' : 'text-muet']}>{quand(a)}</span></p>
+            <h3 class:list={['mt-2 text-titre-4', i === 0 && 'text-papier']} set:html={insecableTexte(a.titre)} />
+            <div class:list={['actu-corps mt-3', i === 0 && 'actu-corps-inverse']}>
+              {a.paragraphes.map((p) => <p set:html={p} />)}
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="mt-6 max-w-[38rem]">Aucune date n’est annoncée pour le moment. Pour connaître les prochaines sessions et ateliers, <a href="/contact/" class="lien">écrivez au centre</a>.</p>
+    )}
+    <p class="mt-8 text-[1rem] text-muet">Createca est aussi sur Facebook : <a href={site.facebook} class="lien" rel="noopener">facebook.com/createca33</a>.</p>
   </section>
 
   <section class="lavis-bande py-14 lg:py-20" aria-labelledby="historique">
@@ -51,7 +44,7 @@ const quand = (a: Actu) => (a.date ? (a.dateFin ? `Du ${dateLongue(a.date)} au $
           <section aria-labelledby={`annee-${an}`} class="grid gap-x-12 gap-y-6 border-t border-encre/15 pt-8 lg:grid-cols-12">
             <h3 id={`annee-${an}`} class="scroll-mt-24 font-titre text-titre-1 font-medium text-encre/80 lg:col-span-2">{an}</h3>
             <div class="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:col-span-10">
-              {anciennes.filter((a) => a.annee === an).map((a) => (
+              {passees.filter((a) => a.annee === an).map((a) => (
                 <article id={a.id} class="scroll-mt-28">
                   <p class="text-[0.95rem] text-cadmium-fonce">{libelles[a.categorie]}<span aria-hidden="true">, </span><span class="text-muet">{quand(a)}</span></p>
                   <h4 class="mt-1 font-titre text-[1.35rem] font-semibold leading-snug text-encre" set:html={insecableTexte(a.titre)} />

@@ -14,7 +14,7 @@ const teinte: Record<Activite, string> = {
 const legende = [
   { cle: 'jlr', texte: 'Séances individuelles avec Jean-Louis Ricaud' },
   { cle: 'cg', texte: 'Séances individuelles avec Caroline Goinaud' },
-  { cle: 'dev-perso', texte: 'Ateliers de groupe au centre' },
+  { cle: 'dev-perso', texte: 'Ateliers : développement personnel adultes, d’artistes, libre' },
   { cle: 'groupe-ext', texte: 'Séances de groupe en structure extérieure' },
 ] as const;
 ---
@@ -43,7 +43,7 @@ const legende = [
                   <span class="block text-[0.98rem] font-medium leading-snug text-encre">{activites[a].nom}</span>
                   <span class="mt-0.5 block text-[0.9rem] leading-snug text-graphite">{activites[a].detail}</span>
                 </td>
-              ) : <td class="h-24 rounded-lg bg-lavis/60"><span class="sr-only">Pas d’activité</span></td>)}
+              ) : <td class="h-24 rounded-lg bg-lavis/60"><span class="sr-only">Aucun créneau</span></td>)}
             </tr>
           ))}
         </tbody>

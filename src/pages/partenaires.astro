@@ -4,8 +4,8 @@ import EnTetePage from '../components/EnTetePage.astro';
 import partenaires from '../data/partenaires.json';
 const total = partenaires.reduce((n, g) => n + g.structures.length, 0);
 ---
-<Base titre="Partenaires : soin, petite enfance, institutions" description={`Les ${total} structures partenaires de Createca en Gironde et au-delà : petite enfance, soin, associations artistiques, personnes âgées, institutions et formation.`}>
-  <EnTetePage titre="Partenaires" chapo="Crèches, structures de soin, associations artistiques, maisons de retraite, institutions et écoles : là où Createca intervient en art-thérapie et en formation."
+<Base titre="Partenaires : soin, petite enfance, institutions" description="Les structures partenaires de Createca, par type d’action : petite enfance, soin, associations artistiques, personnes âgées, institutions et formation.">
+  <EnTetePage titre="Partenaires" chapo="Les structures avec lesquelles Createca travaille, présentées par type d’action."
     pigment="cobalt" dessin="figures-deux" />
   <div class="page py-12 lg:py-16">
     <div class="space-y-16">

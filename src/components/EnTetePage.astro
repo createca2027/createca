@@ -1,5 +1,6 @@
 ---
 // En-tête des pages intérieures : titre, chapô et un dessin de la plaquette sur une tache de pigment.
+import { Image } from 'astro:assets';
 import Embleme from './Embleme.astro';
 import Icone from './Icone.astro';
 import tacheOcre from '../assets/art/tache-ocre-s.webp';
@@ -33,12 +34,12 @@ const tache = { ocre: tacheOcre, cadmium: tacheCadmium, cobalt: tacheCobalt }[pi
         </nav>
       )}
       <h1 class="titre-page font-medium" set:html={insecableTexte(titre)} />
-      <img src={traitEncre.src} width={traitEncre.width} height={traitEncre.height} alt="" class="pigment -ml-2 mt-3 h-auto w-56 opacity-70 md:w-72" />
+      <Image src={traitEncre} widths={[224, 288, 576]} sizes="(min-width: 48rem) 18rem, 14rem" alt="" class="pigment -ml-2 mt-3 h-auto w-56 opacity-70 md:w-72" />
       {chapo && <p class="chapo mt-5 max-w-[38rem]">{chapo}</p>}
     </div>
     <div class="relative hidden h-full min-h-48 md:col-span-4 md:block" aria-hidden="true">
-      <img src={tache.src} width={tache.width} height={tache.height} alt="" class="pigment absolute bottom-0 right-0 w-64" />
-      {dessin && <Embleme nom={dessin} class="absolute bottom-2 right-14 h-52 w-auto text-encre" />}
+      <Image src={tache} widths={[256, 512]} sizes="16rem" alt="" loading="lazy" class="pigment absolute bottom-0 right-0 w-64" />
+      {dessin && <Embleme nom={dessin} class="absolute bottom-2 right-14 h-52 w-auto" />}
       {!dessin && icone && <Icone nom={icone} class="absolute bottom-10 right-20 size-32 text-encre" />}
     </div>
   </div>
