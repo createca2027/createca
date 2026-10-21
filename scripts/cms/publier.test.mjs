@@ -1,5 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { analyserArguments, attendre200, attendreVersion, horsPerimetre, idsActualites, urlSuivi, urlsAControler } from './publier.mjs';
 
 test('arguments : message obligatoire, options valides', () => {
@@ -59,11 +63,27 @@ test('version : attend le commit envoyé ou un commit qui le contient, pas un si
   assert.deepEqual(absente, { ok: false, statut: 'version absente de la page' });
 });
 
-test('périmètre : fichiers suivis modifiés hors des chemins publiés', () => {
-  const porcelain = [
-    ' M src/data/site.ts', 'M  plugins/createca/skills/x/SKILL.md', 'R  .claude/skills/a/SKILL.md -> plugins/createca/skills/a/SKILL.md',
-    ' M tsconfig.json', ' M README.md', ' D vercel.json', '?? notes.txt', ' M src-copie/x.ts', ' M "docs/guide équipe.md"',
-  ].join('\n');
-  assert.deepEqual(horsPerimetre(porcelain), ['README.md', 'vercel.json', 'src-copie/x.ts']);
-  assert.deepEqual(horsPerimetre(''), []);
+test('périmètre : sortie réelle de git status --porcelain -z (renommages, « -> » et accent dans les noms)', () => {
+  const d = mkdtempSync(join(tmpdir(), 'createca-perimetre-'));
+  const g = (...a) => { const r = spawnSync('git', a, { cwd: d, encoding: 'utf8' }); assert.equal(r.status, 0, r.stderr); return r.stdout; };
+  try {
+    g('init', '-q'); g('config', 'user.email', 'essai@exemple.fr'); g('config', 'user.name', 'Essai');
+    mkdirSync(join(d, 'src')); mkdirSync(join(d, 'docs')); mkdirSync(join(d, 'src-copie'));
+    const suivis = ['README.md', 'vercel.json', 'src/a -> b.md', 'docs/guide équipe.md', 'src/ancien.md', 'ancien-dehors.txt', 'src-copie/x.ts', 'tsconfig.json'];
+    for (const f of suivis) writeFileSync(join(d, f), 'x\n');
+    g('add', '.'); g('commit', '-qm', 'départ');
+    for (const f of ['README.md', 'src/a -> b.md', 'docs/guide équipe.md', 'src-copie/x.ts', 'tsconfig.json']) writeFileSync(join(d, f), 'y\n');
+    rmSync(join(d, 'vercel.json'));
+    g('mv', 'src/ancien.md', 'src/nouveau.md');
+    g('mv', 'ancien-dehors.txt', 'src/venu-de-dehors.md');
+    writeFileSync(join(d, 'notes.txt'), 'n\n'); writeFileSync(join(d, 'src/nouvelle.md'), 'n\n');
+    const statut = g('status', '--porcelain', '-z');
+    assert.match(statut, /\0/);
+    const r = horsPerimetre(statut);
+    assert.deepEqual(r.suivis.sort(), ['README.md', 'ancien-dehors.txt', 'src-copie/x.ts', 'vercel.json']);
+    assert.deepEqual(r.nonSuivis, ['notes.txt']);
+    assert.deepEqual(horsPerimetre(''), { suivis: [], nonSuivis: [] });
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
 });

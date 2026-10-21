@@ -106,6 +106,18 @@ export function porteARemplacer(fichiers) {
   return resultat('aucun « à remplacer » restant', p);
 }
 
+// L'adresse d'une actualité vient du nom de son fichier : un nom hors format ou un champ slug publierait
+// la page sous une autre adresse que celle contrôlée après la mise en ligne.
+export function porteNomsActualites(fichiers) {
+  const p = [];
+  for (const { chemin, texte } of fichiers) {
+    const nom = chemin.slice('src/content/actualites/'.length);
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*\.md$/.test(nom)) p.push(`${chemin} : nom de fichier à corriger. Minuscules sans accent, chiffres et tirets, directement dans src/content/actualites/ (exemple : portes-ouvertes-2027-07-04.md).`);
+    if (champ(separer(texte).entete, 'slug') !== undefined) p.push(`${chemin} : retirer le champ « slug », l’adresse de la page vient du nom du fichier.`);
+  }
+  return resultat('noms des actualités valides', p);
+}
+
 export function extraireLiens(html) {
   const liens = new Set();
   for (const m of html.matchAll(/\bhref\s*=\s*"(\/[^"]*)"/g)) {
@@ -166,7 +178,7 @@ export function portesSource(racine = RACINE) {
   const tous = lireFichiers(dossiers.flatMap((d) => lister(d, texte)), racine);
   const contenus = lireFichiers(lister(join(racine, 'src/content'), ['.md']), racine);
   const actus = contenus.filter((f) => f.chemin.split('/').slice(0, 3).join('/') === 'src/content/actualites');
-  return [porteTiretCadratin(tous), porteResume(actus), porteAlt(contenus), porteARemplacer(contenus)];
+  return [porteTiretCadratin(tous), porteNomsActualites(actus), porteResume(actus), porteAlt(contenus), porteARemplacer(contenus)];
 }
 
 function lancer(titre, commande, args, racine) {

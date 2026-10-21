@@ -14,7 +14,7 @@ Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bo
 
 - `npm run actu:nouvelle -- --type <type> --titre "<titre>" [--date AAAA-MM-JJ] [--fin ...] [--limite ...] [--resume "..."] [--brouillon]`
 - `npm run verifier` : `astro check`, `astro build`, puis portes (U+2014, `resume` ≤ 160, alt des images, « à remplacer », liens internes).
-- `npm run publier -- "<message>"` : contrôle la branche `main` et le retard sur GitHub, vérifie, commit, envoie, attend la nouvelle version en ligne puis les réponses 200 (jusqu'à 10 minutes : délai maximal de l'outil ou arrière-plan).
+- `npm run publier -- "<message>"` : contrôle la branche `main` et le retard sur GitHub, vérifie, commit, envoie, attend la nouvelle version en ligne puis les réponses 200 (plusieurs minutes : arrière-plan si possible). Relancée sans rien de nouveau, par exemple après une interruption, elle ne renvoie rien et vérifie seulement la version en ligne.
 - `npm run test:cms` : tests des scripts.
 
 ## Règles (non négociables)

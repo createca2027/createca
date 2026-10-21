@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { blocImage, champ, extraireLiens, lienExiste, liensImbriques, porteAlt, porteARemplacer, porteLiens, porteResume, porteTiretCadratin, separer } from './verifier.mjs';
+import { blocImage, champ, extraireLiens, lienExiste, liensImbriques, porteAlt, porteARemplacer, porteLiens, porteNomsActualites, porteResume, porteTiretCadratin, separer } from './verifier.mjs';
 
 const f = (texte, chemin = 'src/content/actualites/x.md') => [{ chemin, texte }];
 
@@ -67,4 +67,12 @@ test('liens imbriqués : une adresse dans un <a> brut, reliée une seconde fois'
   assert.equal(liensImbriques('<p><a href="mailto:x@y.fr"><a href="mailto:x@y.fr">x@y.fr</a></a></p>'), 1);
   assert.equal(liensImbriques('<a href="/a/">a</a><abbr>b</abbr><article><a href="/c/">c</a></article><address>d</address>'), 0);
   assert.equal(liensImbriques('<script>const s = "<a href=1><a href=2>";</script><a href="/a/">a</a>'), 0);
+});
+
+test('noms des actualités : format de l’adresse, pas de sous-dossier ni de slug', () => {
+  const f = (chemin, entete = 'titre: x') => ({ chemin: `src/content/actualites/${chemin}`, texte: `---\n${entete}\n---\ncorps\n` });
+  assert.deepEqual(porteNomsActualites([f('portes-ouvertes-2027-07-04.md'), f('certifications-2023-b.md')]).problemes, []);
+  const p = porteNomsActualites([f('Portes-Ouvertes.md'), f('fête-2027.md'), f('refonte-2026/note.md'), f('bon-nom.md', 'titre: x\nslug: autre-adresse')]).problemes;
+  assert.equal(p.length, 4);
+  assert.match(p[3], /slug/);
 });
