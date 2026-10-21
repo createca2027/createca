@@ -1,0 +1,140 @@
+---
+import Base from '../../layouts/Base.astro';
+import EnTetePage from '../../components/EnTetePage.astro';
+import Tirage from '../../components/Tirage.astro';
+import { site, tel, carteUrl } from '../../data/site';
+import facade from '../../assets/photos/ancien/facade-rue-pasteur.jpg';
+
+// Objets proposés ; ?objet=<clé> présélectionne l'option (liens des pages Ateliers, Formation…)
+const objets = [
+  { cle: 'premier-entretien', libelle: 'Demander un premier entretien' },
+  { cle: 'ateliers', libelle: 'Les ateliers (inscription, horaires, tarifs)' },
+  { cle: 'formation', libelle: 'La formation en art-thérapie appliquée' },
+  { cle: 'partenariat', libelle: 'Une intervention dans ma structure' },
+  { cle: 'galerie', libelle: 'La galerie et les expositions' },
+  { cle: 'autre', libelle: 'Autre demande' },
+];
+---
+<Base titre="Contact et accès" description={`Écrire à Createca, appeler le centre ou venir au ${site.adresse.rue}, ${site.adresse.cp} ${site.adresse.ville}-${site.adresse.quartier}. Réponse par e-mail à l’adresse que vous indiquez.`}>
+  <EnTetePage titre="Contact" chapo="Une question sur les ateliers, la formation ou un premier entretien : écrivez-nous ou appelez le centre." pigment="ocre" icone="plume" />
+  <div class="page grid gap-x-14 gap-y-14 py-12 lg:grid-cols-12 lg:py-16">
+    <section id="formulaire" aria-labelledby="formulaire-titre" class="scroll-mt-24 lg:col-span-7">
+      <h2 id="formulaire-titre" class="text-titre-3">Nous laisser un message</h2>
+      <p class="mt-2 text-muet">Tous les champs sont obligatoires, sauf l’objet. Le message part à {site.email}.</p>
+
+      <div data-message-erreur role="alert" class="mt-6 hidden rounded-lg border-2 border-cadmium-fonce bg-papier p-4 text-encre"></div>
+
+      <form action="/api/contact" method="post" class="mt-6 space-y-6" data-formulaire novalidate>
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="nom" class="block font-medium text-encre">Votre nom</label>
+            <input id="nom" name="nom" type="text" required maxlength="120" autocomplete="name" class="champ mt-2" />
+          </div>
+          <div>
+            <label for="email" class="block font-medium text-encre">Votre adresse e-mail</label>
+            <input id="email" name="email" type="email" required maxlength="200" autocomplete="email" inputmode="email" class="champ mt-2" aria-describedby="email-aide" />
+            <p id="email-aide" class="mt-1 text-[0.95rem] text-muet">Pour vous répondre, rien d’autre.</p>
+          </div>
+        </div>
+        <div>
+          <label for="sujet" class="block font-medium text-encre">Objet</label>
+          <select id="sujet" name="sujet" class="champ mt-2">
+            {objets.map((o) => <option value={o.libelle} data-cle={o.cle}>{o.libelle}</option>)}
+          </select>
+        </div>
+        <div>
+          <label for="message" class="block font-medium text-encre">Votre message</label>
+          <textarea id="message" name="message" required minlength="10" maxlength="5000" rows="7" class="champ mt-2"></textarea>
+        </div>
+        <div class="champ-piege" aria-hidden="true">
+          <label for="website">Ne pas remplir ce champ</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="bouton bouton-plein" data-envoyer>Envoyer le message</button>
+          <p data-statut class="text-[1rem] text-muet" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div data-message-succes hidden tabindex="-1" class="mt-6 rounded-xl bg-lavis p-6 outline-none">
+        <h3 class="text-titre-4">Message envoyé</h3>
+        <p class="mt-2">Merci. Createca vous répondra à l’adresse indiquée. Pour une demande urgente, appelez le centre au <a class="lien" href={tel(site.telephones[0].numero)}>{site.telephones[0].numero}</a>.</p>
+      </div>
+    </section>
+
+    <aside aria-labelledby="coordonnees" class="lg:col-span-5">
+      <h2 id="coordonnees" class="text-titre-3">Coordonnées</h2>
+      <address class="mt-4 not-italic">
+        <p class="font-titre text-[1.35rem] font-semibold leading-snug text-encre">{site.adresse.rue}<br />{site.adresse.cp} {site.adresse.ville}-{site.adresse.quartier}</p>
+        <ul class="mt-5 space-y-2">
+          {site.telephones.map((t) => <li><span class="text-muet">{t.libelle} : </span><a class="lien" href={tel(t.numero)}>{t.numero}</a></li>)}
+          <li><span class="text-muet">E-mail : </span><a class="lien" href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><span class="text-muet">Facebook : </span><a class="lien" href={site.facebook} rel="noopener">createca33</a></li>
+        </ul>
+      </address>
+      <div class="mt-8 flex flex-wrap items-end gap-6">
+        <Tirage src={facade} alt="La façade du centre Createca, rue Pasteur à Bordeaux" legende="Le centre, rue Pasteur" incline={-2} ruban />
+        <a href={carteUrl} class="bouton bouton-trait" rel="noopener">Voir le plan d’accès</a>
+      </div>
+      <p class="mt-10 text-[0.95rem] text-muet">N° SIRET {site.legal.siret}, code NAF {site.legal.naf}, déclaration d’activité n° {site.legal.activite}.</p>
+    </aside>
+  </div>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-formulaire]');
+  const erreur = document.querySelector<HTMLElement>('[data-message-erreur]');
+  const succes = document.querySelector<HTMLElement>('[data-message-succes]');
+  const statut = document.querySelector<HTMLElement>('[data-statut]');
+  const bouton = document.querySelector<HTMLButtonElement>('[data-envoyer]');
+  const messages: Record<string, string> = {
+    nom: 'Indiquez votre nom.',
+    email: 'Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.',
+    message: 'Écrivez votre message (10 caractères au moins).',
+    longueur: 'Votre message est trop long : raccourcissez-le ou écrivez directement à createca@free.fr.',
+    indisponible: 'L’envoi est indisponible pour le moment. Écrivez directement à createca@free.fr.',
+    envoi: 'Le message n’a pas pu partir. Réessayez dans un instant ou écrivez à createca@free.fr.',
+  };
+  const afficherErreur = (texte: string) => {
+    if (!erreur) return;
+    erreur.textContent = texte;
+    erreur.classList.remove('hidden');
+  };
+
+  const params = new URLSearchParams(location.search);
+  const cle = params.get('objet');
+  const option = cle && form?.querySelector<HTMLOptionElement>(`option[data-cle="${CSS.escape(cle)}"]`);
+  if (option) option.selected = true;
+  const codeErreur = params.get('erreur');
+  if (codeErreur && messages[codeErreur]) afficherErreur(messages[codeErreur]);
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    erreur?.classList.add('hidden');
+    const champ = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')].find((c) => !c.checkValidity());
+    if (champ) {
+      const libelle = form.querySelector(`label[for="${champ.id}"]`)?.textContent ?? 'Ce champ';
+      afficherErreur(champ.id === 'email' && champ.value ? 'Indiquez une adresse e-mail valide, par exemple prenom@exemple.fr.' : champ.id === 'message' ? 'Écrivez votre message (10 caractères au moins).' : `${libelle} : champ à remplir.`);
+      champ.focus();
+      return;
+    }
+    bouton!.disabled = true;
+    statut!.textContent = 'Envoi en cours…';
+    try {
+      const res = await fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        form.hidden = true;
+        succes!.hidden = false;
+        succes!.focus();
+      } else {
+        afficherErreur(data.error ?? messages.envoi);
+      }
+    } catch {
+      afficherErreur(messages.envoi);
+    } finally {
+      bouton!.disabled = false;
+      statut!.textContent = '';
+    }
+  });
+</script>

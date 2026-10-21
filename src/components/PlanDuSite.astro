@@ -1,0 +1,64 @@
+---
+// Plan du site complet, dans un <dialog> natif (piège du focus et touche Échap fournis par le navigateur).
+import { plan, site, tel } from '../data/site';
+import Marque from './Marque.astro';
+const actuel = Astro.url.pathname;
+---
+<dialog id="plan-du-site" class="plan m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto bg-lavis p-0 text-graphite" aria-labelledby="plan-titre">
+  <div class="page flex min-h-full flex-col py-5">
+    <div class="flex items-center justify-between gap-4">
+      <Marque />
+      <form method="dialog">
+        <button class="bouton bouton-trait" data-ferme-plan>
+          <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+          Fermer
+        </button>
+      </form>
+    </div>
+    <h2 id="plan-titre" class="mt-10 font-titre text-titre-2">Plan du site</h2>
+    <nav aria-labelledby="plan-titre" class="mt-8 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      {plan.map((groupe) => (
+        <ul class="space-y-6 border-t border-encre/25 pt-5">
+          {groupe.map((item) => (
+            <li>
+              <a href={item.href} class="font-titre text-[1.6rem] font-semibold leading-tight text-encre no-underline hover:underline hover:decoration-cadmium hover:decoration-2 hover:underline-offset-4" aria-current={actuel === item.href ? 'page' : undefined}>{item.titre}</a>
+              {item.enfants && (
+                <ul class="mt-2 space-y-1.5">
+                  {item.enfants.map((enfant) => (
+                    <li>
+                      <a href={enfant.href} class="lien text-[1.0625rem]">{enfant.titre}</a>
+                      {enfant.enfants && (
+                        <ul class="mt-1.5 space-y-1 border-l-2 border-ocre/70 pl-3">
+                          {enfant.enfants.map((petit) => <li><a href={petit.href} class="lien text-[0.9875rem] text-encre-claire">{petit.titre}</a></li>)}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      ))}
+    </nav>
+    <p class="mt-auto flex flex-wrap gap-x-8 gap-y-1 pt-12 text-[1rem] text-muet">
+      <span>{site.adresse.rue}, {site.adresse.cp} {site.adresse.ville}-{site.adresse.quartier}</span>
+      <a class="lien" href={tel(site.telephones[1].numero)}>{site.telephones[1].numero}</a>
+      <a class="lien" href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </div>
+</dialog>
+<script>
+  const dialogue = document.getElementById('plan-du-site') as HTMLDialogElement | null;
+  document.querySelectorAll<HTMLButtonElement>('[data-ouvre-plan]').forEach((b) =>
+    b.addEventListener('click', () => {
+      dialogue?.showModal();
+      b.setAttribute('aria-expanded', 'true');
+    }),
+  );
+  dialogue?.addEventListener('close', () => document.querySelectorAll('[data-ouvre-plan]').forEach((b) => b.setAttribute('aria-expanded', 'false')));
+  // Un lien vers une ancre de la page courante ferme le panneau avant de défiler.
+  dialogue?.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', () => dialogue.close()));
+  // Clic sur le fond (hors contenu) : fermeture
+  dialogue?.addEventListener('click', (e) => { if (e.target === dialogue) dialogue.close(); });
+</script>

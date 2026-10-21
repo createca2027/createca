@@ -1,0 +1,56 @@
+---
+// Agrandissement des photos de la galerie dans un <dialog> natif.
+// Sans JavaScript, chaque vignette reste un lien vers la photo.
+---
+<dialog id="visionneuse" class="visionneuse m-auto max-h-[94dvh] w-[min(64rem,94vw)] overflow-visible bg-transparent p-0" aria-label="Photo agrandie">
+  <figure class="m-0 rounded-lg bg-papier p-3 sm:p-4">
+    <img data-v-img alt="" class="mx-auto block max-h-[74dvh] w-auto max-w-full object-contain" />
+    <figcaption class="mt-3 flex flex-wrap items-center justify-between gap-3">
+      <span data-v-legende class="font-titre text-[1.05rem] italic text-muet"></span>
+      <span class="flex gap-2">
+        <button type="button" data-v-prec class="bouton bouton-trait min-h-11 px-4" aria-label="Photo précédente">
+          <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+        <button type="button" data-v-suiv class="bouton bouton-trait min-h-11 px-4" aria-label="Photo suivante">
+          <svg viewBox="0 0 24 24" class="size-4" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+        <form method="dialog"><button class="bouton bouton-plein min-h-11 px-4">Fermer</button></form>
+      </span>
+    </figcaption>
+  </figure>
+</dialog>
+<script>
+  const d = document.getElementById('visionneuse') as HTMLDialogElement | null;
+  if (d) {
+    const img = d.querySelector<HTMLImageElement>('[data-v-img]')!;
+    const legende = d.querySelector<HTMLElement>('[data-v-legende]')!;
+    let groupe: HTMLAnchorElement[] = [];
+    let i = 0;
+    const montrer = (n: number) => {
+      i = (n + groupe.length) % groupe.length;
+      const a = groupe[i];
+      const vignette = a.querySelector('img');
+      img.src = a.href;
+      img.alt = vignette?.alt ?? '';
+      legende.textContent = a.dataset.legende ?? '';
+    };
+    document.querySelectorAll<HTMLAnchorElement>('a[data-visionneuse]').forEach((a) =>
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        groupe = [...document.querySelectorAll<HTMLAnchorElement>(`a[data-visionneuse="${a.dataset.visionneuse}"]`)];
+        montrer(groupe.indexOf(a));
+        d.showModal();
+      }),
+    );
+    d.querySelector('[data-v-prec]')?.addEventListener('click', () => montrer(i - 1));
+    d.querySelector('[data-v-suiv]')?.addEventListener('click', () => montrer(i + 1));
+    d.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') montrer(i - 1);
+      if (e.key === 'ArrowRight') montrer(i + 1);
+    });
+    d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+  }
+</script>
+<style>
+  .visionneuse::backdrop { background: color-mix(in srgb, var(--color-encre) 82%, transparent); }
+</style>

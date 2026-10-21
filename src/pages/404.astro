@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Embleme from '../components/Embleme.astro';
+import { raccourcis } from '../data/site';
+---
+<Base titre="Page introuvable" description="Cette page n’existe pas ou a changé d’adresse." noindex>
+  <section class="page grid items-center gap-10 py-16 md:grid-cols-12 lg:py-24">
+    <div class="md:col-span-7">
+      <h1 class="titre-page font-medium">Cette page n’existe pas, ou plus.</h1>
+      <p class="chapo mt-5 max-w-[34rem]">Le site de Createca a été refait : l’ancienne adresse ne mène plus nulle part. Les contenus sont tous là, rangés autrement.</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a href="/" class="bouton bouton-plein">Revenir à l’accueil</a>
+        <a href="/plan-du-site/" class="bouton bouton-trait">Consulter le plan du site</a>
+      </div>
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+        {raccourcis.map((r) => <li><a href={r.href} class="lien">{r.titre}</a></li>)}
+      </ul>
+    </div>
+    <Embleme nom="figure-marche" class="mx-auto h-64 w-auto text-encre md:col-span-5 md:h-80" />
+  </section>
+</Base>

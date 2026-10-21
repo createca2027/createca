@@ -1,0 +1,34 @@
+---
+import PageTexte from '../../layouts/PageTexte.astro';
+import { lirePage } from '../../lib/markdown';
+import { formation, site } from '../../data/site';
+
+const calendrier = `<ol class="calendrier">${formation.calendrier
+  .map((c) => `<li><span class="calendrier-libelle">${c.libelle}</span><span>${c.dates}</span></li>`)
+  .join('')}</ol>`;
+const page = lirePage('formation', { calendrier });
+---
+<PageTexte page={page} titre="Formation en art-thérapie appliquée" titreSeo="Formation en art-thérapie appliquée, Bordeaux"
+  chapo={`Une formation de ${formation.heures} heures en ${formation.modules} modules, en petit groupe de ${formation.groupeMax} personnes au plus, au centre Createca de Bordeaux-Caudéran. Prochaine session : ${formation.prochaineSession}.`}
+  pigment="cobalt" icone="livre" filAriane={[{ titre: 'Actions', href: '/actions/' }]}>
+  <Fragment slot="avant">
+    <div class="lavis-bande">
+      <div class="page grid gap-8 py-10 md:grid-cols-12 md:items-center">
+        <dl class="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4 md:col-span-8">
+          <div><dt class="text-[0.95rem] text-muet">Durée</dt><dd class="font-titre text-titre-4 font-semibold text-encre">{formation.heures} heures</dd></div>
+          <div><dt class="text-[0.95rem] text-muet">Organisation</dt><dd class="font-titre text-titre-4 font-semibold text-encre">{formation.modules} modules</dd></div>
+          <div><dt class="text-[0.95rem] text-muet">Groupe</dt><dd class="font-titre text-titre-4 font-semibold text-encre">{formation.groupeMax} au plus</dd></div>
+          <div><dt class="text-[0.95rem] text-muet">Inscriptions</dt><dd class="font-titre text-titre-4 font-semibold text-encre">jusqu’au {formation.dateLimiteTexte}</dd></div>
+        </dl>
+        <div class="flex flex-col gap-3 md:col-span-4">
+          <a href="/contact/?objet=formation#formulaire" class="bouton bouton-plein">Demander le programme</a>
+          <a href={site.qualiopi.pdf} class="bouton bouton-trait">Certificat Qualiopi (PDF)</a>
+        </div>
+      </div>
+    </div>
+  </Fragment>
+  <aside class="mt-16 grid gap-6 rounded-xl border border-ligne p-6 sm:grid-cols-[1fr_auto] sm:items-center" aria-label="Certification">
+    <p>La certification qualité Qualiopi (n° {site.qualiopi.numero}) a été délivrée au titre des actions de formation. Consultez aussi la liste des <a href="/formation/certifications/" class="lien">art-thérapeutes certifiés par Createca</a>.</p>
+    <a href="/contact/?objet=formation#formulaire" class="bouton bouton-plein">S’inscrire ou poser une question</a>
+  </aside>
+</PageTexte>

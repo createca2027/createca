@@ -1,0 +1,20 @@
+---
+import PageTexte from '../layouts/PageTexte.astro';
+import { lirePage } from '../lib/markdown';
+import { figureHtml } from '../lib/figure';
+import vernissage from '../assets/photos/ancien/vernissage-galerie.jpg';
+import atelierEnfants from '../assets/photos/ancien/atelier-enfants.jpg';
+const figures = {
+  'images/exp1.jpg': await figureHtml(vernissage, { alt: 'Des visiteurs devant des tableaux accrochés à la galerie', legende: 'Un vernissage à la galerie du Chien', incline: 1.5, ruban: true }),
+  'images/at1.jpg': await figureHtml(atelierEnfants, { alt: 'Des enfants dessinent et peignent autour d’une table couverte de crayons et de pinceaux', legende: 'Un atelier d’enfants', incline: -1.8 }),
+};
+const page = lirePage('actions', figures);
+---
+<PageTexte page={page} titreSeo="Actions : galerie, ateliers et formation"
+  chapo="Le centre s’articule autour de trois domaines d’activités complémentaires : la galerie et ses expositions, l’art-thérapie et les arts plastiques, la recherche et la formation."
+  pigment="cadmium" icone="chevalet">
+  <p class="mt-8 max-w-[40rem] rounded-xl border border-ligne bg-lavis/70 p-5">
+    Le programme, l’organisation et le calendrier de la formation sont détaillés sur la page
+    <a href="/formation/" class="lien font-medium">Formation en art-thérapie appliquée</a>.
+  </p>
+</PageTexte>

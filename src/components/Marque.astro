@@ -1,0 +1,13 @@
+---
+// Marque : emblème ovale (dessin de la plaquette) et nom.
+import Embleme from './Embleme.astro';
+interface Props { surEncre?: boolean; class?: string }
+const { surEncre = false, class: classe } = Astro.props;
+---
+<a href="/" class:list={['group inline-flex items-center gap-3 no-underline', classe]} aria-label="Createca, retour à l’accueil">
+  <Embleme nom="embleme-ovale" class:list={['h-11 w-auto shrink-0 transition-transform duration-300 group-hover:-rotate-3', surEncre ? 'text-papier' : 'text-encre']} />
+  <span class="flex flex-col leading-none">
+    <span class:list={['font-titre text-[1.4rem] font-bold tracking-[0.09em]', surEncre ? 'text-papier' : 'text-encre']}>CREATECA</span>
+    <span class:list={['mt-1 text-[0.8125rem] tracking-[0.01em]', surEncre ? 'text-papier/80' : 'text-muet']}>Centre d’art-thérapie à Bordeaux</span>
+  </span>
+</a>

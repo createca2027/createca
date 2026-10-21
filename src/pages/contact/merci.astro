@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import EnTetePage from '../../components/EnTetePage.astro';
+import { site, tel } from '../../data/site';
+---
+<Base titre="Message envoyé" description="Votre message a bien été envoyé à Createca." noindex>
+  <EnTetePage titre="Message envoyé" chapo="Merci. Createca vous répondra à l’adresse e-mail indiquée." pigment="ocre" icone="plume" />
+  <div class="page py-12">
+    <p>Pour une demande urgente, appelez le centre au <a class="lien" href={tel(site.telephones[0].numero)}>{site.telephones[0].numero}</a>.</p>
+    <a href="/" class="bouton bouton-trait mt-8">Revenir à l’accueil</a>
+  </div>
+</Base>

@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import temoignages from '../data/temoignages.json';
+import { insecableTexte } from '../lib/typo';
+---
+<Base titre="Témoignages d’une première séance" description="Ce qu’ont ressenti des étudiants en psychologie de l’Université de Bordeaux après une première séance de découverte de l’art-thérapie à Createca.">
+  <EnTetePage titre="Témoignages" chapo={temoignages.intro.join(' ')} pigment="ocre" dessin="figure-marche"
+    filAriane={[{ titre: 'Public', href: '/public/' }]} />
+  <section class="page py-12 lg:py-16" aria-label="Témoignages recueillis">
+    <ul class="columns-1 gap-10 md:columns-2 lg:columns-3" role="list">
+      {temoignages.items.map((t, i) => (
+        <li class="mb-10 break-inside-avoid">
+          <figure>
+            <blockquote class:list={['border-l-[3px] pl-5 font-titre italic leading-snug text-encre', i % 4 === 0 ? 'border-cadmium text-[1.45rem]' : 'border-ocre text-[1.2rem]']}>
+              <p set:html={insecableTexte(t.texte)} />
+            </blockquote>
+            {t.auteur && <figcaption class="mt-2 pl-5 text-[0.95rem] text-muet">{t.auteur}</figcaption>}
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </section>
+  <section class="lavis-bande py-14" aria-label="Pour finir">
+    <div class="page grid items-center gap-8 md:grid-cols-12">
+      <p class="chapo md:col-span-8">{temoignages.conclusion}</p>
+      <div class="flex flex-col gap-3 md:col-span-4">
+        <a href="/contact/?objet=premier-entretien#formulaire" class="bouton bouton-plein">Demander un premier entretien</a>
+        <a href="/ateliers/" class="bouton bouton-trait">Découvrir les ateliers</a>
+      </div>
+    </div>
+  </section>
+</Base>

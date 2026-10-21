@@ -1,0 +1,35 @@
+---
+import { raccourcis } from '../data/site';
+import Marque from './Marque.astro';
+const actuel = Astro.url.pathname;
+---
+<header class="sticky top-0 z-40 border-b border-ligne/80 bg-papier/95 backdrop-blur-sm supports-[backdrop-filter]:bg-papier/85">
+  <a href="#contenu" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded focus:bg-encre focus:px-4 focus:py-2 focus:text-papier">Aller au contenu</a>
+  <div class="page flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">
+    <Marque />
+    <div class="flex items-center gap-2 lg:gap-7">
+      <nav aria-label="Accès rapides" class="hidden lg:block">
+        <ul class="flex items-center gap-7">
+          {raccourcis.map((l) => {
+            const courant = actuel.startsWith(l.href);
+            return (
+              <li>
+                <a href={l.href} aria-current={courant ? 'page' : undefined}
+                  class:list={['relative py-2 text-[1.0625rem] font-medium no-underline transition-colors hover:text-encre-claire', courant ? 'text-encre' : 'text-graphite']}>
+                  {l.titre}
+                  {courant && <span aria-hidden="true" class="absolute inset-x-0 -bottom-0.5 h-[3px] rounded-full bg-cadmium/85" />}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <button type="button" data-ouvre-plan aria-controls="plan-du-site" aria-expanded="false" aria-haspopup="dialog"
+        class="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-[1.0625rem] font-medium text-encre hover:bg-lavis">
+        <svg viewBox="0 0 24 24" class="size-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7.5c3-.8 6 .6 9 0s5-.5 7 0M4 12.2c4-.6 8 .5 12-.1M4 16.8c2.6-.6 5.4.5 8 0s5.4-.4 8 .2" /></svg>
+        <span class="lg:hidden">Menu</span><span class="hidden lg:inline">Plan du site</span>
+      </button>
+      <a href="/contact/" class="bouton bouton-plein hidden md:inline-flex">Nous écrire</a>
+    </div>
+  </div>
+</header>

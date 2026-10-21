@@ -1,0 +1,67 @@
+---
+// Héros de l'accueil : l'emblème de Createca (dessin à l'encre de la plaquette) révélé par
+// cinq coups de pinceau, posé sur des taches de gouache générées (art/generate.mjs).
+// Sans JavaScript et en mouvement réduit, tout est affiché d'emblée.
+import { emblemes } from '../data/emblemes';
+import { formation } from '../data/site';
+import tacheCadmium from '../assets/art/tache-cadmium.webp';
+import lavisCobalt from '../assets/art/lavis-cobalt.webp';
+import traitOcre from '../assets/art/trait-ocre.webp';
+
+const { viewBox, d } = emblemes['embleme-rayonnant'];
+// Balayages du pinceau (viewBox 1875 × 1713), alternés comme un geste de peintre
+const balayages = [
+  'M-120 190C330 90 760 260 1180 150S1820 120 2000 210',
+  'M2000 520C1600 450 1250 610 860 520S240 430 -120 560',
+  'M-120 880C300 800 700 960 1120 860S1700 820 2000 900',
+  'M2000 1230C1580 1160 1180 1320 780 1220S200 1150 -120 1260',
+  'M-120 1580C380 1500 820 1660 1240 1570S1760 1540 2000 1600',
+];
+---
+<section class="relative overflow-hidden" aria-labelledby="titre-accueil">
+  <div class="page grid items-center gap-x-10 pb-16 pt-6 lg:grid-cols-12 lg:pb-24 lg:pt-14">
+    <div class="relative z-10 order-2 -mt-3 lg:order-1 lg:col-span-6 lg:mt-0">
+      <h1 id="titre-accueil" class="titre-affiche font-medium">
+        Createca, un lien de culture et de thérapie.
+      </h1>
+      <p class="chapo mt-6 max-w-[34rem] text-graphite">
+        Centre d’art-thérapie à Bordeaux-Caudéran depuis 2004. Createca œuvre pour le développement, le soin et la prévention des personnes, enfants, adolescents, adultes et parents, avec pour moyen spécifique les arts plastiques : dessin, peinture, modelage, collage.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a href="/contact/?objet=premier-entretien#formulaire" class="bouton bouton-plein">Demander un premier entretien</a>
+        <a href="/ateliers/" class="bouton bouton-trait">Découvrir les ateliers</a>
+      </div>
+      <p class="mt-8 flex max-w-[34rem] items-start gap-3 text-[1rem] leading-snug text-muet">
+        <span aria-hidden="true" class="mt-1.5 inline-block size-3 shrink-0 rounded-[55%_45%_50%_50%] bg-cadmium"></span>
+        <span>
+          Formation en art-thérapie appliquée : prochaine session en {formation.prochaineSession}, inscriptions jusqu’au {formation.dateLimiteTexte}.
+          <a href="/formation/#calendrier" class="lien">Voir le calendrier</a>
+        </span>
+      </p>
+    </div>
+
+    <div class="relative order-1 mx-auto w-full max-w-[19rem] sm:max-w-[26rem] lg:order-2 lg:col-span-6 lg:max-w-none">
+      <div class="relative aspect-[1875/1713]">
+        <img src={lavisCobalt.src} width={lavisCobalt.width} height={lavisCobalt.height} alt="" decoding="async"
+          class="pigment eclot absolute -right-[12%] top-[2%] w-[78%]" style="--d:.05s" />
+        <img src={tacheCadmium.src} width={tacheCadmium.width} height={tacheCadmium.height} alt="" decoding="async" fetchpriority="high"
+          class="pigment eclot absolute -left-[10%] top-[24%] w-[66%]" style="--d:.15s" />
+        <img src={traitOcre.src} width={traitOcre.width} height={traitOcre.height} alt="" decoding="async"
+          class="pigment eclot absolute -left-[6%] -top-[6%] w-[74%] -rotate-6" style="--d:.3s" />
+        <svg viewBox={viewBox} class="relative h-full w-full text-encre" role="img"
+          aria-label="Emblème de Createca : un visage dessiné à l’encre, entouré de rayons">
+          <defs>
+            <mask id="pinceau-revele" maskUnits="userSpaceOnUse" x="0" y="0" width="1875" height="1713">
+              <g fill="none" stroke="#fff" stroke-width="430" stroke-linecap="round">
+                {balayages.map((b, i) => (
+                  <path d={b} pathLength="1" stroke-dasharray="1 1" class="revele-trait" style={`--i:${i}`} />
+                ))}
+              </g>
+            </mask>
+          </defs>
+          <path d={d} fill="currentColor" fill-rule="evenodd" mask="url(#pinceau-revele)" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

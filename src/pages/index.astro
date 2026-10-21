@@ -1,0 +1,200 @@
+---
+import Base from '../layouts/Base.astro';
+import HerosAccueil from '../components/HerosAccueil.astro';
+import Tirage from '../components/Tirage.astro';
+import Icone from '../components/Icone.astro';
+import Embleme from '../components/Embleme.astro';
+import { site, ateliers, formation, tel, carteUrl } from '../data/site';
+import actualites from '../data/actualites.json';
+import temoignages from '../data/temoignages.json';
+import dessinCollectif from '../assets/photos/atelier/dessin-collectif.jpg';
+import facade from '../assets/photos/ancien/facade-rue-pasteur.jpg';
+import enfantPeinture from '../assets/photos/atelier/atelier-enfant-peinture.jpg';
+import tacheCobalt from '../assets/art/tache-cobalt-s.webp';
+
+// Dernière annonce de chaque type, dans l'ordre de la page Actualités
+const vus = new Set<string>();
+const aLaUne = actualites.filter((a) => (vus.has(a.categorie) ? false : (vus.add(a.categorie), true))).slice(0, 3);
+const citation = temoignages.items[0];
+
+const domaines = [
+  { icone: 'chevalet', titre: 'La galerie et ses expositions', texte: 'La galerie crée le lien avec l’extérieur et stimule l’action artistique.', href: '/galerie/', lien: 'La galerie' },
+  { icone: 'pinceau', titre: 'L’art-thérapie et les arts plastiques', texte: 'L’art-thérapie intervient dans l’aide aux personnes. Elle est nourrie par l’art, qui en est la pierre angulaire.', href: '/ateliers/', lien: 'Les ateliers' },
+  { icone: 'livre', titre: 'La recherche et la formation', texte: 'La recherche fait progresser la connaissance en art-thérapie et permet l’amélioration des pratiques. La formation divulgue les méthodes de travail auprès de professionnels.', href: '/formation/', lien: 'La formation' },
+] as const;
+
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'EducationalOrganization'],
+  name: 'Createca',
+  alternateName: site.nomLong,
+  description: 'Centre d’art-thérapie à Bordeaux-Caudéran : ateliers d’art-thérapie pour enfants, adolescents, adultes et parents, formation en art-thérapie appliquée et galerie.',
+  url: site.url,
+  email: site.email,
+  telephone: '+33953108096',
+  foundingDate: String(site.depuis),
+  address: { '@type': 'PostalAddress', streetAddress: '244 rue Pasteur', postalCode: site.adresse.cp, addressLocality: 'Bordeaux', addressCountry: 'FR' },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lon },
+  founder: [{ '@type': 'Person', name: 'Caroline Goinaud' }, { '@type': 'Person', name: 'Jean-Louis Ricaud' }],
+  sameAs: [site.facebook],
+}];
+import { insecableTexte } from '../lib/typo';
+---
+<Base
+  titre="Createca, art-thérapie à Bordeaux : ateliers, formation"
+  titreComplet
+  description="Centre d’art-thérapie à Bordeaux-Caudéran depuis 2004 : ateliers pour enfants, ados, adultes et parents, formation certifiée en art-thérapie appliquée, galerie."
+  jsonLd={jsonLd}
+>
+  <HerosAccueil />
+
+  <!-- Bienvenue -->
+  <section class="page grid gap-x-12 gap-y-14 py-16 lg:grid-cols-12 lg:py-24" aria-labelledby="bienvenue">
+    <div class="relative lg:col-span-5">
+      <Tirage src={dessinCollectif} alt="Participants d’un atelier allongés autour d’une grande feuille posée au sol, en train de dessiner ensemble" legende="Un atelier de groupe : dessin collectif au sol" largeur={560} incline={-1.6} />
+      <Tirage src={facade} alt="La façade bleue de Createca, au fond d’une cour gravillonnée" legende="244, rue Pasteur" incline={3} ruban class="absolute -bottom-10 right-2 w-[9.5rem] sm:right-6" />
+    </div>
+    <div class="lg:col-span-6 lg:col-start-7">
+      <h2 id="bienvenue" class="text-titre-2">Bienvenue</h2>
+      <div class="mt-6 max-w-[38rem] space-y-4">
+        <p>Vous trouverez sur ce site le détail de toutes nos activités, comme les ateliers pratiques d’art-thérapie (atelier développement personnel, atelier d’arto-analyse, atelier d’artiste, atelier libre…), ainsi que la formation en art-thérapie appliquée et notre galerie destinée aux expositions d’artistes et de participants aux ateliers, aux lectures et analyses de tableaux.</p>
+        <p>Createca se situe à Bordeaux, non loin des boulevards, au niveau de la barrière Judaïque ; le lieu est très accessible et ouvert à tous, librement pour les visiteurs occasionnels des expositions, dans le respect et la confidentialité des participants aux ateliers.</p>
+        <p>Vous serez tenu au courant de nos actualités (dates et horaires d’ouverture, expositions temporaires, stages, événements…) et vous pourrez connaître nos fondements théoriques et expériences pratiques.</p>
+        <p class="pt-2 font-titre text-[1.4rem] italic text-encre">Bonne visite à tous. L’équipe de Createca.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trois domaines -->
+  <section class="page py-12 lg:py-16" aria-labelledby="domaines">
+    <h2 id="domaines" class="max-w-[30rem] text-titre-2">Trois domaines d’activités qui se répondent</h2>
+    <div class="mt-10 grid gap-10 md:grid-cols-3 md:gap-0">
+      {domaines.map((d, i) => (
+        <article class:list={['md:px-8', i === 0 ? 'md:pl-0' : 'md:border-l md:border-ligne']}>
+          <Icone nom={d.icone} class="size-16 text-encre" />
+          <h3 class="mt-4 text-titre-4" set:html={insecableTexte(d.titre)} />
+          <p class="mt-3 text-graphite">{d.texte}</p>
+          <a href={d.href} class="lien mt-4 inline-block font-medium">{d.lien}</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Parole de participant -->
+  <section class="relative my-12 overflow-hidden lavis-bande py-16 lg:my-20 lg:py-24" aria-label="Témoignage">
+    <img src={tacheCobalt.src} width={tacheCobalt.width} height={tacheCobalt.height} alt="" class="pigment absolute -right-24 -top-20 w-[26rem] opacity-60" />
+    <div class="page relative grid items-center gap-10 md:grid-cols-12">
+      <Embleme nom="figure-marche" class="mx-auto h-44 w-auto text-encre md:col-span-3 md:h-60" />
+      <figure class="md:col-span-8 md:col-start-5">
+        <blockquote class="font-titre text-[clamp(1.75rem,1.2rem+2vw,2.6rem)] font-medium italic leading-[1.2] text-encre">
+          « {citation.texte} »
+        </blockquote>
+        <figcaption class="mt-5 text-muet">Recueilli auprès d’étudiants en psychologie de l’Université de Bordeaux, après une première séance de découverte. <a href="/temoignages/" class="lien">Lire les témoignages</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Ateliers -->
+  <section class="page grid gap-x-12 gap-y-12 py-12 lg:grid-cols-12 lg:py-16" aria-labelledby="ateliers-titre">
+    <div class="lg:col-span-7">
+      <h2 id="ateliers-titre" class="text-titre-2">Des ateliers différents pour des publics différents</h2>
+      <p class="mt-5 max-w-[38rem]">Aucune compétence technique n’est requise dans un premier temps. Un des fondements de l’atelier est de ne jamais mettre personne en échec : dans nos ateliers, la panique de la feuille blanche n’existe pas.</p>
+      <dl class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+        {ateliers.map((a) => (
+          <div>
+            <dt class="font-titre text-[1.35rem] font-semibold leading-tight text-encre">
+              <a href={`/ateliers/#${a.id}`} class="no-underline hover:underline hover:decoration-cadmium hover:decoration-2 hover:underline-offset-4">{a.nom}</a>
+            </dt>
+            <dd class="mt-1 text-[1rem] font-medium text-cadmium-fonce">{a.public}</dd>
+            <dd class="mt-1.5 text-[1.0625rem] leading-relaxed">{a.but}</dd>
+          </div>
+        ))}
+      </dl>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href="/ateliers/" class="bouton bouton-plein">Les ateliers en détail</a>
+        <a href="/emploi-du-temps/" class="bouton bouton-trait">Emploi du temps</a>
+        <a href="/ateliers/#tarifs" class="bouton bouton-trait">Tarifs</a>
+      </div>
+    </div>
+    <div class="flex items-start justify-center lg:col-span-5 lg:justify-end lg:pt-24">
+      <Tirage src={enfantPeinture} alt="À gauche, une grande peinture violette et bleue ; à droite, une petite fille trace des traits au mur avec un pinceau" legende="Peindre debout, à grands gestes" largeur={520} incline={1.4} ruban />
+    </div>
+  </section>
+
+  <!-- Formation -->
+  <section class="lavis-bande my-12 py-16 lg:my-20 lg:py-24" aria-labelledby="formation-titre">
+    <div class="page grid gap-x-12 gap-y-12 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <h2 id="formation-titre" class="text-titre-2">Formation en <span class="whitespace-nowrap">art-thérapie</span> appliquée</h2>
+        <p class="mt-5 max-w-[36rem]">Elle répond à un besoin croissant de compétences concrètes en art-thérapie, pour les artistes, les enseignants en art, les professionnels de la santé, de l’éducation, du social et de l’animation. Createca est un centre d’art-thérapie en activité : l’élève art-thérapeute est mis en situation dans des conditions réelles de travail.</p>
+        <dl class="mt-8 grid max-w-[36rem] grid-cols-2 gap-x-6 gap-y-5 border-t border-encre/20 pt-6">
+          <div><dt class="text-[0.9375rem] text-muet">Organisation</dt><dd class="font-titre text-[1.3rem] font-semibold text-encre">{formation.modules} modules d’une semaine</dd></div>
+          <div><dt class="text-[0.9375rem] text-muet">Durée au centre</dt><dd class="font-titre text-[1.3rem] font-semibold text-encre">{formation.heures} heures</dd></div>
+          <div><dt class="text-[0.9375rem] text-muet">Groupe</dt><dd class="font-titre text-[1.3rem] font-semibold text-encre">{formation.groupeMax} élèves au plus</dd></div>
+          <div><dt class="text-[0.9375rem] text-muet">Qualité</dt><dd class="font-titre text-[1.3rem] font-semibold text-encre">Certifiée Qualiopi</dd></div>
+        </dl>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href="/contact/?objet=formation#formulaire" class="bouton bouton-plein">Demander le programme</a>
+          <a href="/formation/" class="bouton bouton-trait">Tout sur la formation</a>
+        </div>
+      </div>
+      <div class="lg:col-span-5 lg:col-start-8">
+        <h3 class="text-titre-4">Groupe de {formation.prochaineSession}</h3>
+        <p class="mt-1 text-[1rem] text-muet">Inscriptions jusqu’au {formation.dateLimiteTexte}</p>
+        <ol class="mt-5 border-l-2 border-encre/25">
+          {formation.calendrier.map((m) => (
+            <li class="relative pb-3.5 pl-6 last:pb-0">
+              <span aria-hidden="true" class:list={['absolute -left-[7px] top-[0.55rem] size-3 rounded-full border-2 border-encre', m.libelle.startsWith('Module') ? 'bg-papier' : 'bg-ocre']} />
+              <span class="font-medium text-encre">{m.libelle}</span>
+              <span class="text-graphite">, {m.dates}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Actualités -->
+  <section class="page py-12 lg:py-16" aria-labelledby="actu-titre">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 id="actu-titre" class="text-titre-2">Actualités</h2>
+      <a href="/actualites/" class="lien font-medium">Toutes les actualités et l’historique</a>
+    </div>
+    <div class="mt-10 grid gap-10 md:grid-cols-3">
+      {aLaUne.map((a) => (
+        <article class="border-t-2 border-encre pt-5">
+          <p class="font-titre text-[1.1rem] font-semibold text-cadmium-fonce">{a.annee}</p>
+          <h3 class="mt-1 text-titre-4" set:html={insecableTexte(a.titre)} />
+          <div class="mt-3 text-[1.0625rem] leading-relaxed [&_a]:underline [&_a]:underline-offset-4">
+            {a.paragraphes.slice(0, 4).map((p) => <p set:html={p} />)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Venir -->
+  <section class="page pb-4 pt-12 lg:pt-16" aria-labelledby="venir-titre">
+    <div class="grid gap-10 rounded-[1.75rem] border border-ligne bg-papier p-6 sm:p-10 md:grid-cols-12">
+      <div class="md:col-span-7">
+        <h2 id="venir-titre" class="text-titre-2">Venir à Createca</h2>
+        <p class="mt-4 max-w-[34rem]">Le centre est de plain-pied, accessible par une allée en gravier et une rampe. Pour un premier entretien, appelez Caroline Goinaud ou écrivez-nous.</p>
+        <address class="mt-6 not-italic">
+          <span class="font-titre text-[1.35rem] font-semibold text-encre">{site.adresse.rue}<br />{site.adresse.cp} {site.adresse.ville}-{site.adresse.quartier}</span>
+        </address>
+        <a href={carteUrl} class="lien mt-2 inline-block" rel="noopener">Voir le plan d’accès</a>
+      </div>
+      <div class="md:col-span-5">
+        <ul class="space-y-3">
+          {site.telephones.map((t) => (
+            <li class="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-ligne pb-3">
+              <span class="text-muet">{t.libelle}</span>
+              <a href={tel(t.numero)} class="font-titre text-[1.3rem] font-semibold text-encre no-underline hover:underline">{t.numero}</a>
+            </li>
+          ))}
+        </ul>
+        <a href="/contact/#formulaire" class="bouton bouton-plein mt-6 w-full">Écrire un message</a>
+      </div>
+    </div>
+  </section>
+</Base>

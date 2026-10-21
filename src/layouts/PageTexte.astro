@@ -1,0 +1,34 @@
+---
+// Gabarit des pages de texte long transcrites de l'ancien site : en-tête, sommaire en marge, prose.
+import Base from './Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import Sommaire from '../components/Sommaire.astro';
+import type { PageMd } from '../lib/markdown';
+import { insecable } from '../lib/typo';
+
+interface Props {
+  page: PageMd;
+  titre?: string;
+  chapo?: string;
+  titreSeo?: string;
+  pigment?: 'ocre' | 'cadmium' | 'cobalt';
+  dessin?: 'figure-marche' | 'figures-deux' | 'embleme-ovale' | 'embleme-rayonnant';
+  icone?: 'pinceau' | 'fusain' | 'modelage' | 'plume' | 'chevalet' | 'livre' | 'palette';
+  filAriane?: { titre: string; href: string }[];
+  sommaire?: boolean;
+}
+const { page, titre = page.title, chapo, titreSeo, pigment, dessin, icone, filAriane, sommaire = true } = Astro.props;
+const html = page.html.replace(/<(h[23])([^>]*)>(.*?)<\/\1>/g, (_m, h, attrs, t) => `<${h}${attrs}>${insecable(t)}</${h}>`);
+---
+<Base titre={titreSeo ?? titre} description={page.description}>
+  <EnTetePage titre={titre} chapo={chapo} pigment={pigment} dessin={dessin} icone={icone} filAriane={filAriane} />
+  <slot name="avant" />
+  <div class="page grid gap-x-12 gap-y-8 py-12 lg:grid-cols-12 lg:py-16">
+    {sommaire && page.titres.length > 2 && <Sommaire titres={page.titres} class="lg:col-span-3" />}
+    <div class:list={['min-w-0', sommaire && page.titres.length > 2 ? 'lg:col-span-9' : 'lg:col-span-12']}>
+      <div class="prose-createca" set:html={html} />
+      <slot />
+    </div>
+  </div>
+  <slot name="apres" />
+</Base>

@@ -1,0 +1,187 @@
+[
+  {
+    "titre": "Structures petite enfance",
+    "missions": [
+      "Action préventive et de développement, utilisant les arts-plastiques comme médiateur relationnel auprès de l’enfant.",
+      "Régulation d’équipe : par le biais d’un langage non verbal (la matière artistique), libérer une expression de soi personnelle dans une dynamique de groupe.",
+      "Art-thérapeute « accueillante » (neutralité bienveillante)."
+    ],
+    "structures": [
+      {
+        "nom": "Halte-garderie Génicaramels",
+        "lieu": "Lormont"
+      },
+      {
+        "nom": "LAEP",
+        "lieu": "Lormont"
+      },
+      {
+        "nom": "Crèches municipales : Le Petit Prince, Le Petit Poucet, Les Lutins et Arc en Ciel",
+        "lieu": "Bruges"
+      },
+      {
+        "nom": "Crèches Les 3 petits Tours",
+        "lieu": "Bègles"
+      },
+      {
+        "nom": "Multi-accueil La Dent de Lait",
+        "lieu": "Pessac"
+      },
+      {
+        "nom": "Multi-accueil La Colline",
+        "lieu": "Cenon"
+      }
+    ]
+  },
+  {
+    "titre": "Structures soignantes, éducatives, accueillantes",
+    "missions": [
+      "Art-thérapie de groupe",
+      "Formation et supervision du personnel soignant"
+    ],
+    "structures": [
+      {
+        "nom": "COS Foyer Quancard",
+        "lieu": "Villenave d’Ornon"
+      },
+      {
+        "nom": "Hôpital de jour L’Oiseau Lyre",
+        "lieu": "Léognan"
+      },
+      {
+        "nom": "Trisomie21 Gironde",
+        "lieu": "Villenave d’Ornon"
+      },
+      {
+        "nom": "ACSC CITE Béthanie CHRS",
+        "lieu": "Bergerac"
+      },
+      {
+        "nom": "Maison d’enfants de MOUSSARON",
+        "lieu": "Auch"
+      },
+      {
+        "nom": "Centre Psychothérapeutique",
+        "lieu": "Lormont"
+      }
+    ]
+  },
+  {
+    "titre": "Associations artistiques",
+    "missions": [
+      "Transmission du langage plastique dans le sens du développement des personnalités."
+    ],
+    "structures": [
+      {
+        "nom": "Association Couleurs et Passions",
+        "lieu": "Martignas"
+      },
+      {
+        "nom": "Amicale Laïque de la Glacière",
+        "lieu": "Mérignac"
+      }
+    ]
+  },
+  {
+    "titre": "Structures personnes âgées",
+    "missions": [
+      "Art-thérapie de groupe",
+      "Formation du personnel en gérontologie"
+    ],
+    "structures": [
+      {
+        "nom": "Maison de Retraite Médicis",
+        "lieu": "Mérignac"
+      },
+      {
+        "nom": "OAREIL",
+        "lieu": "Bordeaux"
+      }
+    ]
+  },
+  {
+    "titre": "Institutions",
+    "missions": [
+      "Interventions ponctuelles en art-thérapie",
+      "Partenariats ponctuels"
+    ],
+    "structures": [
+      {
+        "nom": "Mairie de Bordeaux",
+        "lieu": null
+      },
+      {
+        "nom": "Mairie d’Eysines",
+        "lieu": null
+      },
+      {
+        "nom": "GIHP Aquitaine",
+        "lieu": "Mérignac"
+      },
+      {
+        "nom": "MDSI de Caudéran",
+        "lieu": null
+      },
+      {
+        "nom": "Conseil Général de la Gironde",
+        "lieu": "Bordeaux"
+      },
+      {
+        "nom": "Mairie de Vélizy-Villacoublay",
+        "lieu": null
+      },
+      {
+        "nom": "Mairie d’Ambarès et Lagrave",
+        "lieu": null
+      }
+    ]
+  },
+  {
+    "titre": "Écoles, centres de formation",
+    "missions": [
+      "Formation en art-thérapie"
+    ],
+    "structures": [
+      {
+        "nom": "APSE, sophrologie",
+        "lieu": "Bordeaux"
+      },
+      {
+        "nom": "APE-Faculté de Psychologie",
+        "lieu": "Bordeaux"
+      },
+      {
+        "nom": "Lycée Saint Clément",
+        "lieu": "Cudos"
+      },
+      {
+        "nom": "Centre Hospitalier Montéran",
+        "lieu": "Saint Claude"
+      },
+      {
+        "nom": "Centre Hospitalier Charles Perrens",
+        "lieu": "Bordeaux"
+      },
+      {
+        "nom": "ESAA, École Supérieure d’Arts Appliqués d’Aquitaine",
+        "lieu": "Bordeaux"
+      },
+      {
+        "nom": "ALPTIS",
+        "lieu": "Lyon"
+      },
+      {
+        "nom": "FNAREN",
+        "lieu": "Bordeaux"
+      },
+      {
+        "nom": "CFPPS-Xavier Arnozan",
+        "lieu": "Pessac"
+      },
+      {
+        "nom": "CNFPT",
+        "lieu": "Bordeaux"
+      }
+    ]
+  }
+]

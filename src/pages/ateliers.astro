@@ -1,0 +1,40 @@
+---
+import PageTexte from '../layouts/PageTexte.astro';
+import { lirePage } from '../lib/markdown';
+import { figureHtml } from '../lib/figure';
+import { tarifs, tel, site } from '../data/site';
+import dessinCollectif from '../assets/photos/atelier/dessin-collectif.jpg';
+const figures = {
+  'images/at2.jpg': await figureHtml(dessinCollectif, { alt: 'Participants penchés sur une grande feuille au sol, dessinant ensemble', legende: 'Dessin collectif au sol', largeur: 320, incline: 1.4, ruban: true }),
+};
+const page = lirePage('ateliers', figures);
+page.titres.push({ niveau: 2, id: 'tarifs', texte: 'Tarifs' });
+---
+<PageTexte page={page} titre="Les ateliers" titreSeo="Ateliers d’art-thérapie à Bordeaux"
+  chapo="Cadre adapté d’expression et de communication artistiques. Chaque participant établit un protocole avec l’art-thérapeute."
+  pigment="cadmium" icone="pinceau">
+  <section aria-labelledby="tarifs" class="mt-16">
+    <h2 id="tarifs" class="scroll-mt-24 font-titre text-titre-3">Tarifs des ateliers {tarifs.annee}</h2>
+    <p class="mt-2 text-muet">Pour les particuliers. Adhésion : <strong class="text-encre">{tarifs.adhesion.prix}</strong> ({tarifs.adhesion.detail}).</p>
+    <div class="mt-6 overflow-x-auto rounded-xl border border-ligne">
+      <table class="w-full min-w-[40rem] border-collapse text-left text-[1rem]">
+        <caption class="sr-only">Tarifs des ateliers selon le nombre de séances</caption>
+        <thead class="bg-lavis">
+          <tr>
+            <th scope="col" class="px-4 py-3 font-titre text-[1.05rem] text-encre">Atelier</th>
+            {tarifs.colonnes.map((c) => <th scope="col" class="px-4 py-3 font-titre text-[1.05rem] text-encre">{c}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {tarifs.lignes.map((l) => (
+            <tr class="border-t border-ligne align-top">
+              <th scope="row" class="px-4 py-3 font-medium text-encre">{l.nom}<span class="block text-[0.9375rem] font-normal text-muet">{l.rythme}</span></th>
+              {l.prix.map((p) => <td class="px-4 py-3">{p}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-6">Pour les horaires de l’année en cours ou pour tout entretien individuel personnalisé : <a class="lien" href={tel(site.telephones[1].numero)}>{site.telephones[1].numero}</a>. Voir aussi l’<a href="/emploi-du-temps/" class="lien">emploi du temps</a>.</p>
+  </section>
+</PageTexte>

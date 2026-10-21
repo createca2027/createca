@@ -1,0 +1,621 @@
+{
+  "intro": [
+    "IMPORTANT : Seules les personnes répertoriées ci-dessous ont reçu la certification en art-thérapie appliquée.",
+    "Toute personne prétendant avoir été formée par Createca et dont le nom n’apparaît pas dans cette liste, n’est pas validée par notre organisme comme art-thérapeute certifié en art-thérapie appliquée.",
+    "Liste exhaustive (mise à jour régulière)"
+  ],
+  "personnes": [
+    {
+      "annee": 2011,
+      "prenom": "Laurence",
+      "nom": "BIERNE",
+      "metier": "éducatrice spécialisée",
+      "memoire": "L’art-thérapie, jeu de l’ego",
+      "stage": "MECS",
+      "email": null
+    },
+    {
+      "annee": 2012,
+      "prenom": "Valérie",
+      "nom": "MARY",
+      "metier": "artiste",
+      "memoire": "Mémoire",
+      "stage": "Maison de retraite",
+      "email": null
+    },
+    {
+      "annee": 2012,
+      "prenom": "Marie-Hélène",
+      "nom": "NICOLAS",
+      "metier": "en recherche d’emploi",
+      "memoire": "Des maux pour le dire",
+      "stage": "EHPAD",
+      "email": null
+    },
+    {
+      "annee": 2012,
+      "prenom": "Odile",
+      "nom": "SLAMTI",
+      "metier": "animatrice socio-culturelle",
+      "memoire": "Le collectif au singulier",
+      "stage": "CHRS",
+      "email": null
+    },
+    {
+      "annee": 2013,
+      "prenom": "Nathalie",
+      "nom": "GERARD",
+      "metier": "psychologue",
+      "memoire": "Mémoire",
+      "stage": "Ateliers libres d’Aquitaine",
+      "email": null
+    },
+    {
+      "annee": 2013,
+      "prenom": "Corinne",
+      "nom": "HELL",
+      "metier": "artiste",
+      "memoire": "L’art dans la recherche d’un équilibre psychique, physique et émotionnel",
+      "stage": "Centre de Rééducation fonctionnelle",
+      "email": null
+    },
+    {
+      "annee": 2013,
+      "prenom": "Catherine",
+      "nom": "VIELLE",
+      "metier": "éducatrice de jeunes enfants",
+      "memoire": "La rencontre avec l’autre",
+      "stage": "IME",
+      "email": null
+    },
+    {
+      "annee": 2014,
+      "prenom": "Magali",
+      "nom": "LUTFALLA",
+      "metier": "artiste peintre",
+      "memoire": "Mémoire de fin de formation en Art-thérapie Appliquée",
+      "stage": "EHPAD",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Elisa",
+      "nom": "BOCHE",
+      "metier": "archéologue",
+      "memoire": "L’art-thérapie : l’image et l’autre / miroirs et projections",
+      "stage": "Hôpital de Jour adolescents, CMP enfants",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Sophie",
+      "nom": "DUPIN",
+      "metier": "directrice et animatrice en centre de loisirs",
+      "memoire": "Mémoire d’art-thérapie appliquée en arts-plastiques",
+      "stage": "École/TAP",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Evelyne",
+      "nom": "LABERGERE",
+      "metier": "monitrice-éducatrice",
+      "memoire": "Expérience d’art-thérapie à dominante arts-plastiques auprès d’enfants et adolescents déficients",
+      "stage": "IME",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Karine",
+      "nom": "LARQUIER",
+      "metier": "manipulatrice en radiologie",
+      "memoire": "Mémoire de fin d’études d’art-thérapie",
+      "stage": "Clinique Anouste",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Véronique",
+      "nom": "LESNIER",
+      "metier": "auxiliaire de vie",
+      "memoire": "Art-Thérapie et temporalité : le temps de la co-création art-thérapeutique",
+      "stage": "HANDIHOME",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Sandrine",
+      "nom": "MADELINE-GOSSELIN",
+      "metier": "adjoint du patrimoine",
+      "memoire": "Identité et perception, Comment entrer en communication artistique avec la personne autisme, permettre son accompagnement thérapeutique et devenir pour lui sujet ?",
+      "stage": "Association « Un Autre Pour Apprendre »",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Noémie",
+      "nom": "MESSAHEL",
+      "metier": "AVS",
+      "memoire": "Mémoires de fin d’études en art-thérapie appliquée",
+      "stage": "UMD de Cadillac",
+      "email": null
+    },
+    {
+      "annee": 2015,
+      "prenom": "Chantal",
+      "nom": "SPIES",
+      "metier": "artiste",
+      "memoire": "Mémoire d’art-thérapie appliquée en arts-plastiques",
+      "stage": "IME",
+      "email": null
+    },
+    {
+      "annee": 2016,
+      "prenom": "Aurélie",
+      "nom": "GREGOIRE",
+      "metier": null,
+      "memoire": "L’art-thérapie permet-elle de matérialiser sa peur profonde ?",
+      "stage": "Centre Hospitalier de Vauclair (Hôpital de jour pour adultes)",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Marie",
+      "nom": "LERBEIL",
+      "metier": "éducatrice",
+      "memoire": "Le Beau en Art-Thérapie",
+      "stage": "EHPAD de Lannemezan",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Sophie",
+      "nom": "VESPIGNANI",
+      "metier": "directrice d’école primaire",
+      "memoire": "Au cœur de l’humain",
+      "stage": "Centre Hélio marin d’Oléron",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Christine",
+      "nom": "LAVOIE-BONNEAU",
+      "metier": "graphiste",
+      "memoire": "En quoi l’art-thérapie permet-il de libérer l’expression des émotions ?",
+      "stage": "CEPMO d’Oléron",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Hélène",
+      "nom": "BOULAIS",
+      "metier": "infirmière",
+      "memoire": "L’art-thérapie et la souffrance infantile : Traumatismes, Héritages Trans générationnels",
+      "stage": "Association Ricochet",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Patricia",
+      "nom": "MEMY",
+      "metier": "artiste",
+      "memoire": "Repérer les mécanismes de défense en art-thérapie",
+      "stage": "EHPAD de Blaye",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Madly",
+      "nom": "LESCURE",
+      "metier": "infirmière",
+      "memoire": "L’art-thérapie ou l’art de soigner",
+      "stage": "EHPAD de Biganos",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Isabelle",
+      "nom": "VERRIER",
+      "metier": "animatrice en gérontologie",
+      "memoire": "L’art-thérapie : un outil vers la guérison de notre enfant intérieur",
+      "stage": "Hôpital de Penne d’Agenais",
+      "email": null
+    },
+    {
+      "annee": 2018,
+      "prenom": "Stéphanie",
+      "nom": "MAREK",
+      "metier": "animatrice",
+      "memoire": "Les carences affectives : élaboration de la relation à soi bienveillante en Art-Thérapie",
+      "stage": "Ligue contre le cancer",
+      "email": null
+    },
+    {
+      "annee": 2019,
+      "prenom": "Jacqueline",
+      "nom": "DARROUX",
+      "metier": "animatrice en gérontologie",
+      "memoire": "Le dire en art-thérapie",
+      "stage": "EHPAD",
+      "email": null
+    },
+    {
+      "annee": 2019,
+      "prenom": "Karine",
+      "nom": "GIRAUDEL",
+      "metier": "éducatrice",
+      "memoire": "L’art-thérapie : l’art du lien ou comment se lier, se relier et se délier",
+      "stage": "Centre Hospitalier Côte Basque",
+      "email": null
+    },
+    {
+      "annee": 2019,
+      "prenom": "Loic",
+      "nom": "IBARROLA-IBERO",
+      "metier": "infographiste",
+      "memoire": "Processus de structuration et de réaffirmation de son identité propre par l’exploitation de l’art-thérapie et du potentiel artistique",
+      "stage": "Association L’art s’emporte",
+      "email": null
+    },
+    {
+      "annee": 2019,
+      "prenom": "Caroline",
+      "nom": "CAPOT",
+      "metier": "animatrice",
+      "memoire": "L’art nécessaire",
+      "stage": "Tour de Gassies",
+      "email": null
+    },
+    {
+      "annee": 2019,
+      "prenom": "Emmanuelle",
+      "nom": "TARTAS",
+      "metier": "professeur d’arts-plastiques",
+      "memoire": "L’atelier d’art-thérapie : des liens pour restaurer une légitimité",
+      "stage": "Association ADEMA",
+      "email": null
+    },
+    {
+      "annee": 2020,
+      "prenom": "Aurélie",
+      "nom": "DEBANDE",
+      "metier": "animatrice en gérontologie",
+      "memoire": "Le corps reflet de l’âme et du cœur ou comment l’art-thérapie dévoile notre Terra Incognita",
+      "stage": "EHPAD Terre Nègre",
+      "email": null
+    },
+    {
+      "annee": 2020,
+      "prenom": "Guillaume",
+      "nom": "BODIN",
+      "metier": "éducateur spécialisé",
+      "memoire": "La pudeur du lézard",
+      "stage": "Association Rénovation",
+      "email": null
+    },
+    {
+      "annee": 2020,
+      "prenom": "Laetitia",
+      "nom": "CROCE",
+      "metier": "artiste peintre",
+      "memoire": "La place et les limites de l’empathie en art-thérapie",
+      "stage": "EHPAD les 7 sources / association GEM à Avignon",
+      "email": null
+    },
+    {
+      "annee": 2020,
+      "prenom": "Maurane",
+      "nom": "DESCUBES",
+      "metier": "infirmière",
+      "memoire": "L’enfant lune et l’enfant soleil",
+      "stage": null,
+      "email": null
+    },
+    {
+      "annee": 2021,
+      "prenom": "Alexandrine",
+      "nom": "BRARD",
+      "metier": "travailleur indépendant",
+      "memoire": "Pratique et bienfait de l’art-thérapie dans le handicap et sa partie invisible",
+      "stage": "association Simon de Cyrène",
+      "email": null
+    },
+    {
+      "annee": 2021,
+      "prenom": "Sandrine",
+      "nom": "SUEUR",
+      "metier": "AMP",
+      "memoire": "Le potentiel de l’art-thérapie dans l’amélioration des peurs, angoisses et manifestations psychosomatiques",
+      "stage": "association AVA",
+      "email": null
+    },
+    {
+      "annee": 2021,
+      "prenom": "Sophie",
+      "nom": "ROIG-BALINT",
+      "metier": "professeur des écoles",
+      "memoire": "Art-thérapie et transmission familiale",
+      "stage": "LAEP de La Teste",
+      "email": null
+    },
+    {
+      "annee": 2021,
+      "prenom": "Véronique",
+      "nom": "GUEUDET",
+      "metier": "professeur d’allemand",
+      "memoire": "Potentialités et limites de la rencontre interculturelle en art-thérapie",
+      "stage": "association ESPOIR 33",
+      "email": null
+    },
+    {
+      "annee": 2022,
+      "prenom": "Laure",
+      "nom": "HAMMOUCHE",
+      "metier": "assistante d’éducation",
+      "memoire": "Légitimité de l’existence : la reconstruction de la dignité en art-thérapie",
+      "stage": "Lycée Professionnel Léonard de Vinci à Blanquefort",
+      "email": null
+    },
+    {
+      "annee": 2022,
+      "prenom": "Léa",
+      "nom": "DUPASQUIER",
+      "metier": "étudiante en art (master en arts-plastiques)",
+      "memoire": "De la cage mentale à l’expression de soi : l’art-thérapie une passerelle d’accès à l’être",
+      "stage": "Cabinet de Gestalt thérapie à Limoges",
+      "email": null
+    },
+    {
+      "annee": 2023,
+      "prenom": "Isabelle",
+      "nom": "CASTRO-DANTAS",
+      "metier": "reconversion",
+      "memoire": "Comment l’art-thérapeute, avec sa difficulté aux autres, peut-il accompagner un actant ?",
+      "stage": "la MATA à Bordeaux",
+      "email": null
+    },
+    {
+      "annee": 2023,
+      "prenom": "Karine",
+      "nom": "RAMBERT",
+      "metier": "aide-soignante",
+      "memoire": "Le monde d’à côté",
+      "stage": "EHPAD SAINT SEVER LUXEY et le Pôle prévention CIAS Cœur Haute Lande",
+      "email": null
+    },
+    {
+      "annee": 2023,
+      "prenom": "Samantha",
+      "nom": "DERATHE",
+      "metier": "éducatrice",
+      "memoire": "Le corps dans tous ses états",
+      "stage": "Groupe de femmes victimes de violence sexuelles en cabinet libéral",
+      "email": null
+    },
+    {
+      "annee": 2023,
+      "prenom": "Sylvie",
+      "nom": "MONTIXI",
+      "metier": "psychosociologue",
+      "memoire": "L’individu, le groupe et l’art-thérapeute dans le monde du travail",
+      "stage": "Association Le dire autrement",
+      "email": "fasylit.action@gmail.com"
+    },
+    {
+      "annee": 2023,
+      "prenom": "Nadia",
+      "nom": "CHERAUD",
+      "metier": "dessinatrice en architecture",
+      "memoire": "Comment l’art-thérapie peut-elle accompagner dans les passages transitoires de la vie",
+      "stage": "EHPAD - Côtes d’Armor",
+      "email": "cheraudnadia@gmail.com"
+    },
+    {
+      "annee": 2023,
+      "prenom": "Fiona",
+      "nom": "MICHEL",
+      "metier": "ALS en EHPAD",
+      "memoire": "Les bienfaits de l’art-thérapie chez les personnes atteinte de la maladie d’Alzheimer",
+      "stage": "EHPAD",
+      "email": null
+    },
+    {
+      "annee": 2024,
+      "prenom": "Karine",
+      "nom": "CHAVASSE",
+      "metier": "architecte d’intérieur",
+      "memoire": "Quand l’Art-Thérapie accompagne pas à pas la vie jusqu’à la mort.",
+      "stage": "Association « Solidarité Femmes Bassin » - EHPAD « Les Roses du Bassin »",
+      "email": "chavassek@gmail.com"
+    },
+    {
+      "annee": 2024,
+      "prenom": "Julie",
+      "nom": "RUGGERI",
+      "metier": "ATSEM",
+      "memoire": "La vie fantasmatique à travers ses objets au sein d’un atelier d’art-thérapie",
+      "stage": "la CADA (Clinique Anouste)",
+      "email": "j.ruggeri33@gmail.com"
+    },
+    {
+      "annee": 2024,
+      "prenom": "Isabelle",
+      "nom": "GEORGES",
+      "metier": "soma thérapeute",
+      "memoire": "Peut-on réparer les liens primordiaux par l’art-thérapie ?",
+      "stage": "IMEP de Mimizan",
+      "email": null
+    },
+    {
+      "annee": 2024,
+      "prenom": "Julie",
+      "nom": "FESSENMEYER",
+      "metier": "éducatrice jeune enfant",
+      "memoire": "Jusqu’où le cadre éducatif peut-il empêcher la singularité ?",
+      "stage": "Centre de l’audition et du langage",
+      "email": null
+    },
+    {
+      "annee": 2025,
+      "prenom": "Madison",
+      "nom": "ATANACKOVIC",
+      "metier": "équipière polyvalente/licence de psycho",
+      "memoire": "Art-thérapie et croyances : l’atelier d’art-thérapie pour donner du sens à notre survie",
+      "stage": "Association F’Ames",
+      "email": "madison.atana@gmail.com"
+    },
+    {
+      "annee": 2025,
+      "prenom": "Sophie",
+      "nom": "LACHERET",
+      "metier": "designer textile et accompagnant éducatif petite enfance",
+      "memoire": "De la production plastique au talisman. Une métamorphose de la souffrance",
+      "stage": "Université Michel de Montaigne Bordeaux III et Association La grande Ourse",
+      "email": "sophielacheret.arthe@gmail.com"
+    },
+    {
+      "annee": 2025,
+      "prenom": "Marie-Hélène",
+      "nom": "BONAFOUS",
+      "metier": "directrice d’établissement médico-social",
+      "memoire": "Un lieu ressource au service de l’art-thérapie",
+      "stage": "A.R.T. (Accueil Ressource Temporaire)",
+      "email": null
+    },
+    {
+      "annee": 2025,
+      "prenom": "Laurent",
+      "nom": "OREVE",
+      "metier": "éducateur spécialisé",
+      "memoire": "Ulysse l’Infable, le dessin comme mémoire d’un voyage intérieur",
+      "stage": "Association Rénovation SESSAD",
+      "email": "lo.oreve@orange.fr"
+    },
+    {
+      "annee": 2025,
+      "prenom": "Laura",
+      "nom": "VEYSSIERES",
+      "metier": "ergothérapeute",
+      "memoire": "L’art-thérapie, entre conformité et individualité",
+      "stage": "Maison de Santé Les Pins (33)",
+      "email": null
+    },
+    {
+      "annee": 2025,
+      "prenom": "Claire",
+      "nom": "GODET",
+      "metier": "architecte & artiste",
+      "memoire": "Comment surmonter la honte en art-thérapie pour favoriser l’acceptation de soi",
+      "stage": "le CADA Clinique Anouste",
+      "email": "c.godet.dm@gmail.com"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Maeva",
+      "nom": "TRACQUI",
+      "metier": "artiste-auteur",
+      "memoire": "L’art-thérapie : vers un autre langage pour communiquer ; ériger des ponts au-dessus du vide",
+      "stage": "Ludosens à Bègles (association d’accompagnement professionnel pour les adolescents neuro-atypiques)",
+      "email": "maetigre@orange.fr"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Solène",
+      "nom": "DELIVERTOUX",
+      "metier": "éducatrice spécialisée",
+      "memoire": "Art-thérapie dans le cadre de la protection de l’enfance, schémas familiaux et individualisation",
+      "stage": "ASE Charente, Maison Départementale des solidarités de Ruelle-sur-Touvre",
+      "email": "solene.delivertoux@gmail.com"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Florence",
+      "nom": "RATINAUD",
+      "metier": "tapissier, décorateur",
+      "memoire": "L’art-thérapie, ou comment transformer l’anxiété en matière d’existence",
+      "stage": "Ehpad Duras - Korian Bellevue / Hôpital de Jour Enfants Les Oyats à Marmande",
+      "email": null
+    },
+    {
+      "annee": 2026,
+      "prenom": "Alizé",
+      "nom": "GAUTHIER",
+      "metier": "céramiste et porcelainière",
+      "memoire": "Comment à l’image du Kintsugi, l’art-thérapie permet une réhabilitation de l’actant dans sa connexion à lui-même",
+      "stage": "L’éveil des sens (87000)",
+      "email": "alize.gauthier@gmail.com"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Anna",
+      "nom": "LADEIRO DOS SANTOS",
+      "metier": "auxiliaire puéricultrice",
+      "memoire": "Croyances familiales et art-thérapie, l’art-thérapie pour dépasser les héritages familiaux et se relier à soi-même",
+      "stage": "Association Lilomino à Bordeaux",
+      "email": "annaladeiro@msn.com"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Nelly",
+      "nom": "GROU-RADENEZ",
+      "metier": "chargé de mission en insertion",
+      "memoire": "Se connaitre, s’accepter, sans fin ; vers la juste place de l’art-thérapeute",
+      "stage": "EHPAD Villa Bontemps (Talence)",
+      "email": "nellygrou@yahoo.fr"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Manon",
+      "nom": "MONGOUR",
+      "metier": "infirmière en psychiatrie",
+      "memoire": "Funambule entre deux mondes : structuration psychique des personnes borderline en art-thérapie",
+      "stage": "Clinique les Bruyères (27) / MATA",
+      "email": "manon0606@wanadoo.fr"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Omphale",
+      "nom": "FORHAN",
+      "metier": "médiatrice culturelle",
+      "memoire": "Art-thérapie et régression : une voie de dignité pour les personnes déficientes en perte d’autonomie",
+      "stage": "EHPAD du Grand Bon Pasteur de Bordeaux",
+      "email": "omphale.forhan@wanadoo.fr"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Anne-Sarah",
+      "nom": "BRUNETEAU",
+      "metier": "éducatrice spécialisée",
+      "memoire": "L’art-thérapie facteur d’engagement dans le processus de soin",
+      "stage": "FAM Triade / Résidence d’accueil Gallieni (Bordeaux)",
+      "email": "annesarahbruneteau@hotmail.fr"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Sophie",
+      "nom": "BOUSCARY",
+      "metier": "responsable administrative et financière",
+      "memoire": "Transformer l’angoisse en matière ; la production artistique comme fonction ou objet contraphobique en atelier d’art-thérapie",
+      "stage": "IME L’Oiseau Lire de Saint Laurent du Médoc / antenne de Villambis",
+      "email": "sophiebouscary33@gmail.com"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Michel",
+      "nom": "BOURJAC",
+      "metier": "psychanalyste",
+      "memoire": "Quand les maux sont sans mots : l’art-thérapie éclaire certaines ombres de la psychanalyse",
+      "stage": "Association Epilepsie France",
+      "email": "psy.mbourjac@gmail.com"
+    },
+    {
+      "annee": 2026,
+      "prenom": "Caroline",
+      "nom": "BOURGEOIS",
+      "metier": "enseignante",
+      "memoire": "Je est un autre : comment l’art-thérapie révèle l’inconnu en soi",
+      "stage": "Unité de jour à l’Hôpital psychiatrique Garderose",
+      "email": "kaleido.coursetateliers@gmail.com"
+    }
+  ]
+}

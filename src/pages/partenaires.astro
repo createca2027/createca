@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import partenaires from '../data/partenaires.json';
+const total = partenaires.reduce((n, g) => n + g.structures.length, 0);
+---
+<Base titre="Partenaires : soin, petite enfance, institutions" description={`Les ${total} structures partenaires de Createca en Gironde et au-delà : petite enfance, soin, associations artistiques, personnes âgées, institutions et formation.`}>
+  <EnTetePage titre="Partenaires" chapo="Crèches, structures de soin, associations artistiques, maisons de retraite, institutions et écoles : là où Createca intervient en art-thérapie et en formation."
+    pigment="cobalt" dessin="figures-deux" />
+  <div class="page py-12 lg:py-16">
+    <div class="space-y-16">
+      {partenaires.map((g, i) => (
+        <section aria-labelledby={`partenaires-${i}`} class="grid gap-x-12 gap-y-6 border-t border-ligne pt-8 lg:grid-cols-12">
+          <div class="lg:col-span-5">
+            <h2 id={`partenaires-${i}`} class="text-titre-3">{g.titre}</h2>
+            <ul class="mt-4 space-y-2 font-titre text-[1.15rem] italic leading-snug text-encre-claire">
+              {g.missions.map((m) => <li>{m}</li>)}
+            </ul>
+          </div>
+          <ul class="grid content-start gap-x-8 gap-y-4 sm:grid-cols-2 lg:col-span-7" role="list">
+            {g.structures.map((s) => (
+              <li class="border-l-2 border-ocre/70 pl-4">
+                <span class="block font-medium text-encre">{s.nom}</span>
+                {s.lieu && <span class="text-[1rem] text-muet">{s.lieu}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+    <p class="mt-16 max-w-[40rem]">Vous souhaitez mettre en place des séances d’art-thérapie dans votre structure ? <a href="/contact/?objet=partenariat#formulaire" class="lien">Écrivez-nous</a>.</p>
+  </div>
+</Base>

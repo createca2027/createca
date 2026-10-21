@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import EnTetePage from '../../components/EnTetePage.astro';
+import certifications from '../../data/certifications.json';
+
+const [avertissement, precision, ...reste] = certifications.intro;
+const annees = [...new Set(certifications.personnes.map((p) => p.annee))].sort((a, b) => b - a);
+const total = certifications.personnes.length;
+---
+<Base titre="Art-thérapeutes certifiés" description={`La liste des ${total} art-thérapeutes certifiés en art-thérapie appliquée par Createca depuis ${annees.at(-1)}, avec leur mémoire et leur lieu de stage.`}>
+  <EnTetePage titre="Art-thérapeutes certifiés" chapo={`${total} personnes ont reçu la certification en art-thérapie appliquée délivrée par Createca depuis ${annees.at(-1)}.`}
+    pigment="cobalt" icone="livre" filAriane={[{ titre: 'Actions', href: '/actions/' }, { titre: 'Formation', href: '/formation/' }]} />
+  <div class="page py-12 lg:py-16">
+    <div role="note" class="max-w-[46rem] rounded-xl border-2 border-cadmium bg-papier p-6">
+      <p class="font-semibold text-encre">{avertissement.replace(/^IMPORTANT\s*:\s*/, '')}</p>
+      <p class="mt-2">{precision}</p>
+      {reste.map((r) => <p class="mt-2 text-[1rem] text-muet">{r}</p>)}
+    </div>
+    <nav aria-label="Promotions" class="mt-10">
+      <ul class="flex flex-wrap gap-2">
+        {annees.map((an) => <li><a href={`#promotion-${an}`} class="inline-flex min-h-11 items-center rounded-full border border-encre/30 px-4 text-[1rem] text-encre no-underline hover:border-encre hover:bg-lavis">{an}</a></li>)}
+      </ul>
+    </nav>
+    <div class="mt-12 space-y-14">
+      {annees.map((an) => {
+        const promo = certifications.personnes.filter((p) => p.annee === an);
+        return (
+          <section aria-labelledby={`promotion-${an}`} class="grid gap-x-12 gap-y-4 border-t border-ligne pt-8 lg:grid-cols-12">
+            <h2 id={`promotion-${an}`} class="scroll-mt-24 font-titre text-titre-1 font-medium text-encre/80 lg:col-span-2">{an}</h2>
+            <ul class="divide-y divide-ligne lg:col-span-10" role="list">
+              {promo.map((p) => (
+                <li class="grid gap-x-8 gap-y-1 py-4 md:grid-cols-12">
+                  <p class="md:col-span-4"><span class="font-titre text-[1.3rem] font-semibold text-encre">{p.prenom} {p.nom}</span>
+                    {p.metier && <span class="block text-[1rem] text-muet">{p.metier}</span>}
+                  </p>
+                  <div class="text-[1.0625rem] md:col-span-8">
+                    {p.memoire && <p><span class="text-muet">Mémoire : </span><i class="font-titre text-[1.15rem]">{p.memoire}</i></p>}
+                    {p.stage && <p><span class="text-muet">Stage : </span>{p.stage}</p>}
+                    {p.email && <p><a href={`mailto:${p.email}`} class="lien">{p.email}</a></p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</Base>

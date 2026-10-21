@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import PageTexte from '../layouts/PageTexte.astro';
+import Visionneuse from '../components/Visionneuse.astro';
+import { lirePage } from '../lib/markdown';
+import { expositions, autresExpositions } from '../data/expositions';
+
+const page = lirePage('galerie');
+page.titres.unshift({ niveau: 2, id: 'expositions', texte: 'Les expositions' });
+const inclinaisons = [-1.6, 1.1, -0.6, 1.8, -1.2];
+---
+<PageTexte page={page} titre="La galerie du Chien" titreSeo="Galerie : expositions et art-thérapie"
+  chapo="Lieu d’exposition et de stimulation, la galerie est la première étape de la thérapie artistique : elle aide à voir les œuvres, puis accueille les productions des participants."
+  pigment="cadmium" icone="chevalet">
+  <Fragment slot="avant">
+    <section aria-labelledby="expositions" class="lavis-bande py-14 lg:py-20">
+      <div class="page">
+        <div class="max-w-[42rem]">
+          <h2 id="expositions" class="scroll-mt-24 text-titre-2">Les expositions de la galerie</h2>
+          <p class="mt-3">Peintres, dessinateurs et sculpteurs exposés par Createca. Sélectionnez une photo pour l’agrandir.</p>
+        </div>
+        <div class="mt-10 divide-y divide-encre/15 border-y border-encre/15">
+          {expositions.map((expo) => (
+            <article class="grid gap-x-10 gap-y-6 py-10 lg:grid-cols-12" aria-labelledby={`expo-${expo.id}`}>
+              <div class="lg:col-span-4">
+                <h3 id={`expo-${expo.id}`} class="text-titre-4">{expo.artiste}</h3>
+                {expo.titre && <p class="mt-1 font-titre text-[1.15rem] italic text-encre-claire">{expo.titre}</p>}
+                {expo.texte && <p class="mt-3 text-[1.0625rem]">{expo.texte}</p>}
+                {expo.actualite && <p class="mt-3 text-[1rem]"><a href={`/actualites/#${expo.actualite}`} class="lien">L’annonce dans les actualités</a></p>}
+              </div>
+              <ul class="grid grid-cols-3 gap-x-3 gap-y-5 sm:gap-x-5 sm:gap-y-7 lg:col-span-8 lg:grid-cols-4" role="list">
+                {expo.photos.map((p, i) => (
+                  <li>
+                    <a href={p.src.src} data-visionneuse={expo.id} data-legende={p.legende ?? expo.artiste}
+                      class="tirage block transition-[rotate] duration-300 hover:rotate-0" style={`--incline:${inclinaisons[i % inclinaisons.length]}deg`}>
+                      <Image src={p.src} alt={p.alt} width={400} widths={[200, 400]} sizes="(min-width: 64rem) 11rem, 30vw" class="aspect-square w-full object-cover" loading="lazy" decoding="async" />
+                      {p.legende && <span class="mt-2 block font-titre text-[0.95rem] italic text-muet">{p.legende}</span>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+        <div class="mt-10 max-w-[42rem]">
+          <h3 class="text-titre-4">Les autres expositions</h3>
+          <ul class="mt-4 space-y-2">
+            {autresExpositions.map((e) => (
+              <li><a href={`/actualites/#${e.actualite}`} class="lien">{e.artiste}{e.titre && <>, <i>{e.titre}</i></>}</a> <span class="text-muet">({e.annee})</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </Fragment>
+  <Visionneuse />
+</PageTexte>

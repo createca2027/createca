@@ -1,0 +1,45 @@
+---
+// En-tête des pages intérieures : titre, chapô et un dessin de la plaquette sur une tache de pigment.
+import Embleme from './Embleme.astro';
+import Icone from './Icone.astro';
+import tacheOcre from '../assets/art/tache-ocre-s.webp';
+import tacheCadmium from '../assets/art/tache-cadmium-s.webp';
+import tacheCobalt from '../assets/art/tache-cobalt-s.webp';
+import traitEncre from '../assets/art/trait-encre.webp';
+import { insecableTexte } from '../lib/typo';
+
+interface Props {
+  titre: string;
+  chapo?: string;
+  pigment?: 'ocre' | 'cadmium' | 'cobalt';
+  dessin?: 'figure-marche' | 'figures-deux' | 'embleme-ovale' | 'embleme-rayonnant';
+  icone?: 'pinceau' | 'fusain' | 'modelage' | 'plume' | 'chevalet' | 'livre' | 'palette';
+  filAriane?: { titre: string; href: string }[];
+}
+const { titre, chapo, pigment = 'ocre', dessin, icone, filAriane = [] } = Astro.props;
+const tache = { ocre: tacheOcre, cadmium: tacheCadmium, cobalt: tacheCobalt }[pigment];
+---
+<section class="relative overflow-hidden border-b border-ligne/70">
+  <div class="page grid items-end gap-8 pb-12 pt-10 md:grid-cols-12 md:pb-16 md:pt-16">
+    <div class="relative z-10 md:col-span-8">
+      {filAriane.length > 0 && (
+        <nav aria-label="Fil d’Ariane" class="mb-5 text-[0.9375rem] text-muet">
+          <ol class="flex flex-wrap items-center gap-x-2">
+            <li><a href="/" class="lien text-muet">Accueil</a></li>
+            {filAriane.map((e) => (
+              <li class="flex items-center gap-2"><span aria-hidden="true">/</span><a href={e.href} class="lien text-muet">{e.titre}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <h1 class="titre-page font-medium" set:html={insecableTexte(titre)} />
+      <img src={traitEncre.src} width={traitEncre.width} height={traitEncre.height} alt="" class="pigment -ml-2 mt-3 h-auto w-56 opacity-70 md:w-72" />
+      {chapo && <p class="chapo mt-5 max-w-[38rem]">{chapo}</p>}
+    </div>
+    <div class="relative hidden h-full min-h-48 md:col-span-4 md:block" aria-hidden="true">
+      <img src={tache.src} width={tache.width} height={tache.height} alt="" class="pigment absolute bottom-0 right-0 w-64" />
+      {dessin && <Embleme nom={dessin} class="absolute bottom-2 right-14 h-52 w-auto text-encre" />}
+      {!dessin && icone && <Icone nom={icone} class="absolute bottom-10 right-20 size-32 text-encre" />}
+    </div>
+  </div>
+</section>

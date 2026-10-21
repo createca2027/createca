@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import { plan } from '../data/site';
+---
+<Base titre="Plan du site" description="Toutes les pages du site de Createca, centre d’art-thérapie à Bordeaux : actualités, raisons, actions, public, fondateurs, galerie, ateliers, contact.">
+  <EnTetePage titre="Plan du site" pigment="ocre" dessin="embleme-ovale" />
+  <nav aria-label="Plan du site" class="page grid gap-x-10 gap-y-12 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:py-16">
+    {plan.map((groupe) => (
+      <ul class="space-y-6 border-t border-encre/25 pt-5">
+        {groupe.map((item) => (
+          <li>
+            <a href={item.href} class="font-titre text-[1.6rem] font-semibold text-encre no-underline hover:underline hover:decoration-cadmium hover:decoration-2 hover:underline-offset-4">{item.titre}</a>
+            {item.enfants && (
+              <ul class="mt-2 space-y-1.5">
+                {item.enfants.map((e) => (
+                  <li>
+                    <a href={e.href} class="lien">{e.titre}</a>
+                    {e.enfants && <ul class="mt-1.5 space-y-1 border-l-2 border-ocre/70 pl-3">{e.enfants.map((p) => <li><a href={p.href} class="lien text-[0.98rem] text-encre-claire">{p.titre}</a></li>)}</ul>}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    ))}
+  </nav>
+</Base>

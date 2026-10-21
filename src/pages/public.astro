@@ -1,0 +1,15 @@
+---
+import PageTexte from '../layouts/PageTexte.astro';
+import Tirage from '../components/Tirage.astro';
+import { lirePage } from '../lib/markdown';
+import atelierAdultes from '../assets/photos/ancien/atelier-adultes.jpg';
+const page = lirePage('public');
+---
+<PageTexte page={page} titreSeo="Public : enfants, ados, adultes et parents"
+  chapo="Le centre est ouvert aux enfants, adolescents, adultes et parents, en séance individuelle ou de groupe."
+  pigment="cobalt" icone="palette" sommaire={false}>
+  <div class="mt-12 flex flex-wrap items-end gap-8">
+    <Tirage src={atelierAdultes} alt="Des adultes, dont une personne en fauteuil roulant, peignent autour d’une grande table d’atelier" legende="Un atelier d’adultes à Createca" incline={-1.5} />
+    <p class="max-w-[24rem]">Ce que disent celles et ceux qui ont découvert l’art-thérapie lors d’une première séance : <a href="/temoignages/" class="lien">les témoignages</a>.</p>
+  </div>
+</PageTexte>

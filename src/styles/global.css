@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+/* Alegreya : titres (dessin calligraphique, pensé pour la lecture longue).
+   Alegreya Sans : texte courant et interface. Sous-ensemble latin seulement. */
+@import "@fontsource/alegreya/latin-500.css";
+@import "@fontsource/alegreya/latin-600.css";
+@import "@fontsource/alegreya/latin-700.css";
+@import "@fontsource/alegreya/latin-500-italic.css";
+@import "@fontsource/alegreya-sans/latin-400.css";
+@import "@fontsource/alegreya-sans/latin-400-italic.css";
+@import "@fontsource/alegreya-sans/latin-500.css";
+@import "@fontsource/alegreya-sans/latin-700.css";
+
+@theme {
+  /* Papier, encre et pigments, tirés de la plaquette Createca */
+  --color-papier: #fcfcfa;
+  --color-lavis: #eef3f9;
+  --color-encre: #12305c;
+  --color-encre-claire: #3d5a86;
+  --color-graphite: #2a2e35;
+  --color-muet: #5a6170;
+  --color-ligne: #d3dce8;
+  --color-cadmium: #ee7f1a;
+  --color-cadmium-fonce: #b5560a;
+  --color-ocre: #e8b33c;
+  --color-cobalt: #6f98cf;
+
+  --font-titre: "Alegreya", "Iowan Old Style", Georgia, serif;
+  --font-texte: "Alegreya Sans", "Gill Sans", "Segoe UI", system-ui, sans-serif;
+
+  /* Échelle typographique classique : 15 · 19 · 24 · 30 · 38 · 48 · 72 */
+  --text-petit: 0.9375rem;
+  --text-corps: 1.1875rem;
+  --text-titre-4: 1.5rem;
+  --text-titre-3: 1.875rem;
+  --text-titre-2: 2.375rem;
+  --text-titre-1: 3rem;
+  --text-affiche: 4.5rem;
+
+  --ease-pinceau: cubic-bezier(0.6, 0.05, 0.25, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    background-color: var(--color-papier);
+    color: var(--color-graphite);
+    font-family: var(--font-texte);
+    font-size: var(--text-corps);
+    line-height: 1.6;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-titre);
+    color: var(--color-encre);
+    line-height: 1.12;
+    text-wrap: balance;
+    font-weight: 600;
+  }
+  p, li, dd, figcaption, blockquote { text-wrap: pretty; }
+  ::selection { background: color-mix(in srgb, var(--color-ocre) 55%, transparent); color: var(--color-encre); }
+  a { color: var(--color-encre); }
+  :focus-visible {
+    outline: 2px solid var(--color-encre);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .sur-encre :focus-visible { outline-color: var(--color-ocre); }
+  img, svg { max-width: 100%; height: auto; }
+}
+
+@layer components {
+  /* Gabarit : gouttière de 16 px sur mobile */
+  .page { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1rem; }
+  @media (min-width: 48rem) { .page { padding-inline: 2rem; } }
+
+  /* Lien de texte : soulignement fin, qui passe à l'orange au survol */
+  .lien {
+    color: var(--color-encre);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: color-mix(in srgb, var(--color-encre) 45%, transparent);
+    transition: text-decoration-color 0.2s, text-decoration-thickness 0.2s;
+  }
+  .lien:hover { text-decoration-color: var(--color-cadmium); text-decoration-thickness: 2px; }
+
+  /* Boutons */
+  .bouton {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 3rem; padding: 0.6rem 1.35rem;
+    font-family: var(--font-texte); font-weight: 500; font-size: 1.0625rem; line-height: 1.2;
+    border-radius: 999px; border: 1.5px solid var(--color-encre);
+    text-decoration: none; transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease-pinceau);
+  }
+  .bouton-plein { background: var(--color-encre); color: var(--color-papier); }
+  .bouton-plein:hover { background: var(--color-encre-claire); border-color: var(--color-encre-claire); }
+  .bouton-trait { background: transparent; color: var(--color-encre); }
+  .bouton-trait:hover { background: var(--color-lavis); }
+  .bouton:active { transform: translateY(1px); }
+
+  /* Tirage photo : petite épreuve posée sur la page, avec un ruban adhésif */
+  .tirage {
+    position: relative; display: inline-block; margin: 0;
+    background: #fff; padding: 0.5rem 0.5rem 0.65rem;
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--color-encre) 14%, transparent), 0 8px 24px -12px color-mix(in srgb, var(--color-encre) 35%, transparent);
+    rotate: var(--incline, -1.2deg);
+  }
+  .tirage img { display: block; width: 100%; height: auto; }
+  .tirage figcaption {
+    margin-top: 0.5rem; font-family: var(--font-titre); font-style: italic; font-weight: 500;
+    font-size: 0.9375rem; line-height: 1.35; color: var(--color-muet);
+  }
+  .tirage[data-ruban]::before {
+    content: ""; position: absolute; top: -0.7rem; left: 50%; width: 5.5rem; height: 1.4rem;
+    translate: -50% 0; rotate: 3deg;
+    background: color-mix(in srgb, var(--color-ocre) 42%, transparent);
+    mix-blend-mode: multiply;
+  }
+
+  /* Texte long (pages issues de l'ancien site) */
+  .prose-createca { max-width: 40rem; }
+  .prose-createca > * + * { margin-top: 1em; }
+  .prose-createca h2 {
+    font-size: var(--text-titre-3); margin-top: 2.6em; margin-bottom: 0.2em; scroll-margin-top: 6rem;
+  }
+  .prose-createca h3 {
+    font-size: var(--text-titre-4); margin-top: 1.9em; scroll-margin-top: 6rem;
+  }
+  .prose-createca h2 + h3 { margin-top: 1em; }
+  .prose-createca ul { padding-left: 0; list-style: none; }
+  .prose-createca ul > li { position: relative; padding-left: 1.6rem; }
+  .prose-createca ul > li + li { margin-top: 0.4em; }
+  .prose-createca ul > li::before {
+    content: ""; position: absolute; left: 0.15rem; top: 0.62em; width: 0.8rem; height: 0.32rem;
+    background: var(--color-cadmium); border-radius: 60% 40% 55% 45%; rotate: -8deg; opacity: 0.85;
+  }
+  .prose-createca ol { padding-left: 1.4rem; list-style: decimal; }
+  .prose-createca strong { font-weight: 700; color: var(--color-encre); }
+  .prose-createca a { color: var(--color-encre); text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  .prose-createca a:hover { text-decoration-color: var(--color-cadmium); text-decoration-thickness: 2px; }
+  .prose-createca blockquote {
+    font-family: var(--font-titre); font-style: italic; font-size: 1.3rem; color: var(--color-encre);
+    border-left: 3px solid var(--color-ocre); padding-left: 1rem;
+  }
+  .prose-createca figure.tirage { display: block; max-width: 22rem; margin-block: 2rem; }
+  /* Dans la marge droite seulement quand elle est assez large (colonne de 852 px pour 640 px de texte) */
+  @media (min-width: 90rem) {
+    .prose-createca figure.tirage.en-marge { float: right; clear: right; width: 13rem; margin: 0.4rem -14.5rem 1.5rem 2rem; }
+  }
+
+  /* Taches de gouache : pigments qui se superposent comme sur le papier */
+  .pigment { mix-blend-mode: multiply; pointer-events: none; user-select: none; }
+
+  .lavis-bande { background-color: var(--color-lavis); }
+}
+
+@layer utilities {
+  .titre-affiche { font-size: clamp(2.6rem, 1.4rem + 4.8vw, var(--text-affiche)); line-height: 1.02; letter-spacing: -0.01em; }
+  .titre-page { font-size: clamp(2.4rem, 1.6rem + 3.2vw, 3.75rem); line-height: 1.05; letter-spacing: -0.005em; }
+  .chapo { font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.375rem); line-height: 1.5; }
+}
+
+/* Révélation au pinceau de l'emblème (accueil) : l'état final est l'état par défaut,
+   l'animation ne joue que si l'utilisateur n'a pas demandé de réduire les mouvements. */
+@media (prefers-reduced-motion: no-preference) {
+  .revele-trait {
+    animation: revele-trait 1.15s var(--ease-pinceau) both;
+    animation-delay: calc(0.35s + var(--i, 0) * 0.17s);
+  }
+  .eclot {
+    animation: eclot 1.3s var(--ease-pinceau) both;
+    animation-delay: var(--d, 0s);
+  }
+}
+@keyframes revele-trait { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes eclot { from { opacity: 0; scale: 0.9; } to { opacity: 1; scale: 1; } }
+
+/* Panneau « Plan du site » */
+dialog.plan::backdrop { background: color-mix(in srgb, var(--color-encre) 35%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  dialog.plan[open] { animation: plan-ouvre 0.35s var(--ease-pinceau); }
+}
+@keyframes plan-ouvre { from { opacity: 0; translate: 0 -0.75rem; } to { opacity: 1; translate: 0 0; } }
+
+/* Mots composés qu'on ne coupe pas au trait d'union dans les titres */
+.insecable { white-space: nowrap; }
+
+.groupe-tirages { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1.5rem 1.75rem; margin-block: 2rem; }
+.groupe-tirages .tirage { flex: 0 0 auto; }
+
+/* Calendrier de la formation (page Formation) */
+.prose-createca .calendrier { list-style: none; padding: 0; border-top: 1px solid var(--color-ligne); }
+.prose-createca .calendrier li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--color-ligne); margin: 0; }
+.prose-createca .calendrier .calendrier-libelle { font-family: var(--font-titre); font-weight: 600; color: var(--color-encre); }
+
+/* Texte des actualités : lignes courtes d'annonce, liens soulignés */
+.actu-corps { font-size: 1.0625rem; line-height: 1.5; }
+.actu-corps > p + p { margin-top: 0.3em; }
+.actu-corps a { text-decoration: underline; text-underline-offset: 0.18em; }
+.actu-corps strong { color: var(--color-encre); font-weight: 700; }
+.actu-corps-inverse, .actu-corps-inverse a, .actu-corps-inverse strong { color: var(--color-papier); }
+
+/* Champs du formulaire de contact */
+.champ {
+  display: block; width: 100%; min-height: 3rem; padding: 0.65rem 0.85rem;
+  font: inherit; font-size: 1.0625rem; color: var(--color-graphite);
+  background: #fff; border: 1.5px solid color-mix(in srgb, var(--color-encre) 40%, transparent); border-radius: 0.6rem;
+}
+.champ:hover { border-color: var(--color-encre); }
+.champ:focus-visible { outline: 2px solid var(--color-encre); outline-offset: 2px; border-color: var(--color-encre); }
+textarea.champ { resize: vertical; }
+.champ-piege { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }

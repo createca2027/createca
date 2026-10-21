@@ -1,0 +1,28 @@
+---
+// Sommaire d'une page longue : liste repliable sur mobile, colonne collante en marge sur grand écran.
+import type { Titre } from '../lib/markdown';
+interface Props { titres: Titre[]; class?: string }
+const { titres, class: classe } = Astro.props;
+---
+<nav aria-label="Sommaire de la page" class:list={['text-[1rem]', classe]}>
+  <details class="group rounded-lg border border-ligne bg-lavis/60 px-4 py-3 lg:hidden">
+    <summary class="cursor-pointer list-none font-titre text-[1.15rem] font-semibold text-encre">
+      <span class="inline-flex items-center gap-2">Sommaire
+        <svg viewBox="0 0 24 24" class="size-4 transition-transform group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      </span>
+    </summary>
+    <ul class="mt-3 space-y-1.5">
+      {titres.map((t) => <li class:list={[t.niveau === 3 && 'pl-4']}><a href={`#${t.id}`} class="lien">{t.texte}</a></li>)}
+    </ul>
+  </details>
+  <div class="sticky top-28 hidden lg:block">
+    <p class="font-titre text-[1.15rem] font-semibold text-encre">Sommaire</p>
+    <ul class="mt-3 space-y-2 border-l border-ligne">
+      {titres.map((t) => (
+        <li class:list={['-ml-px border-l-2 border-transparent', t.niveau === 3 ? 'pl-7 text-[0.9375rem]' : 'pl-4']}>
+          <a href={`#${t.id}`} class="text-graphite no-underline hover:text-encre hover:underline hover:decoration-cadmium hover:decoration-2 hover:underline-offset-4">{t.texte}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>

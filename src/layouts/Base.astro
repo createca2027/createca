@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import EnTete from '../components/EnTete.astro';
+import PiedDePage from '../components/PiedDePage.astro';
+import PlanDuSite from '../components/PlanDuSite.astro';
+import { site } from '../data/site';
+
+interface Props {
+  titre: string;
+  description: string;
+  /** Titre complet déjà composé (accueil) */
+  titreComplet?: boolean;
+  image?: string;
+  jsonLd?: Record<string, unknown>[];
+  /** Page exclue des moteurs (confirmation, 404) */
+  noindex?: boolean;
+}
+const { titre, description, titreComplet = false, image = '/og-createca.jpg', jsonLd = [], noindex = false } = Astro.props;
+const titreDoc = titreComplet ? titre : `${titre} | Createca`;
+const canonique = new URL(Astro.url.pathname, site.url).href;
+const imageAbs = new URL(image, site.url).href;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titreDoc}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonique} />}
+    <meta name="theme-color" content="#12305C" />
+    <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Createca" />
+    <meta property="og:title" content={titreDoc} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonique} />
+    <meta property="og:image" content={imageAbs} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd.map((bloc) => <script type="application/ld+json" set:html={JSON.stringify(bloc)} />)}
+  </head>
+  <body class="min-h-dvh">
+    <EnTete />
+    <main id="contenu">
+      <slot />
+    </main>
+    <PiedDePage />
+    <PlanDuSite />
+  </body>
+</html>

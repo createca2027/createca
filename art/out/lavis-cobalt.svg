@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700"><defs><filter id="g" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="4" seed="9" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="50" xChannelSelector="R" yChannelSelector="G" result="shape"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.0065" numOctaves="3" seed="12" result="pool"/>
+  <feColorMatrix in="pool" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.1 0 0 0 -0.45" result="poolA"/>
+  <feComposite in="shape" in2="poolA" operator="in" result="pooled"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="16" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 1.38" result="grainA"/>
+  <feComposite in="pooled" in2="grainA" operator="in" result="grained"/>
+  <feMorphology in="shape" operator="erode" radius="7" result="inner"/>
+  <feComposite in="shape" in2="inner" operator="out" result="ring"/>
+  <feGaussianBlur in="ring" stdDeviation="1.4" result="ringSoft"/>
+  <feComponentTransfer in="ringSoft" result="ringDark"><feFuncA type="linear" slope="0.8"/></feComponentTransfer>
+  <feMerge><feMergeNode in="grained"/><feMergeNode in="ringDark"/></feMerge>
+</filter></defs><g filter="url(#g)" fill="#6F98CF" fill-opacity="0.42">
+    <path d="M877 350C887.7 367.5 897.4 388.2 897.1 406.7C896.9 425.1 889.1 445.2 875.6 460.6C862.1 476.1 838.3 489.4 816 499.2C793.6 509 764.5 513.9 741.4 519.4C718.3 524.9 695.4 526.5 677.4 531.9C659.5 537.4 646.4 543.1 633.6 552.2C620.8 561.3 612.5 574.1 600.6 586.4C588.7 598.8 577.2 614.7 562.2 626.2C547.2 637.7 529.2 649.3 510.5 655.4C491.8 661.6 470 664 450 663.1C430 662.2 409.2 656.4 390.6 650.1C371.9 643.8 354.5 634.3 338.1 625.5C321.7 616.7 306.8 607 292.5 597.4C278.1 587.7 264.6 578.1 252.2 567.8C239.8 557.5 228.2 546.8 217.9 535.7C207.6 524.5 198.9 512.6 190.4 500.9C181.9 489.2 174.9 477.2 166.7 465.5C158.4 453.7 150.3 442.4 141 430.3C131.7 418.2 120.7 406.3 111 393C101.3 379.6 90.1 365.2 82.9 350C75.8 334.8 69.6 317.9 68.1 301.6C66.6 285.3 69 268.1 73.8 252.2C78.7 236.3 88.1 221 97.4 206.3C106.7 191.5 118.4 177.9 129.5 163.7C140.6 149.6 151.7 135.4 164.2 121.4C176.7 107.3 189 92 204.4 79.6C219.8 67.1 237.2 54.2 256.9 46.8C276.5 39.3 299.8 34.6 322.1 35.1C344.4 35.6 369.2 41.9 390.6 49.8C411.9 57.7 432.4 71.4 450 82.4C467.6 93.4 481.9 106.7 496.4 115.6C510.9 124.4 522.8 131.1 537 135.7C551.2 140.3 565.9 140.9 581.7 143.2C597.6 145.5 615.7 145.7 632.2 149.4C648.6 153.1 666 158.2 680.6 165.6C695.1 172.9 707.6 183.2 719.4 193.4C731.1 203.7 740 215.7 751.3 227.2C762.6 238.7 773.6 250 787.2 262.4C800.7 274.7 817.7 286.9 832.7 301.5C847.6 316.1 866.2 332.5 877 350Z"/>
+  </g></svg>

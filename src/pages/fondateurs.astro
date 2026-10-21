@@ -1,0 +1,74 @@
+---
+import PageTexte from '../layouts/PageTexte.astro';
+import Tirage from '../components/Tirage.astro';
+import Video from '../components/Video.astro';
+import { lirePage } from '../lib/markdown';
+import { figureHtml, groupeHtml } from '../lib/figure';
+import { site } from '../data/site';
+import atelierRicaud from '../assets/photos/ricaud/atelier-ricaud.jpg';
+import leVivant from '../assets/photos/ricaud/le-vivant.jpg';
+import lAnge from '../assets/photos/ricaud/l-ange.jpg';
+import leGisant from '../assets/photos/ricaud/le-gisant.jpg';
+import soudure from '../assets/photos/ricaud/soudure.jpg';
+import meulage from '../assets/photos/ricaud/meulage.jpg';
+import christe from '../assets/photos/ricaud/la-christe-atelier.jpg';
+import colonne from '../assets/photos/ricaud/colonne.jpg';
+import moto from '../assets/photos/ricaud/moto-sculpture.jpg';
+import relief1 from '../assets/photos/ricaud/relief-1.png';
+import relief2 from '../assets/photos/ricaud/relief-2.png';
+import relief3 from '../assets/photos/ricaud/relief-3.png';
+import dedicace from '../assets/photos/ricaud/dedicace.jpg';
+import museeSalle from '../assets/photos/ricaud/musee-salle.jpg';
+
+const figures = {
+  'portrait-jlr': await figureHtml(atelierRicaud, { alt: 'Jean-Louis Ricaud debout dans son atelier, entouré de sculptures et d’outils', legende: 'Jean-Louis Ricaud dans son atelier', largeur: 480, incline: 1.6, ruban: true }),
+  trilogie: await groupeHtml([
+    { src: leVivant, alt: 'Le Vivant, sculpture monumentale de la trilogie', legende: 'Le Vivant', incline: -2 },
+    { src: lAnge, alt: 'L’Ange, sculpture monumentale de la trilogie', legende: 'L’Ange', incline: 1.2 },
+    { src: leGisant, alt: 'Le Gisant de Saint Guilhem, sculpture monumentale de la trilogie', legende: 'Le Gisant', incline: -1 },
+  ]),
+};
+const page = lirePage('fondateurs', figures);
+page.titres.push({ niveau: 2, id: 'atelier', texte: 'À l’atelier' }, { niveau: 2, id: 'musee', texte: 'Le musée, à Marmande' });
+
+const atelier = [
+  { src: soudure, alt: 'Soudure d’une sculpture en métal à l’atelier, gerbe de lumière bleue', largeur: 260, incline: -1.5 },
+  { src: christe, alt: 'Une grande sculpture de figure crucifiée, à côté du sculpteur, en photographie sépia', largeur: 300, incline: 1.2 },
+  { src: colonne, alt: 'Sculpture verticale en bronze patiné : un corps enlacé de formes organiques', largeur: 170, incline: -0.8 },
+  { src: meulage, alt: 'Meulage d’une sculpture en métal, gerbe d’étincelles', largeur: 260, incline: 1.8 },
+  { src: moto, alt: 'Une moto transformée en sculpture de métal ciselé', largeur: 420, incline: -1.2 },
+  { src: relief1, alt: 'Relief sculpté en noir et blanc : une forme végétale qui s’ouvre', largeur: 230, incline: 1 },
+  { src: relief2, alt: 'Relief sculpté en noir et blanc : un œil et des volutes', largeur: 230, incline: -1.6 },
+  { src: relief3, alt: 'Relief sculpté posé en losange : un visage grimaçant tirant la langue', largeur: 230, incline: 1.4 },
+  { src: dedicace, alt: 'Séance de dédicace : un auteur signe un livre devant une pile d’ouvrages', largeur: 260, incline: -1 },
+];
+---
+<PageTexte page={page} titreSeo="Fondateurs : Caroline Goinaud et J.-L. Ricaud"
+  chapo="Une historienne de l’art devenue art-thérapeute et un sculpteur-peintre : leurs parcours ont donné à Createca sa méthode, celle de la figuration personnelle."
+  pigment="ocre" dessin="figures-deux">
+  <Fragment slot="apres">
+    <section aria-labelledby="atelier" class="lavis-bande py-16 lg:py-24">
+      <div class="page">
+        <h2 id="atelier" class="scroll-mt-24 text-titre-2">À l’atelier de Jean-Louis Ricaud</h2>
+        <p class="mt-3 max-w-[40rem]">Sculpture céramique, métal soudé, reliefs et peinture : quelques images du travail de l’artiste, cofondateur de Createca.</p>
+        <div class="mt-12 flex flex-wrap items-end justify-center gap-x-8 gap-y-10">
+          {atelier.map((p) => <Tirage src={p.src} alt={p.alt} largeur={p.largeur} incline={p.incline} sizes={`${p.largeur}px`} />)}
+        </div>
+      </div>
+    </section>
+    <section aria-labelledby="musee" class="page grid gap-x-12 gap-y-10 py-16 lg:grid-cols-12 lg:py-24">
+      <div class="lg:col-span-5">
+        <h2 id="musee" class="scroll-mt-24 text-titre-2">Le musée Jean-Louis Ricaud, à Marmande</h2>
+        <p class="mt-4">Les œuvres de Jean-Louis Ricaud sont présentées dans son musée, au {site.musee.adresse}. Le site du musée retrace son parcours et présente ses sculptures et peintures.</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a href={site.musee.url} class="bouton bouton-plein" rel="noopener">Visiter le site du musée</a>
+          <a href={site.facebook} class="bouton bouton-trait" rel="noopener">Createca sur Facebook</a>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <Video id={site.musee.videoId} titre="Jean-Louis Ricaud et son musée à Marmande" affiche={museeSalle}
+          altAffiche="Salle du musée Jean-Louis Ricaud : sculptures de métal disposées sur un sol blanc, tableaux aux murs" />
+      </div>
+    </section>
+  </Fragment>
+</PageTexte>

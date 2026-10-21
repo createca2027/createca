@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import { activites, jours, creneaux, site, tel, type Activite } from '../data/site';
+
+const teinte: Record<Activite, string> = {
+  jlr: 'bg-ocre/30 border-ocre',
+  cg: 'bg-cobalt/25 border-cobalt',
+  'groupe-ext': 'bg-papier border-encre/40 border-dashed',
+  'dev-perso': 'bg-cadmium/25 border-cadmium',
+  artistes: 'bg-cadmium/25 border-cadmium',
+  libre: 'bg-cadmium/25 border-cadmium',
+};
+const legende = [
+  { cle: 'jlr', texte: 'Séances individuelles avec Jean-Louis Ricaud' },
+  { cle: 'cg', texte: 'Séances individuelles avec Caroline Goinaud' },
+  { cle: 'dev-perso', texte: 'Ateliers de groupe au centre' },
+  { cle: 'groupe-ext', texte: 'Séances de groupe en structure extérieure' },
+] as const;
+---
+<Base titre="Emploi du temps des ateliers" description="Les créneaux de la semaine à Createca : séances individuelles, atelier développement personnel, atelier d’artistes, atelier libre, groupes en structure.">
+  <EnTetePage titre="Emploi du temps" chapo="Les créneaux de la semaine, du lundi au samedi. Pour les horaires de l’année en cours ou un entretien personnalisé, appelez le centre." pigment="cobalt" icone="palette" />
+  <div class="page py-12 lg:py-16">
+    <ul class="flex flex-wrap gap-x-8 gap-y-3 text-[1rem]" aria-label="Légende">
+      {legende.map((l) => <li class="flex items-center gap-2"><span aria-hidden="true" class:list={['inline-block size-5 rounded border-2', teinte[l.cle]]}></span>{l.texte}</li>)}
+    </ul>
+
+    <div class="mt-8 hidden overflow-x-auto md:block">
+      <table class="w-full min-w-[46rem] table-fixed border-separate border-spacing-1.5 text-left">
+        <caption class="sr-only">Emploi du temps de la semaine, par créneau et par jour</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="w-28 px-2 pb-2 text-[0.95rem] font-medium text-muet">Horaires</th>
+            {jours.map((j) => <th scope="col" class="px-2 pb-2 font-titre text-[1.15rem] font-semibold text-encre">{j}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {creneaux.map((c) => (
+            <tr>
+              <th scope="row" class="whitespace-nowrap px-2 align-top text-[0.95rem] font-medium text-muet">{c.heures}</th>
+              {c.cases.map((a) => a ? (
+                <td class:list={['h-24 rounded-lg border-2 p-3 align-top', teinte[a]]}>
+                  <span class="block text-[0.98rem] font-medium leading-snug text-encre">{activites[a].nom}</span>
+                  <span class="mt-0.5 block text-[0.9rem] leading-snug text-graphite">{activites[a].detail}</span>
+                </td>
+              ) : <td class="h-24 rounded-lg bg-lavis/60"><span class="sr-only">Pas d’activité</span></td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-8 space-y-6 md:hidden">
+      {jours.map((j, ij) => (
+        <section aria-labelledby={`jour-${ij}`}>
+          <h2 id={`jour-${ij}`} class="font-titre text-titre-4">{j}</h2>
+          <ul class="mt-2 space-y-2" role="list">
+            {creneaux.map((c) => {
+              const a = c.cases[ij];
+              return a ? (
+                <li class:list={['rounded-lg border-2 p-3', teinte[a]]}>
+                  <span class="text-[0.95rem] text-muet">{c.heures}</span>
+                  <span class="block font-medium text-encre">{activites[a].nom}</span>
+                  <span class="block text-[0.95rem]">{activites[a].detail}</span>
+                </li>
+              ) : null;
+            })}
+          </ul>
+        </section>
+      ))}
+    </div>
+
+    <div class="mt-12 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+      <a href="/contact/?objet=ateliers#formulaire" class="bouton bouton-plein">Demander une place</a>
+      <a href="/ateliers/#tarifs" class="bouton bouton-trait">Voir les tarifs</a>
+      <p class="text-[1rem] text-muet sm:ml-2">Ou par téléphone : <a class="lien" href={tel(site.telephones[1].numero)}>{site.telephones[1].numero}</a></p>
+    </div>
+  </div>
+</Base>

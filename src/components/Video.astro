@@ -1,0 +1,36 @@
+---
+// Vidéo YouTube chargée seulement au clic (aucun cookie ni script tiers avant l'action).
+// Sans JavaScript, le lien ouvre la vidéo sur YouTube.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props { id: string; titre: string; affiche: ImageMetadata; altAffiche: string }
+const { id, titre, affiche, altAffiche } = Astro.props;
+const img = await getImage({ src: affiche, width: 960, widths: [480, 960], format: 'webp' });
+---
+<div class="video relative aspect-video overflow-hidden rounded-xl bg-encre shadow-[0_18px_40px_-24px_rgb(18_48_92/0.6)]" data-video={id} data-titre={titre}>
+  <a href={`https://www.youtube.com/watch?v=${id}`} class="group absolute inset-0 block" rel="noopener">
+    <img src={img.src} srcset={img.srcSet.attribute} sizes="(min-width: 64rem) 46rem, 92vw" alt={altAffiche}
+      width={img.attributes.width} height={img.attributes.height} loading="lazy" decoding="async"
+      class="h-full w-full object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-95" />
+    <span class="absolute inset-x-0 bottom-0 flex items-center gap-4 bg-gradient-to-t from-encre/90 to-transparent p-5 pt-16 text-papier">
+      <span class="grid size-16 shrink-0 place-items-center rounded-full bg-cadmium text-encre transition-transform duration-300 group-hover:scale-105" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="ml-1 size-7"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" /></svg>
+      </span>
+      <span class="font-titre text-[1.2rem] font-semibold leading-snug">Lire la vidéo<span class="block font-texte text-[0.95rem] font-normal opacity-90">{titre}, sur YouTube</span></span>
+    </span>
+  </a>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-video]').forEach((boite) => {
+    boite.querySelector('a')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${boite.dataset.video}?autoplay=1&rel=0`;
+      iframe.title = boite.dataset.titre ?? 'Vidéo';
+      iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+      iframe.className = 'absolute inset-0 h-full w-full border-0';
+      boite.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
+</script>

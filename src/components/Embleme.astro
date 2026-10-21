@@ -1,0 +1,16 @@
+---
+// Dessin à l'encre de la plaquette Createca, vectorisé (src/data/emblemes.ts).
+import { emblemes } from '../data/emblemes';
+interface Props {
+  nom: keyof typeof emblemes;
+  class?: string;
+  /** Texte alternatif ; absent = décoratif */
+  alt?: string;
+}
+const { nom, class: classe, alt } = Astro.props;
+const { viewBox, d } = emblemes[nom];
+---
+<svg viewBox={viewBox} class={classe} fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+  role={alt ? 'img' : undefined} aria-label={alt} aria-hidden={alt ? undefined : 'true'} focusable="false">
+  <path fill-rule="evenodd" d={d} />
+</svg>
