@@ -1,0 +1,24 @@
+---
+// Tableau des tarifs des ateliers (données : src/data/site.ts, `tarifs`)
+import { tarifs } from '../data/site';
+---
+<p class="text-muet">Pour les particuliers. Adhésion : <strong class="text-encre">{tarifs.adhesion.prix}</strong> ({tarifs.adhesion.detail}).</p>
+<div class="mt-6 overflow-x-auto rounded-xl border border-ligne" tabindex="0" role="region" aria-label="Tableau des tarifs, défilant horizontalement sur petit écran">
+  <table class="w-full min-w-[40rem] border-collapse text-left text-[1rem]">
+    <caption class="sr-only">Tarifs des ateliers {tarifs.annee} selon le nombre de séances</caption>
+    <thead class="bg-lavis">
+      <tr>
+        <th scope="col" class="px-4 py-3 font-titre text-[1.05rem] text-encre">Atelier</th>
+        {tarifs.colonnes.map((c) => <th scope="col" class="px-4 py-3 font-titre text-[1.05rem] text-encre">{c}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {tarifs.lignes.map((l) => (
+        <tr class="border-t border-ligne align-top">
+          <th scope="row" class="px-4 py-3 font-medium text-encre">{l.nom}<span class="block text-[0.9375rem] font-normal text-muet">{l.rythme}</span></th>
+          {l.prix.map((p) => <td class="px-4 py-3">{p}</td>)}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

@@ -12,7 +12,16 @@ const page = lirePage('formation', { calendrier });
   chapo={`Une formation de ${formation.heures} heures en ${formation.modules} modules, en petit groupe de ${formation.groupeMax} personnes au plus, au centre Createca de Bordeaux-Caudéran. Prochaine session : ${formation.prochaineSession}.`}
   pigment="cobalt" icone="livre" filAriane={[{ titre: 'Actions', href: '/actions/' }]}>
   <Fragment slot="avant">
-    <div class="lavis-bande">
+    <div class="page pt-8">
+      <section aria-labelledby="qualiopi" class="flex flex-col gap-4 rounded-xl border border-encre/35 bg-papier p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <div>
+          <h2 id="qualiopi" class="font-titre text-titre-4 font-semibold text-encre">Certification Qualiopi n° {site.qualiopi.numero}</h2>
+          <p class="mt-1 text-[1.0625rem]">La certification qualité a été délivrée au titre de la catégorie d’action suivante : {site.qualiopi.categorie}. Certificat {site.qualiopi.organisme}, valable jusqu’au {site.qualiopi.validite}.</p>
+        </div>
+        <a href={site.qualiopi.pdf} class="bouton bouton-trait shrink-0">Certificat Qualiopi (PDF)</a>
+      </section>
+    </div>
+    <div class="lavis-bande mt-8">
       <div class="page grid gap-8 py-10 md:grid-cols-12 md:items-center">
         <dl class="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4 md:col-span-8">
           <div><dt class="text-[0.95rem] text-muet">Durée</dt><dd class="font-titre text-titre-4 font-semibold text-encre">{formation.heures} heures</dd></div>
@@ -22,13 +31,13 @@ const page = lirePage('formation', { calendrier });
         </dl>
         <div class="flex flex-col gap-3 md:col-span-4">
           <a href="/contact/?objet=formation#formulaire" class="bouton bouton-plein">Demander le programme</a>
-          <a href={site.qualiopi.pdf} class="bouton bouton-trait">Certificat Qualiopi (PDF)</a>
+          <a href="/formation/#calendrier" class="bouton bouton-trait">Voir le calendrier</a>
         </div>
       </div>
     </div>
   </Fragment>
-  <aside class="mt-16 grid gap-6 rounded-xl border border-ligne p-6 sm:grid-cols-[1fr_auto] sm:items-center" aria-label="Certification">
-    <p>La certification qualité Qualiopi (n° {site.qualiopi.numero}) a été délivrée au titre des actions de formation. Consultez aussi la liste des <a href="/formation/certifications/" class="lien">art-thérapeutes certifiés par Createca</a>.</p>
+  <aside class="mt-16 grid gap-6 rounded-xl border border-ligne p-6 sm:grid-cols-[1fr_auto] sm:items-center" aria-label="Inscription">
+    <p>Les demandes de formation sont examinées sur entretien et dossier. Consultez aussi la liste des <a href="/formation/certifications/" class="lien">art-thérapeutes certifiés par Createca</a>.</p>
     <a href="/contact/?objet=formation#formulaire" class="bouton bouton-plein">S’inscrire ou poser une question</a>
   </aside>
 </PageTexte>

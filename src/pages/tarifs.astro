@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import TableTarifs from '../components/TableTarifs.astro';
+import { site, tarifs, tel } from '../data/site';
+---
+<Base titre={`Tarifs des ateliers ${tarifs.annee}`} description={`Tarifs ${tarifs.annee} des ateliers d’art-thérapie de Createca à Bordeaux pour les particuliers : adhésion, atelier adultes, atelier libre, séances individuelles.`}>
+  <EnTetePage titre="Tarifs des ateliers" chapo={`Tarifs ${tarifs.annee} pour les particuliers.`} pigment="ocre" icone="palette"
+    filAriane={[{ titre: 'Les Ateliers', href: '/ateliers/' }]} />
+  <div class="page max-w-[52rem] py-12 lg:py-16">
+    <TableTarifs />
+    <p class="mt-8">Pour les horaires de l’année en cours ou pour tout entretien individuel personnalisé : <a class="lien" href={tel(site.telephones[1].numero)}>{site.telephones[1].numero}</a>.</p>
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href="/emploi-du-temps/" class="bouton bouton-trait">Voir l’emploi du temps</a>
+      <a href="/contact/?objet=premier-entretien#formulaire" class="bouton bouton-plein">Demander un premier entretien</a>
+    </div>
+  </div>
+</Base>

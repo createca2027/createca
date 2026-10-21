@@ -17,7 +17,7 @@ export const site = {
   ],
   facebook: 'https://www.facebook.com/createca33',
   plaquette: '/documents/plaquette-createca.pdf',
-  qualiopi: { numero: '25-07-981', pdf: '/documents/certificat-qualiopi.pdf' },
+  qualiopi: { numero: '25-07-981', pdf: '/documents/certificat-qualiopi.pdf', categorie: 'actions de formation', organisme: 'DEKRA Certification', validite: '9 septembre 2028' },
   legal: { siret: '480 178 359 00018', naf: '9499Z', activite: '72 33 07385 33' },
   musee: {
     nom: 'Musée Jean-Louis Ricaud',
@@ -32,11 +32,24 @@ export const tel = (numero: string) => `tel:+33${numero.replace(/\s/g, '').slice
 
 export const carteUrl = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lon}#map=17/${site.geo.lat}/${site.geo.lon}`;
 
-// Plan du site, selon l'arborescence demandée (4 groupes)
+// Plan du site. Premier groupe : la partie pratique, dans l'ordre du menu de l'ancien site
+// (Actualités, Ateliers, Formations, Tarifs, Emploi du temps, Contact, Plaquette) ;
+// puis la partie de présentation (Raisons, Actions, Public, Fondateurs, Galerie, Partenaires).
 export type Lien = { titre: string; href: string; enfants?: Lien[] };
 export const plan: Lien[][] = [
   [
     { titre: 'Actualités', href: '/actualites/', enfants: [{ titre: 'Historique', href: '/actualites/#historique' }] },
+    { titre: 'Les Ateliers', href: '/ateliers/' },
+    {
+      titre: 'Formation', href: '/formation/', enfants: [
+        { titre: 'Calendrier de la session', href: '/formation/#calendrier' },
+        { titre: 'Art-thérapeutes certifiés', href: '/formation/certifications/' },
+      ],
+    },
+    { titre: 'Tarifs', href: '/tarifs/' },
+    { titre: 'Emploi du temps', href: '/emploi-du-temps/' },
+    { titre: 'Contact', href: '/contact/' },
+    { titre: 'Plaquette (PDF)', href: site.plaquette },
   ],
   [
     {
@@ -54,16 +67,14 @@ export const plan: Lien[][] = [
         { titre: 'La fiche d’observation', href: '/raisons/#fiche-observation' },
       ],
     },
+  ],
+  [
     {
       titre: 'Actions', href: '/actions/', enfants: [
         { titre: 'Fonctionnement de Createca', href: '/actions/#fonctionnement' },
         { titre: 'Les expositions', href: '/actions/#expositions' },
         { titre: 'Les ateliers d’art-thérapie', href: '/actions/#ateliers' },
-        {
-          titre: 'La formation', href: '/formation/', enfants: [
-            { titre: 'Art-thérapeutes certifiés', href: '/formation/certifications/' },
-          ],
-        },
+        { titre: 'La formation', href: '/formation/' },
       ],
     },
     { titre: 'Public', href: '/public/', enfants: [{ titre: 'Témoignages', href: '/temoignages/' }] },
@@ -71,21 +82,17 @@ export const plan: Lien[][] = [
   ],
   [
     { titre: 'Galerie', href: '/galerie/', enfants: [{ titre: 'Les expositions', href: '/galerie/#expositions' }] },
-    { titre: 'Les Ateliers', href: '/ateliers/', enfants: [{ titre: 'Tarifs', href: '/ateliers/#tarifs' }] },
     { titre: 'Partenaires', href: '/partenaires/' },
-  ],
-  [
-    { titre: 'Contact', href: '/contact/' },
-    { titre: 'Emploi du temps', href: '/emploi-du-temps/' },
   ],
 ];
 
-// Raccourcis de l'en-tête (le plan complet reste dans le panneau)
+// Raccourcis de l'en-tête : la partie pratique de l'ancien menu (Contact = bouton « Nous écrire »)
 export const raccourcis: Lien[] = [
   { titre: 'Actualités', href: '/actualites/' },
   { titre: 'Ateliers', href: '/ateliers/' },
   { titre: 'Formation', href: '/formation/' },
-  { titre: 'Galerie', href: '/galerie/' },
+  { titre: 'Tarifs', href: '/tarifs/' },
+  { titre: 'Emploi du temps', href: '/emploi-du-temps/' },
 ];
 
 // Les six formes d'ateliers (texte de la page Ateliers)

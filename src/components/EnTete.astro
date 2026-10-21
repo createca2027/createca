@@ -7,15 +7,15 @@ const actuel = Astro.url.pathname;
   <a href="#contenu" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded focus:bg-encre focus:px-4 focus:py-2 focus:text-papier">Aller au contenu</a>
   <div class="page flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">
     <Marque />
-    <div class="flex items-center gap-2 lg:gap-7">
+    <div class="flex items-center gap-2 lg:gap-4 xl:gap-7">
       <nav aria-label="Accès rapides" class="hidden lg:block">
-        <ul class="flex items-center gap-7">
+        <ul class="flex items-center gap-5 xl:gap-7">
           {raccourcis.map((l) => {
             const courant = actuel.startsWith(l.href);
             return (
               <li>
                 <a href={l.href} aria-current={courant ? 'page' : undefined}
-                  class:list={['relative py-2 text-[1.0625rem] font-medium no-underline transition-colors hover:text-encre-claire', courant ? 'text-encre' : 'text-graphite']}>
+                  class:list={['relative whitespace-nowrap py-2 text-[1.0625rem] font-medium no-underline transition-colors hover:text-encre-claire', courant ? 'text-encre' : 'text-graphite']}>
                   {l.titre}
                   {courant && <span aria-hidden="true" class="absolute inset-x-0 -bottom-0.5 h-[3px] rounded-full bg-cadmium/85" />}
                 </a>
