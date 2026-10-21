@@ -74,6 +74,9 @@ export const quand = (a: Actu) => {
 /** Contenu rendu du corps Markdown. */
 export const corps = async (a: Actu) => (await render(a)).Content;
 
+/** Listes : une annonce s'affiche en entier ; un article, long et titré, par son résumé (il a sa page). */
+export const corpsEnListe = async (a: Actu) => (a.data.type === 'article' ? undefined : corps(a));
+
 /** Texte brut du corps (sans balises ni syntaxe Markdown courante). */
 const texteBrut = (a: Actu) =>
   (a.body ?? '')

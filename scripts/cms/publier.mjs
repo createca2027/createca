@@ -62,6 +62,22 @@ export async function attendre200(url, { delaiMax, pause = 15_000, requete = (u)
   }
 }
 
+// Envoi Git : l'ancienne version répond déjà 200. On attend que l'accueil porte le commit envoyé
+// (<meta name="createca-version">, écrite par Base.astro depuis VERCEL_GIT_COMMIT_SHA).
+export async function attendreVersion(url, sha, { delaiMax, pause = 15_000, lire = (u) => fetch(u, { redirect: 'follow' }).then((r) => r.text()), dormir = (ms) => new Promise((r) => setTimeout(r, ms)), horloge = Date.now }) {
+  const fin = horloge() + delaiMax;
+  let dernier = 'aucune réponse';
+  for (;;) {
+    try {
+      const m = /name="createca-version" content="([0-9a-f]{7,40})"/.exec(await lire(`${url}${url.includes('?') ? '&' : '?'}controle=${horloge()}`));
+      dernier = m ? `version ${m[1].slice(0, 7)} en ligne` : 'version absente de la page';
+      if (m?.[1] === sha) return { ok: true };
+    } catch (e) { dernier = e.message; }
+    if (horloge() + pause > fin) return { ok: false, statut: dernier };
+    await dormir(pause);
+  }
+}
+
 function git(args, options = {}) {
   return spawnSync('git', args, { cwd: RACINE, encoding: 'utf8', ...options });
 }
@@ -104,6 +120,11 @@ async function principal() {
     if (push.status !== 0) arreter('git push a échoué : le commit est fait en local, rien n’est en ligne. Vérifier les droits GitHub puis relancer « git push origin HEAD ».');
     const suivi = urlSuivi(remote.stdout);
     if (suivi) console.log(`Suivi du déploiement : ${suivi}`);
+    const sha = git(['rev-parse', 'HEAD']).stdout.trim();
+    console.log(`\n== Attente de la nouvelle version ${sha.slice(0, 7)} en ligne (maximum ${opts.attente} s)`);
+    const v = await attendreVersion(`${URL_PUBLIQUE}/`, sha, { delaiMax: opts.attente * 1000 });
+    if (!v.ok) arreter(`la nouvelle version n’est pas en ligne après ${opts.attente} s (${v.statut}). Ouvrir le suivi du déploiement ; ne pas annoncer que le site est à jour.`);
+    console.log(`OK  version ${sha.slice(0, 7)} en ligne`);
   } else if (existsSync(join(RACINE, '.vercel/project.json')) && spawnSync('vercel', ['--version'], { stdio: 'ignore' }).status === 0) {
     console.log('\n== Déploiement direct (vercel deploy --prod --yes)');
     const dep = spawnSync('vercel', ['deploy', '--prod', '--yes'], { cwd: RACINE, stdio: 'inherit' });

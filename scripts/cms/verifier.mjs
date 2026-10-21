@@ -135,6 +135,27 @@ export function porteLiens(dossierClient) {
   return resultat(`liens internes valides (${pages.length} pages)`, p);
 }
 
+// Lien dans un lien : souvent une adresse écrite dans une balise <a> brute du Markdown, que le Markdown relie
+// une seconde fois. Le lien extérieur reste sans nom pour les lecteurs d'écran.
+export function liensImbriques(html) {
+  let profondeur = 0;
+  let n = 0;
+  for (const m of html.replace(/<script[\s\S]*?<\/script>/g, '').matchAll(/<a[\s>]|<\/a>/g)) {
+    if (m[0] === '</a>') profondeur = Math.max(0, profondeur - 1);
+    else if (++profondeur > 1) n++;
+  }
+  return n;
+}
+
+export function porteLiensImbriques(dossierClient) {
+  const p = [];
+  for (const page of lister(dossierClient, ['.html'])) {
+    const n = liensImbriques(readFileSync(page, 'utf8'));
+    if (n) p.push(`${relative(dossierClient, page)} : ${n} lien(s) dans un autre lien. Dans le Markdown, écrire [texte](adresse) plutôt qu’une balise <a> qui contient une adresse.`);
+  }
+  return resultat('aucun lien dans un lien', p);
+}
+
 export function lireFichiers(chemins, racine = RACINE) {
   return chemins.map((c) => ({ chemin: relative(racine, c), texte: readFileSync(c, 'utf8') }));
 }
@@ -178,6 +199,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const client = join(RACINE, 'dist', 'client');
   if (!existsSync(client)) echec('dist/client est introuvable après la construction.');
   console.log('\n== Portes sur le site construit');
-  appliquer([porteLiens(client)]);
+  appliquer([porteLiens(client), porteLiensImbriques(client)]);
   console.log('\nTout est vert : le site est prêt à être publié.');
 }

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { blocImage, champ, extraireLiens, lienExiste, porteAlt, porteARemplacer, porteLiens, porteResume, porteTiretCadratin, separer } from './verifier.mjs';
+import { blocImage, champ, extraireLiens, lienExiste, liensImbriques, porteAlt, porteARemplacer, porteLiens, porteResume, porteTiretCadratin, separer } from './verifier.mjs';
 
 const f = (texte, chemin = 'src/content/actualites/x.md') => [{ chemin, texte }];
 
@@ -61,4 +61,10 @@ test('liens internes : extraction et existence dans dist/client', () => {
   assert.equal(r.problemes.length, 1);
   assert.match(r.problemes[0], /« \/absente\/ »/);
   rmSync(dist, { recursive: true });
+});
+
+test('liens imbriqués : une adresse dans un <a> brut, reliée une seconde fois', () => {
+  assert.equal(liensImbriques('<p><a href="mailto:x@y.fr"><a href="mailto:x@y.fr">x@y.fr</a></a></p>'), 1);
+  assert.equal(liensImbriques('<a href="/a/">a</a><abbr>b</abbr><article><a href="/c/">c</a></article><address>d</address>'), 0);
+  assert.equal(liensImbriques('<script>const s = "<a href=1><a href=2>";</script><a href="/a/">a</a>'), 0);
 });

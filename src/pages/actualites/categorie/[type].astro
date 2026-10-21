@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import EnTetePage from '../../../components/EnTetePage.astro';
-import { toutes, typesPresents, libelles, pigments, quand, lien, lienType, corps, type TypeActu } from '../../../lib/actualites';
+import { toutes, typesPresents, libelles, pigments, quand, lien, lienType, corpsEnListe, description, type TypeActu } from '../../../lib/actualites';
 import { insecableTexte } from '../../../lib/typo';
 
 export function getStaticPaths() {
@@ -9,7 +9,7 @@ export function getStaticPaths() {
 }
 interface Props { type: TypeActu }
 const { type } = Astro.props;
-const liste = await Promise.all(toutes.filter((a) => a.data.type === type).map(async (a) => ({ a, Content: await corps(a) })));
+const liste = await Promise.all(toutes.filter((a) => a.data.type === type).map(async (a) => ({ a, Content: await corpsEnListe(a) })));
 const libelle = libelles[type];
 ---
 <Base titre={`Actualités : ${libelle}`} description={`Les actualités de Createca, centre d’art-thérapie à Bordeaux, de type « ${libelle} » : ${liste.length} annonce${liste.length > 1 ? 's' : ''}, de la plus récente à la plus ancienne.`}>
@@ -26,7 +26,7 @@ const libelle = libelles[type];
         <article class="rounded-xl border border-ligne bg-papier p-6">
           <p class="text-[0.95rem] text-cadmium-fonce">{quand(a)}</p>
           <h2 class="mt-1 font-titre text-[1.35rem] font-semibold leading-snug text-encre"><a href={lien(a)} class="inline-block py-1 text-inherit underline decoration-encre/30 underline-offset-4 hover:decoration-cadmium" set:html={insecableTexte(a.data.titre)} /></h2>
-          <div class="actu-corps mt-2"><Content /></div>
+          <div class="actu-corps mt-2">{Content ? <Content /> : <p>{description(a)}</p>}</div>
         </article>
       ))}
     </div>

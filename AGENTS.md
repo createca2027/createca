@@ -14,7 +14,7 @@ Site Astro 7 de Createca, centre d'art-thérapie et organisme de formation à Bo
 
 - `npm run actu:nouvelle -- --type <type> --titre "<titre>" [--date AAAA-MM-JJ] [--fin ...] [--limite ...] [--resume "..."] [--brouillon]`
 - `npm run verifier` : `astro check`, `astro build`, puis portes (U+2014, `resume` ≤ 160, alt des images, « à remplacer », liens internes).
-- `npm run publier -- "<message>"` : vérifie, commit, envoie, attend que le site réponde 200.
+- `npm run publier -- "<message>"` : vérifie, commit, envoie, attend la nouvelle version en ligne puis les réponses 200.
 - `npm run test:cms` : tests des scripts.
 
 ## Règles (non négociables)

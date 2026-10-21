@@ -12,7 +12,7 @@ when_to_use: « mets ça en ligne », « publie », « c'est bon, on valide ».
    ```
    npm run publier -- "Message court décrivant le changement"
    ```
-   Le script enchaîne vérification (types, build, portes), commit, envoi vers GitHub (Vercel construit alors le site) ou déploiement direct, puis attend que `https://createca.vercel.app/` et la page de l'actualité répondent 200 (attente maximale 10 minutes, code 1 au dépassement). `--simuler` s'arrête avant le commit.
+   Le script enchaîne vérification (types, build, portes), commit, envoi vers GitHub (Vercel construit alors le site) ou déploiement direct. Après un envoi GitHub, il attend que l'accueil porte le commit envoyé (`<meta name="createca-version">`), car l'ancienne version répond déjà 200. Il attend ensuite que `https://createca.vercel.app/` et la page de l'actualité répondent 200 (attente maximale 10 minutes par étape, code 1 au dépassement). `--simuler` s'arrête avant le commit.
 4. Donner le lien de la page publiée, par exemple `https://createca.vercel.app/actualites/<id>/`.
 
 ## En cas d'échec

@@ -3,11 +3,11 @@ import Base from '../../layouts/Base.astro';
 import EnTetePage from '../../components/EnTetePage.astro';
 import EcheanceClient from '../../components/actualites/EcheanceClient.astro';
 import { site } from '../../data/site';
-import { aVenir, passees, libelles, quand, lien, lienType, typesPresents, corps, echeance } from '../../lib/actualites';
+import { aVenir, passees, libelles, quand, lien, lienType, typesPresents, corpsEnListe, description, echeance } from '../../lib/actualites';
 import { insecableTexte } from '../../lib/typo';
 
 const annees = [...new Set(passees.map((a) => a.data.annee))].sort((a, b) => b - a);
-const avecCorps = async (liste: typeof aVenir) => Promise.all(liste.map(async (a) => ({ a, Content: await corps(a) })));
+const avecCorps = async (liste: typeof aVenir) => Promise.all(liste.map(async (a) => ({ a, Content: await corpsEnListe(a) })));
 const cartesAVenir = await avecCorps(aVenir);
 const cartesPassees = await avecCorps(passees);
 ---
@@ -23,7 +23,7 @@ const cartesPassees = await avecCorps(passees);
           <article id={a.id} data-carte-a-venir data-echeance={echeance(a)} class:list={['scroll-mt-28 rounded-xl border p-6', i === 0 ? 'border-encre bg-encre text-papier sur-encre' : 'border-ligne bg-papier']}>
             <p class:list={['text-[0.95rem]', i === 0 ? 'text-ocre' : 'text-cadmium-fonce']}>{libelles[a.data.type]}<span aria-hidden="true">, </span><span class:list={[i === 0 ? 'text-papier/85' : 'text-muet']}>{quand(a)}</span></p>
             <h3 class:list={['mt-2 text-titre-4', i === 0 && 'text-papier']}><a href={lien(a)} class="inline-block py-1 text-inherit underline decoration-current/40 underline-offset-4 hover:decoration-cadmium" set:html={insecableTexte(a.data.titre)} /></h3>
-            <div class:list={['actu-corps mt-3', i === 0 && 'actu-corps-inverse']}><Content /></div>
+            <div class:list={['actu-corps mt-3', i === 0 && 'actu-corps-inverse']}>{Content ? <Content /> : <p>{description(a)}</p>}</div>
           </article>
         ))}
       </div>
@@ -54,7 +54,7 @@ const cartesPassees = await avecCorps(passees);
                 <article id={a.id} class="scroll-mt-28">
                   <p class="text-[0.95rem] text-cadmium-fonce">{libelles[a.data.type]}<span aria-hidden="true">, </span><span class="text-muet">{quand(a)}</span></p>
                   <h4 class="mt-1 font-titre text-[1.35rem] font-semibold leading-snug text-encre"><a href={lien(a)} class="inline-block py-1 text-inherit underline decoration-encre/30 underline-offset-4 hover:decoration-cadmium" set:html={insecableTexte(a.data.titre)} /></h4>
-                  <div class="actu-corps mt-2"><Content /></div>
+                  <div class="actu-corps mt-2">{Content ? <Content /> : <p>{description(a)}</p>}</div>
                 </article>
               ))}
             </div>

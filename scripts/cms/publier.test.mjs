@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { analyserArguments, attendre200, idsActualites, urlSuivi, urlsAControler } from './publier.mjs';
+import { analyserArguments, attendre200, attendreVersion, idsActualites, urlSuivi, urlsAControler } from './publier.mjs';
 
 test('arguments : message obligatoire, options valides', () => {
   assert.throws(() => analyserArguments([]), /message est obligatoire/);
@@ -35,4 +35,20 @@ test('attente : réussit après des 404, échoue au délai dépassé', async () 
   t = 0;
   const err = await attendre200('https://x/', { ...base, delaiMax: 30, requete: async () => { throw new Error('réseau'); } });
   assert.equal(err.ok, false);
+});
+
+test('version : attend le commit envoyé, pas un simple 200 de l’ancienne version', async () => {
+  let t = 0; let n = 0;
+  const base = { pause: 10, dormir: async (ms) => { t += ms; }, horloge: () => t };
+  const sha = 'a'.repeat(40);
+  const page = (v) => `<head><meta name="createca-version" content="${v}"></head>`;
+  const ok = await attendreVersion('https://x/', sha, { ...base, delaiMax: 100, lire: async () => page(++n < 3 ? 'b'.repeat(40) : sha) });
+  assert.deepEqual(ok, { ok: true });
+  assert.equal(n, 3);
+  t = 0;
+  const ancienne = await attendreVersion('https://x/', sha, { ...base, delaiMax: 50, lire: async () => page('b'.repeat(40)) });
+  assert.deepEqual(ancienne, { ok: false, statut: 'version bbbbbbb en ligne' });
+  t = 0;
+  const absente = await attendreVersion('https://x/', sha, { ...base, delaiMax: 30, lire: async () => '<head></head>' });
+  assert.deepEqual(absente, { ok: false, statut: 'version absente de la page' });
 });
