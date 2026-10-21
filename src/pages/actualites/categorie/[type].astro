@@ -1,0 +1,35 @@
+---
+import Base from '../../../layouts/Base.astro';
+import EnTetePage from '../../../components/EnTetePage.astro';
+import { toutes, typesPresents, libelles, pigments, quand, lien, lienType, corps, type TypeActu } from '../../../lib/actualites';
+import { insecableTexte } from '../../../lib/typo';
+
+export function getStaticPaths() {
+  return typesPresents.map((type) => ({ params: { type }, props: { type } }));
+}
+interface Props { type: TypeActu }
+const { type } = Astro.props;
+const liste = await Promise.all(toutes.filter((a) => a.data.type === type).map(async (a) => ({ a, Content: await corps(a) })));
+const libelle = libelles[type];
+---
+<Base titre={`Actualités : ${libelle}`} description={`Les actualités de Createca, centre d’art-thérapie à Bordeaux, de type « ${libelle} » : ${liste.length} annonce${liste.length > 1 ? 's' : ''}, de la plus récente à la plus ancienne.`}>
+  <EnTetePage titre={libelle} chapo={`${liste.length} annonce${liste.length > 1 ? 's' : ''} de ce type, de la plus récente à la plus ancienne.`} pigment={pigments[type]} icone="plume"
+    filAriane={[{ titre: 'Actualités', href: '/actualites/' }]} />
+  <section class="page py-12 lg:py-16" aria-label={`Annonces : ${libelle}`}>
+    <nav aria-label="Catégories" class="mb-10">
+      <ul class="flex flex-wrap gap-2">
+        {typesPresents.map((t) => <li><a href={lienType(t)} aria-current={t === type ? 'page' : undefined} class:list={['inline-flex min-h-11 items-center rounded-full border px-4 text-[1rem] no-underline', t === type ? 'border-encre bg-encre text-papier' : 'border-encre/30 text-encre hover:border-encre hover:bg-papier']}>{libelles[t]}</a></li>)}
+      </ul>
+    </nav>
+    <div class="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      {liste.map(({ a, Content }) => (
+        <article class="rounded-xl border border-ligne bg-papier p-6">
+          <p class="text-[0.95rem] text-cadmium-fonce">{quand(a)}</p>
+          <h2 class="mt-1 font-titre text-[1.35rem] font-semibold leading-snug text-encre"><a href={lien(a)} class="inline-block py-1 text-inherit underline decoration-encre/30 underline-offset-4 hover:decoration-cadmium" set:html={insecableTexte(a.data.titre)} /></h2>
+          <div class="actu-corps mt-2"><Content /></div>
+        </article>
+      ))}
+    </div>
+    <p class="mt-10"><a href="/actualites/" class="lien inline-flex min-h-11 items-center">Retour aux actualités</a></p>
+  </section>
+</Base>

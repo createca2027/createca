@@ -6,7 +6,8 @@ import Tirage from '../components/Tirage.astro';
 import Icone from '../components/Icone.astro';
 import Embleme from '../components/Embleme.astro';
 import { site, ateliers, formation, tel, carteUrl } from '../data/site';
-import { aVenir, passees, libelles, quand } from '../lib/actualites';
+import EcheanceClient from '../components/actualites/EcheanceClient.astro';
+import { aVenir, passees, libelles, quand, lien, corps, echeance } from '../lib/actualites';
 import temoignages from '../data/temoignages.json';
 import dessinCollectif from '../assets/photos/atelier/dessin-collectif.jpg';
 import facade from '../assets/photos/ancien/facade-rue-pasteur.jpg';
@@ -15,9 +16,12 @@ import tacheCobalt from '../assets/art/tache-cobalt-s.webp';
 
 // Les annonces à venir, puis la plus récente de chaque autre type (titre et date seulement :
 // leur texte, écrit avant l'événement, reste lisible dans l'historique)
-const vus = new Set<string>(aVenir.map((a) => a.categorie));
-const recentes = passees.filter((a) => (vus.has(a.categorie) ? false : (vus.add(a.categorie), true)));
-const aLaUne = [...aVenir.map((a) => ({ ...a, aVenir: true })), ...recentes.map((a) => ({ ...a, aVenir: false }))].slice(0, 3);
+const vus = new Set<string>(aVenir.map((a) => a.data.type));
+const recentes = passees.filter((a) => (vus.has(a.data.type) ? false : (vus.add(a.data.type), true)));
+const aLaUne = await Promise.all(
+  [...aVenir.map((a) => ({ a, aVenir: true })), ...recentes.map((a) => ({ a, aVenir: false }))].slice(0, 3)
+    .map(async (c) => ({ ...c, Content: c.aVenir ? await corps(c.a) : undefined })),
+);
 const citation = temoignages.items[0];
 
 const domaines = [
@@ -164,18 +168,19 @@ import { insecableTexte } from '../lib/typo';
       <a href="/actualites/" class="lien font-medium">Toutes les actualités et l’historique</a>
     </div>
     <div class="mt-10 grid gap-10 md:grid-cols-3">
-      {aLaUne.map((a) => (
-        <article class:list={['border-t-2 pt-5', a.aVenir ? 'border-cadmium' : 'border-encre/30']}>
-          <p class="text-[0.95rem] text-cadmium-fonce">{a.aVenir ? 'À venir' : libelles[a.categorie]}<span aria-hidden="true">, </span><span class="text-muet">{quand(a)}</span></p>
-          <h3 class="mt-1 text-titre-4" set:html={insecableTexte(a.titre)} />
-          {a.aVenir ? (
-            <div class="actu-corps mt-3">{a.paragraphes.map((p) => <p set:html={p} />)}</div>
+      {aLaUne.map(({ a, aVenir: venir, Content }) => (
+        <article data-carte-a-venir={venir ? '' : undefined} data-echeance={venir ? echeance(a) : undefined} class:list={['border-t-2 pt-5', venir ? 'border-cadmium' : 'border-encre/30']}>
+          <p class="text-[0.95rem] text-cadmium-fonce">{venir ? 'À venir' : libelles[a.data.type]}<span aria-hidden="true">, </span><span class="text-muet">{quand(a)}</span></p>
+          <h3 class="mt-1 text-titre-4"><a href={lien(a)} class="inline-block py-1 text-inherit underline decoration-encre/30 underline-offset-4 hover:decoration-cadmium" set:html={insecableTexte(a.data.titre)} /></h3>
+          {Content ? (
+            <div class="actu-corps mt-3"><Content /></div>
           ) : (
-            <p class="mt-3 text-[1.0625rem]"><a href={`/actualites/#${a.id}`} class="lien">Lire l’annonce<span class="sr-only"> : {a.titre}, {quand(a)}</span></a></p>
+            <p class="mt-3 text-[1.0625rem]"><a href={lien(a)} class="lien inline-flex min-h-11 items-center">Lire l’annonce<span class="sr-only"> : {a.data.titre}, {quand(a)}</span></a></p>
           )}
         </article>
       ))}
     </div>
+    <EcheanceClient />
   </section>
 
   <!-- Venir -->

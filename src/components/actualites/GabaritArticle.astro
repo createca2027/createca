@@ -1,0 +1,12 @@
+---
+// Article : texte long en prose, image de couverture si présente. Les images du corps (relatives au fichier) sont optimisées par Astro.
+import { Image } from 'astro:assets';
+import type { Actu } from '../../lib/actualites';
+interface Props { actu: Actu; Content: any }
+const { actu, Content } = Astro.props;
+const { image } = actu.data;
+---
+<article>
+  {image && <Image src={image.src} alt={image.alt} widths={[480, 800, 1200]} sizes="(min-width: 48rem) 40rem, 92vw" class="mb-8 h-auto w-full max-w-[40rem] rounded-sm" loading="eager" decoding="async" />}
+  <div class="prose-createca text-[1.1875rem]"><Content /></div>
+</article>

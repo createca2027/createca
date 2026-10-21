@@ -1,0 +1,26 @@
+---
+// Les dates sont figées à la construction du site : ce petit script (sans framework) masque côté navigateur
+// les cartes « À venir » échues depuis, affiche le message d'absence de date si la section se vide,
+// et ajoute « Annonce passée » sur la page d'une annonce échue. Sans JavaScript, le rendu du build reste correct.
+---
+<script is:inline>
+(function () {
+  var j = new Date();
+  var p = function (n) { return (n < 10 ? '0' : '') + n; };
+  var auj = j.getFullYear() + '-' + p(j.getMonth() + 1) + '-' + p(j.getDate());
+  var echu = function (el) { var e = el.getAttribute('data-echeance'); return !!e && e < auj; };
+  document.querySelectorAll('[data-carte-a-venir]').forEach(function (c) { if (echu(c)) c.hidden = true; });
+  document.querySelectorAll('[data-a-venir]').forEach(function (zone) {
+    var restantes = zone.querySelectorAll('[data-carte-a-venir]:not([hidden])').length;
+    if (restantes === 0) {
+      var liste = zone.querySelector('[data-liste-a-venir]');
+      var vide = zone.querySelector('[data-aucune-date]');
+      if (liste) liste.hidden = true;
+      if (vide) vide.hidden = false;
+    }
+  });
+  document.querySelectorAll('[data-annonce]').forEach(function (a) {
+    if (echu(a)) a.querySelectorAll('[data-passee]').forEach(function (m) { m.hidden = false; });
+  });
+})();
+</script>
